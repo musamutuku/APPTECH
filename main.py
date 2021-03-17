@@ -98,13 +98,13 @@ def Register():
 @app.route('/login', methods=['POST'])
 def Login():
 
-    request_body = request.get_json()
-    username = request_body['username']
-    password = request_body['password']
-    #if request.method=="POST":
+    #request_body = request.get_json()
+    #username = request_body['username']
+    #password = request_body['password']
+    if request.method=="POST":
 
-       #username=request.form.get('username')
-       #password=request.form.get('password')
+       username=request.form.get('username')
+       password=request.form.get('password')
 
     current_user = UserAccount.query.filter_by(username=username).first()
 
