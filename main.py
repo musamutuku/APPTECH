@@ -34,9 +34,9 @@ class UserAccount(db.Model):
     password = db.Column(db.String(100))
     account_balance = db.Column(db.Integer, default=0)
     float_balance = db.Column(db.Integer)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
-    def __init__(self, firstname, lastname, age, username, password,role_id):
+    def __init__(self, firstname, lastname, age, username, password):
         self.firstname = firstname
         self.lastname = lastname
         self.age = age
@@ -44,7 +44,7 @@ class UserAccount(db.Model):
         self.password = password
         #self.account_balance = account_balance
         #self.float_balance = float_balance
-        self.role_id = role_id
+        #self.role_id = role_id
 
 class RoleAccount(db.Model):  
     
@@ -85,10 +85,10 @@ def Register():
     age = request_body['age']
     username = request_body['username']
     password = request_body['password']
-    role_id = request_body['role_id']
+    #role_id = request_body['role_id']
     
     encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
-    registered_user = UserAccount(firstname,lastname,age,username,encrpted_pass.decode(),role_id)
+    registered_user = UserAccount(firstname,lastname,age,username,encrpted_pass.decode())
 
     db.session.add(registered_user)
     db.session.commit()
