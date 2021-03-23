@@ -36,7 +36,8 @@ class UserAccount(db.Model):
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
-    def __init__(self, firstname, lastname, age, username, password):
+    def __init__(self, id, firstname, lastname, age, username, password):
+        self.id = id
         self.firstname = firstname
         self.lastname = lastname
         self.age = age
@@ -75,20 +76,31 @@ def CheckRole():
 def Register():
     request_body = request.get_json()
     username = request_body.get('username')
+    id = request_body.get('id_no')
 
+    user_ID = UserAccount.query.filter_by(id=id).first()
     current_user = UserAccount.query.filter_by(username=username).first()
-    if current_user is not None:
-        return jsonify({"msg":"the username is already taken. Use another username"}),409
+    if user_ID is None:
+        if current_user is not None:
+            return jsonify({"msg":"the username is already taken. Use another username"}),409
+    else:
+        return jsonify({"msg":"the ID is already used"}),409
 
     firstname = request_body['firstname']
     lastname = request_body['lastname']
+    id = request_body['id_no']
     age = request_body['age']
     username = request_body['username']
     password = request_body['password']
+    confirm = request_body['confirm']
     #role_id = request_body['role_id']
     
-    encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
-    registered_user = UserAccount(firstname,lastname,age,username,encrpted_pass.decode())
+    
+    if confirm == password:
+        encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
+        registered_user = UserAccount(id,firstname,lastname,age,username,encrpted_pass.decode())
+    else:
+        return jsonify({'msg':"password does not match"}),412
 
     db.session.add(registered_user)
     db.session.commit()
