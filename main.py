@@ -188,6 +188,7 @@ def Deposit():
     else:
         return {"error": "agent not found, confirm your id"}
 
+# agent can check balance for a user
 @app.route('/checkbalance', methods= ['GET'])
 @jwt_required()
 def CheckBalance():
