@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask.templating import render_template
 import bcrypt
 
 from flask_jwt_extended import create_access_token
@@ -14,6 +15,7 @@ app = Flask(__name__)
 
 app.config["JWT_SECRET_KEY"] = "super-secret" 
 jwt = JWTManager(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:musa@localhost/akiba"
 
@@ -56,6 +58,12 @@ class RoleAccount(db.Model):
     users = db.relationship('UserAccount', backref='role', lazy=True)
     
 
+@app.route('/')
+def index():
+
+  return render_template('index.html')
+
+
 @app.route('/checkrole', methods= ["POST"])
 def CheckRole():
    # role_id = 3
@@ -72,64 +80,74 @@ def CheckRole():
    # print(myrole_id.role_id)
     return f"my role is {my_role}"
 
-@app.route('/register', methods = ["POST"])
+@app.route('/register', methods = ["POST","GET"])
 def Register():
-    request_body = request.get_json()
-    username = request_body.get('username')
-    id = request_body.get('id_no')
 
-    user_ID = UserAccount.query.filter_by(id=id).first()
-    current_user = UserAccount.query.filter_by(username=username).first()
-    if user_ID is None:
-        if current_user is not None:
-            return jsonify({"msg":"the username is already taken. Use another username"}),409
-    else:
-        return jsonify({"msg":"the ID is already used"}),409
+    # getting form details from registration form
+    if request.method == "POST":
+        firstname = request.form.get('firstname')
+        lastname = request.form.get('lastname')
+        id = request.form.get('id_no')
+        age = request.form.get('age')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        confirm = request.form.get('confirm')
 
-    firstname = request_body['firstname']
-    lastname = request_body['lastname']
-    id = request_body['id_no']
-    age = request_body['age']
-    username = request_body['username']
-    password = request_body['password']
-    confirm = request_body['confirm']
-    #role_id = request_body['role_id']
+        # get/check the entered user_id no and username in the users' table(database) (if any)
+        user_ID = UserAccount.query.filter_by(id=id).first()
+        current_user = UserAccount.query.filter_by(username=username).first()
+
+        # check if the user_id and username are already used
+        if user_ID is None:
+            if current_user is not None:
+                return jsonify({"msg":"the username is already taken. Use another username"}),409
+        else:
+            return jsonify({"msg":"the ID is already used"}),409
+        
+        
+        # encrypting the password using hash function
+        if confirm == password:
+            encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
+            registered_user = UserAccount(id,firstname,lastname,age,username,encrpted_pass.decode())
+        else:
+            return jsonify({'msg':"password does not match"}),412
+
+        # add the details in the database
+        db.session.add(registered_user)
+        db.session.commit()
+        return jsonify({'msg':"registered successfully"})
+    return render_template('register.html')
     
-    
-    if confirm == password:
-        encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
-        registered_user = UserAccount(id,firstname,lastname,age,username,encrpted_pass.decode())
-    else:
-        return jsonify({'msg':"password does not match"}),412
 
-    db.session.add(registered_user)
-    db.session.commit()
-    return jsonify({'msg':"registered successfully"})
-    
-
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST','GET'])
 def Login():
 
-    #request_body = request.get_json()
-    #username = request_body['username']
-    #password = request_body['password']
+    # getting form details from login form
     if request.method=="POST":
+        username=request.form.get('username')
+        password=request.form.get('password')
 
-       username=request.form.get('username')
-       password=request.form.get('password')
+        # get/check the person with the entered username in the database
+        current_user = UserAccount.query.filter_by(username=username).first()
 
-    current_user = UserAccount.query.filter_by(username=username).first()
-
-    if current_user is not None:
-        result = bcrypt.checkpw(password.encode(), current_user.password.encode())
-        if current_user and result:
-            access_token = create_access_token(identity=username)
-            return jsonify(access_token=access_token)
+        # check the existence of the person in the database
+        # if current_user is not None:(opposite statement)
+        if current_user is None:
+             return render_template("login_error.html")
         else:
-            return jsonify({"msg": "incorrect username or password"}), 401
-    else:
-        return "user does not exist"
-    
+            # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
+             result = bcrypt.checkpw(password.encode(), current_user.password.encode())
+            
+             if result:
+                 # check if he/she is the admin 
+                 if current_user.role_id == 1:
+                    return render_template('admin_home.html')
+                 else:
+                    correct = "You have been logged in successfully"
+                    return render_template('user_home.html', success_message = correct, user = current_user)
+             else:
+                 return render_template("login_error.html")
+    return render_template('login.html')
 
 @app.route('/logout', methods= ['POST'])
 def Logout():
@@ -232,4 +250,4 @@ def WithdrawCash():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

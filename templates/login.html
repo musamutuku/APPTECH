@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .login{
+            margin: auto;
+            margin-top: 300px;
+            width: 430px;
+            background-color: rgb(168, 167, 167);
+            border: 2px solid gray;
+        }
+        .inner{
+            padding: 30px;
+            height: 100px;
+            margin-top: auto;
+        }
+        #btn{
+            width: 430px;
+            height: 30px;
+            background-color: dodgerblue;
+            color: white;
+            font-size: 20px;
+        }
+        #btn1{
+            width: 100px;
+            height: 40px;
+            border-radius: 15px;
+            background-color: grey;
+            color: black;
+        }
+        .signup{
+            float: right;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <h2>Login to access our Akiba App</h2>
+    <p><i>click sign up to register</i></p>
+    <div class="signup"><a href="/register"><button id="btn1"><b>Sign Up</b></button></a></div>
+  
+    <form action="/login" method="POST">
+        <div class="login">
+            <div class="inner">
+                USERNAME &nbsp;<i class="glyphicon glyphicon-user"></i>&nbsp;<input type="text" name="username" size="25px" width="30px"><br><br>
+                PASSWORD &nbsp;<i class="glyphicon glyphicon-lock"></i>&nbsp;<input type="password" name="password" size="25px" width="30px"><br><br>
+                <a href="#"><i>Forgot password</i></a>
+            </div><br>
+            <input type="submit" value="LOGIN" id="btn">
+        </div>
+    </form>
+</body>
+</html>
