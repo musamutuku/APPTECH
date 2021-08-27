@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <img src="{{ url_for('static', filename='images/login_vec.png') }}" alt="login_vec" width="100%">
     <div class="login-errbox">
         <p id="error">Error!</p>
-        <a href="login.html" id="try-again">Try again</a>
+        <a href="/login" id="try-again">Try again</a>
     </div>
-    <div>Error! <a href="/login">Try again</a></div>
 </body>
 </html>

@@ -1,9 +1,9 @@
 .loginbox{
     position: absolute;
-    width: 373px;
+    width: 413px;
     height: 359px;
-    left:580px;
-    top: 304px;
+    left: 680px;
+    top: 330px;
     background: rgba(255, 229, 223, 0.2);
     border: 1px solid #B8AEAE;
     box-sizing: border-box;
@@ -12,30 +12,30 @@
 }
 p#title{
     position: absolute;
-    left: 567px;
+    left: 680px;
     top: 183px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
-    font-size: 27px;
+    font-size: 28px;
     line-height: 33px;
     color: #000000;
 }
 p#subtitle{
     position: absolute;
-    left: 590px;
+    left: 703px;
     top: 235px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 16px;
     color: #127010;
 }
 form input{ 
     width: 204px;
     height: 30px;
-    margin-left: 101px;
+    margin-left: 115px;
     margin-bottom: 27px;
     padding-left: 20px;
     background: #FFFFFF;
@@ -47,21 +47,21 @@ form img#user{
     position: absolute;
     width: 30px;
     height: 28px;
-    left: 70px;
+    left: 84px;
     top: 77px;
 }
 form img#pass{
     position: absolute;
     width: 18px;
     height: 22px;
-    left: 76px;
+    left: 90px;
     top: 136px;
 }
 input::placeholder{
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 16px;
     color: #636161;
 }
@@ -71,7 +71,7 @@ input:focus{
 .login-btn{
     width: 173px;
     height: 33px;
-    margin-left: 108px;
+    margin-left: 126px;
     margin-top: 18px;
     background: #414ABB;
     border-radius: 6px;
@@ -79,7 +79,7 @@ input:focus{
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 18px;
     line-height: 21px;
     text-align: center;
     color: #FFFFFF;
@@ -91,10 +91,8 @@ input:focus{
     position: absolute;
     width: 502px;
     height: 179px;
-    margin-left: 530px;
+    left: 630px;
     top: 345px;
-    background: #fff;
-    border: none;
     box-sizing: border-box;
     border: 1px solid #eee8e8;
     border-radius: 30px;
@@ -131,34 +129,36 @@ input:focus{
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 13px;
+    left: 101px;
 }
 #forgot p{
     position: absolute;
-    margin-left: 101px;
+    margin-left: 120px;
     margin-top: 27px;
 }
 #forgot a{
     position: absolute;
     font-style: italic;
-    margin-left: 243px;
+    left: 275px;
     margin-top: 27px;
 }#signup{
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 16px;
+    left: 112px;
 }
 #signup p{
     position: absolute;
-    margin-left: 93px;
+    margin-left: 102px;
     margin-top: 70px;
 }
 #signup a{
     position: absolute;
-    margin-left: 243px;
+    margin-left: 270px;
     margin-top: 70px;
 }
 #forgot a:visited, #signup a:visited{
