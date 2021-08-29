@@ -1,18 +1,24 @@
+/* -----login pages---- */
 .loginbox{
     position: absolute;
-    width: 413px;
+    width: 373px;
     height: 359px;
-    left: 680px;
-    top: 330px;
+    left: 593px;
+    top: 304px;
     background: rgba(255, 229, 223, 0.2);
     border: 1px solid #B8AEAE;
     box-sizing: border-box;
     border-radius: 11px;
     padding-top: 75px;
 }
+.log-img{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
 p#title{
     position: absolute;
-    left: 680px;
+    left: 570px;
     top: 183px;
     font-family: Montserrat;
     font-style: normal;
@@ -23,7 +29,7 @@ p#title{
 }
 p#subtitle{
     position: absolute;
-    left: 703px;
+    left: 593px;
     top: 235px;
     font-family: Roboto;
     font-style: normal;
@@ -35,7 +41,7 @@ p#subtitle{
 form input{ 
     width: 204px;
     height: 30px;
-    margin-left: 115px;
+    margin-left: 99px;
     margin-bottom: 27px;
     padding-left: 20px;
     background: #FFFFFF;
@@ -47,14 +53,14 @@ form img#user{
     position: absolute;
     width: 30px;
     height: 28px;
-    left: 84px;
+    left: 68px;
     top: 77px;
 }
 form img#pass{
     position: absolute;
     width: 18px;
     height: 22px;
-    left: 90px;
+    left: 74px;
     top: 136px;
 }
 input::placeholder{
@@ -71,7 +77,7 @@ input:focus{
 .login-btn{
     width: 173px;
     height: 33px;
-    margin-left: 126px;
+    margin-left: 112px;
     margin-top: 18px;
     background: #414ABB;
     border-radius: 6px;
@@ -91,7 +97,7 @@ input:focus{
     position: absolute;
     width: 502px;
     height: 179px;
-    left: 630px;
+    left: 530px;
     top: 345px;
     box-sizing: border-box;
     border: 1px solid #eee8e8;
@@ -103,6 +109,7 @@ input:focus{
 #error{
     margin-top: 51px;
     margin-left: auto;
+    margin-bottom: 22px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -111,9 +118,15 @@ input:focus{
     text-align: center;
     color: #A73232;
 }
+#error span{
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: normal;
+    color: black;
+}
 #try-again{
-    margin-top: 68px;
-    margin-left: 218px;
+    margin-top: 75px;
+    margin-left: 212px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -131,17 +144,16 @@ input:focus{
     font-weight: normal;
     font-size: 12px;
     line-height: 13px;
-    left: 101px;
 }
 #forgot p{
     position: absolute;
-    margin-left: 120px;
+    margin-left: 101px;
     margin-top: 27px;
 }
 #forgot a{
     position: absolute;
     font-style: italic;
-    left: 275px;
+    left: 253px;
     margin-top: 27px;
 }#signup{
     font-family: Roboto;
@@ -149,18 +161,459 @@ input:focus{
     font-weight: normal;
     font-size: 15px;
     line-height: 16px;
-    left: 112px;
 }
 #signup p{
     position: absolute;
-    margin-left: 102px;
+    margin-left: 93px;
     margin-top: 70px;
 }
 #signup a{
     position: absolute;
-    margin-left: 270px;
+    margin-left: 253px;
     margin-top: 70px;
 }
 #forgot a:visited, #signup a:visited{
     color: #0909FC;
+}
+
+/* ---------index-------- */
+.app-info{
+    position: absolute;
+    width: 695px;
+    height: 416px;
+    left: 80px;
+    top: 0px;
+    background: #FAF2F2;
+    border-radius: 70px 0px;
+}
+p#org-name{
+    position: absolute;    
+    left: 27px;
+    top: 36px;
+    font-family: 'Rosario', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: flex-end;
+    color: #A4A716;
+}
+.title{
+    position: absolute;
+    left: 87px;
+    top: 110px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 59px;
+    color: #30BB3D;
+}
+.app-option{
+    position: absolute;
+    left: 105px;
+    top: 212px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: #000000;
+    }
+.about{
+    position: absolute;
+    left: 105px;
+    top: 292px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #0000FF;
+}
+.money-logo{
+    position: absolute;
+    width: 745px;
+    height: 416px;
+    left: 775px;
+    top: 0px;
+    background-color: #FAF2F2;;
+}
+.money-logo img{
+    width: 668px;
+    height: 416px;
+}
+.logReg-box{
+    position: absolute;
+    width: 1440px;
+    height: 386px;
+    left: 80px;
+    top: 416px;
+    margin-top: 0px;
+    background: #729A4A;
+    border-radius: 0px 90px;
+}
+.updiv{
+    position: absolute;
+    width: 1439px;
+    height: 742px;
+    margin-left: 73px;
+    top: 0px;
+    background: #C0E998;
+}
+.bottom{
+    width: 1440px;
+    height: 142px;
+    margin-left: 73px;
+    margin-top: 680px;
+    background: #C0E998;
+}
+#start{
+    position: absolute;
+    left: 584px;
+    top: 33px;
+    font-family: Montserrat;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 37px;
+    color: #000000;
+}
+#direct{
+    position: absolute;
+    width: 960px;
+    height: 57px;
+    left: 237px;
+    top: 121px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+.direct-reg{
+    position: absolute;
+    width: 314px;
+    height: 37px;
+    left: 237px;
+    top: 255px;
+    background: #FFFFFF;
+}
+.direct-log{
+    position: absolute;
+    width: 278px;
+    height: 37px;
+    left: 919px;
+    top: 255px;
+    background: #FFFFFF;
+}
+.direct-reg a{
+    position: absolute;
+    left: 20px;
+    top: 11px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    text-decoration: none;
+}
+.direct-log a{
+    position: absolute;
+    left: 35px;
+    top: 11px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    text-decoration: none;
+}
+.direct-reg a:visited, .direct-log a:visited{
+    color: #0000FF;
+}
+
+/* ----------Register page----------- */
+.createAcc{
+    position: absolute;
+    width: 794px;
+    height: 53px;
+    left: 385px;
+    top: 88px;
+    background: rgba(196, 196, 196, 0.5);
+}
+.createAcc p{
+    margin-left: 18px;
+    margin-top: 12px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 30px;
+    color: #000000;
+}
+#acc-sign{
+    position: absolute;
+    width: 58px;
+    height: 22px;
+    left: 700px;
+    bottom: 12px;
+    background: rgba(81, 205, 108, 0.5);
+    text-align: center;
+    padding-top: 4px;
+}
+#acc-sign a{
+    text-decoration: none;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 17px;
+    color: #040497;
+}
+#acc-sign a:visited{
+    color: #040497; 
+}
+#fill-det{
+    position: absolute;
+    left: 389px;
+    top: 133px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+}
+.regform{
+    position: absolute;
+    width: 782px;
+    height: 314px;
+    left: 397px;
+    top: 246px;
+    background: rgba(233, 140, 31, 0.37);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+.log-det{
+    position: absolute;
+    left: 304px;
+    top: 20px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+}
+#login-det label{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    color: #040497;
+}
+#user-lab{
+    position: absolute;
+    left: 131px;
+    top: 91px;
+    margin-bottom: 38px;
+}
+#pass-lab{
+    position: absolute;
+    left: 131px;
+    top: 149px;
+    margin-bottom: 38px;
+}
+#confirm-lab{
+    position: absolute;
+    left: 131px;
+    top: 203px;
+}
+#login-det input{
+    width: 255px;
+    height: 28px;
+    background: #FFFDFD;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+#login-det input[type="text"]{
+    position: absolute;
+    left: 304px;
+    top: 81px;
+}
+#paswd{
+    position: absolute;
+    left: 304px;
+    top: 139px;
+}
+#conf-paswd{
+    position: absolute;
+    left: 304px;
+    top: 193px;
+}
+#login-det button{
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    left: 680px;
+    top: 271px;
+    background: rgba(0, 0, 255, 0.5);
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 255, 0.5);
+}
+#acc-ready{
+    position: absolute;
+    left: 380px;
+    top: 350px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 518px;
+    color: #000000;
+}
+#sign-check{
+    position: absolute;
+    left: 392px;
+    top: 623px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    color: #0000FF;
+}
+#account-det{
+    position: absolute;
+    width: 100%;
+    visibility: hidden;
+}
+#account-det label{
+    position: absolute;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #040497;
+}
+#account-det input{
+    position: absolute;
+    width: 255px;
+    height: 28px;
+    background: #FFFDFD;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 2px;
+    margin-top: 70px;
+    margin-left: 0px;
+}
+#fname, #id-no, #pin-no{
+    position: absolute;
+    left: 73px;
+}
+#lname, #phone-no, #conf-pin{
+    position: absolute;
+    left: 427px;
+}
+#fName, #id-No, #pin-No{
+    position: absolute;
+    left: 73px;
+}
+#lName, #phone-No, #conf-Pin{
+    position: absolute;
+    left: 427px;
+}
+.acc-det{
+    position: absolute;
+    left: 309px;
+    top: 20px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #000000;
+}
+#fname, #lname{
+    position: absolute;
+    top: 80px;
+}
+#fName, #lName{
+    position: absolute;
+    top: 25px;
+}
+#id-no, #phone-no{
+    position: absolute;
+    top: 135px;
+}
+#id-No, #phone-No{
+    position: absolute;
+    top: 80px;
+}
+#id-no, #phone-no{
+    position: absolute;
+    top: 140px;
+}
+#id-No, #phone-No{
+    position: absolute;
+    top: 84px;
+}
+#pin-no, #conf-pin{
+    position: absolute;
+    top: 199px;
+}
+#pin-No, #conf-Pin{
+    position: absolute;
+    top: 143px;
+}
+#btn-back{
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    left: 20px;
+    top: 271px;
+    background: rgba(0, 0, 255, 0.5);
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 255, 0.5);
+}
+#btn-create{
+    position: absolute;
+    width: 225px;
+    height: 39px;
+    left: 540px;
+    top: 370px;
+    background: rgba(0, 0, 255, 0.7);
+    border-radius: 2px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    color: #FFFFFF;
+    border: #0000FF;
+    cursor: pointer;
 }

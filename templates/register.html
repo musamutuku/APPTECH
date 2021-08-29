@@ -4,28 +4,73 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Saving App-Register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div>
-        <h1>Registration form</h1>
-        <form action="/register" method="POST">
-            <label>ID_NO:</label><br>
-            <input type="number" name="id_no"required><br><br>
-            <label>FirstName:</label><br>
-            <input type="text" name="firstname"required><br><br>
-            <label>LastName:</label><br>
-            <input type="text" name="lastname"required><br><br>
-            <label>Age:</label><br>
-            <input type="number" name="age"required><br><br>
-            <label>UserName:</label><br>
-            <input type="text" name="username"required><br><br>
-            <label>Password:</label><br>
-            <input type="password" name="password"required><br><br>
-            <label>Confirm Password:</label><br>
-            <input type="password" name="confirm"required><br><br>
-            <input type="submit" value="REGISTER">
-        </form>
+    <div class="createAcc">
+        <p>Create your account</p>
+        <div id="acc-sign"><a href="/login">Sign in</a></div>
     </div>
+    <p id="fill-det">Fill in the registration details below to start saving with us</p>
+    <div class="regform">
+
+            <form name="myForm" action="/register" method="POST" onsubmit="return validateForm()">
+                <div id="login-det">
+                    <p class="log-det">LOGIN DETAILS</p>
+                    <label id="user-lab">Username</label><input type="text" name="username">
+                    <label id="pass-lab">Password</label><input type="password" name="password" id="paswd">
+                    <label id="confirm-lab">Confirm Password</label><input type="password" name="confirm" id="conf-paswd">
+                </div>
+                <div id="account-det">
+                    <p class="acc-det">ACCOUNT DETAILS</p>
+                    <label id="fname">First name</label><br>
+                    <input type="text" name="firstname" id="fName" required>
+                    <label id="lname">Last name</label><br>
+                    <input type="text" name="lastname" id="lName" required>
+                    <label id="id-no">ID number</label><br>
+                    <input type="text" name="id_no" minlength="6" id="id-No" required>
+                    <label id="phone-no">Phone number</label><br>
+                    <input type="number" name="phone" id="phone-No" required>
+                    <label id="pin-no">PIN</label><br>
+                    <input type="password" name="pin" id="pin-No" required>
+                    <label id="conf-pin">Confirm PIN</label>
+                    <input type="password" name="confirm_pin" id="conf-Pin" required>
+                    <button type="submit" id="btn-create">CREATE</button>
+                    
+                </div>
+            </form>
+    </div> 
+    <p id="input-error">heyyyy</p>
+    <p id="acc-ready">Already have an account?</p>
+    <p id="sign-check">click sign-in option to login</p>
+    <button onclick="logForm()">Next</button>
+    <button id="btn-back" onclick="accForm()">Back</button>
+
+    <!-- form-input swap js function-->
+    <script>
+        var logform = document.getElementById("login-det");
+        var accform = document.getElementById("account-det");
+
+        function logForm(){
+            logform.style.visibility = "hidden";
+            accform.style.visibility = "visible";
+        }
+        function accForm(){
+            logform.style.visibility = "visible";
+            accform.style.visibility = "hidden";
+        }
+    </script>
+    <script>   
+        function validateForm() {
+            var x = document.forms["myForm"]["username"].value;
+            var y = document.forms["myForm"]["password"].value;
+            var z = document.forms["myForm"]["confirm"].value;
+            if (x == "" || y == "" || z == "") {
+                document.getElementById("input-error").innerHTML= "error pleaseeee";
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>

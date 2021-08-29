@@ -63,7 +63,6 @@ def index():
 
   return render_template('index.html')
 
-
 @app.route('/checkrole', methods= ["POST"])
 def CheckRole():
    # role_id = 3
