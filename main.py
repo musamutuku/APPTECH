@@ -32,18 +32,22 @@ class UserAccount(db.Model):
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
     age = db.Column(db.Integer)
+    # phone_no = db.Column(db.Integer(50))
+    # pin = db.Column(db.String(100))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
     account_balance = db.Column(db.Integer, default=0)
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
-    def __init__(self, id, firstname, lastname, age, username, password):
+    def __init__(self, id, firstname, lastname,age, username, password):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
         self.age = age
         self.username = username
+        # self.phone_no = phone_no
+        # self.pin = pin
         self.password = password
         #self.account_balance = account_balance
         #self.float_balance = float_balance
@@ -87,6 +91,9 @@ def Register():
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
         id = request.form.get('id_no')
+        # phone_no = request.form.get('phone')
+        # pin = request.form.get('pin')
+        # confirm_pin = request.form.get('pin')
         age = request.form.get('age')
         username = request.form.get('username')
         password = request.form.get('password')

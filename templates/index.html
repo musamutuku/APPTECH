@@ -8,19 +8,20 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="updiv"></div>
-    <div class="app-info">
-        <p id="org-name">BEANNSOFTS LTD MACHAKOS</p>
-        <p class="title">SAVE YOUR MONEY</p>
-        <p class="app-option">Click <u>About App</u> option below to know<br> about the application and how it works</p>
-        <a class="about" href="#">About App</a>
+    <div class="updiv">
+        <div class="app-info">
+            <p id="org-name">BEANNSOFTS LTD MACHAKOS</p>
+            <p class="title">SAVE YOUR MONEY</p>
+            <p class="app-option">Click <u>About App</u> option below to know<br> about the application and how it works</p>
+            <a class="about" href="#">About App</a>
+        </div>
+        <div class="money-logo"><img src="{{ url_for('static', filename='images/moneysave.png') }}" alt="moneysave"></div>
     </div>
-    <div class="money-logo"><img src="{{ url_for('static', filename='images/moneysave.png') }}" alt="moneysave"></div>
-    <div class="bottom"><div class="logReg-box">
+    <div class="logReg-box">
         <p id="start">START NOW!</p>
         <p id="direct">You can start registering and saving now by clicking register or login links below to direct you to the pages.</p>
         <div class="direct-reg"><a href="/register">CLICK HERE TO START REGISTRATION</a></div>
         <div class="direct-log"><a href="/login">CLICK HERE TO START LOGIN</a></div>
-    </div></div>
+    </div>
 </body>
 </html>

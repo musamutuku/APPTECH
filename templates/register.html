@@ -36,29 +36,34 @@
                     <input type="password" name="pin" id="pin-No" required>
                     <label id="conf-pin">Confirm PIN</label>
                     <input type="password" name="confirm_pin" id="conf-Pin" required>
-                    <button type="submit" id="btn-create">CREATE</button>
-                    
+                    <button type="submit" id="btn-create">CREATE</button> 
                 </div>
             </form>
     </div> 
-    <p id="input-error">heyyyy</p>
+    <p id="input-error"></p>
     <p id="acc-ready">Already have an account?</p>
-    <p id="sign-check">click sign-in option to login</p>
-    <button onclick="logForm()">Next</button>
-    <button id="btn-back" onclick="accForm()">Back</button>
+    <p id="sign-check">click sign-in option at the top to login</p>
+    <button onclick="logForm()" class="btn next" id="next-btn">Next&nbsp;&#10095;</button>
+    <button class="btn back" onclick="accForm()" id="back-btn">&#10094;&nbsp;Back</button>
 
     <!-- form-input swap js function-->
     <script>
         var logform = document.getElementById("login-det");
         var accform = document.getElementById("account-det");
+        var next_btn = document.getElementById("next-btn");
+        var back_btn = document.getElementById("back-btn");
 
         function logForm(){
             logform.style.visibility = "hidden";
             accform.style.visibility = "visible";
+            next_btn.style.visibility = "hidden";
+            back_btn.style.visibility = "visible";
         }
         function accForm(){
             logform.style.visibility = "visible";
             accform.style.visibility = "hidden";
+            next_btn.style.visibility = "visible";
+            back_btn.style.visibility = "hidden";
         }
     </script>
     <script>   
@@ -67,7 +72,7 @@
             var y = document.forms["myForm"]["password"].value;
             var z = document.forms["myForm"]["confirm"].value;
             if (x == "" || y == "" || z == "") {
-                document.getElementById("input-error").innerHTML= "error pleaseeee";
+                document.getElementById("input-error").innerHTML= "Please check and fill all the fields of login details!";
                 return false;
             }
         }
