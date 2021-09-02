@@ -106,7 +106,9 @@ def Register():
         # check if the user_id and username are already used
         if user_ID is None:
             if current_user is not None:
-                return jsonify({"msg":"the username is already taken. Use another username"}),409
+                error_msg = "false"
+                return render_template("register.html", error = error_msg, usernme = current_user)
+                # return jsonify({"msg":"the username is already taken. Use another username"}),409
         else:
             return jsonify({"msg":"the ID is already used"}),409
         

@@ -1,11 +1,19 @@
 /* -----login pages---- */
+.login-div{
+    position: absolute;
+    width: 401px;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-content: center;
+}
 .loginbox{
     position: absolute;
     width: 373px;
     height: 359px;
-    transform: translate(-50%, 0);
-    left: 50%;
-    top: 304px;
+    bottom: 0px;
+    left: 14px;
     background: rgba(255, 229, 223, 0.2);
     border: 1px solid #B8AEAE;
     box-sizing: border-box;
@@ -19,9 +27,8 @@
 }
 p#title{
     position: absolute;
-    transform: translate(-50%, 0);
-    left: 50%;
-    top: 183px;
+    left: 20px;
+    margin-top: 10px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -31,9 +38,8 @@ p#title{
 }
 p#subtitle{
     position: absolute;
-    transform: translate(-50%, 0);
-    left: 50%;
-    top: 235px;
+    margin-top: 45px;
+    left: 40px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -41,30 +47,39 @@ p#subtitle{
     line-height: 16px;
     color: #127010;
 }
-form input{ 
+.input-div{
+    position: absolute;
+    width: 250px;
+    height: 100px;
+    transform: translate(-50%, 0);
+    left: 50%;
+}
+.input-div input{ 
+    position: absolute;
     width: 204px;
     height: 30px;
-    margin-left: 99px;
-    margin-bottom: 27px;
-    padding-left: 20px;
+    right: 8px;
     background: #FFFFFF;
-    border: 1px solid #000000;
     box-sizing: border-box;
     border-radius: 6px;
+    padding-left: 20px;
+    border: 1px solid #000000;
+}
+.input-div input[type="password"]{
+    top: 50px;
 }
 form img#user{
     position: absolute;
     width: 30px;
     height: 28px;
-    left: 68px;
-    top: 77px;
+    left: 8px;
 }
 form img#pass{
     position: absolute;
     width: 18px;
     height: 22px;
-    left: 74px;
-    top: 136px;
+    left: 14px;
+    top: 50px;
 }
 input::placeholder{
     font-family: Montserrat;
@@ -78,10 +93,12 @@ input:focus{
     outline: none;
 }
 .login-btn{
+    position: absolute;
     width: 173px;
     height: 33px;
-    margin-left: 112px;
-    margin-top: 18px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    margin-top: 120px;
     background: #414ABB;
     border-radius: 6px;
     border: 1px solid #414ABB;
@@ -96,22 +113,49 @@ input:focus{
 .login-btn:hover{
     cursor: pointer;
 }
+#forgot{
+    position: absolute;
+    top: 260px;
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 13px;
+    text-align: center;
+}
+#forgot span{
+    font-style: italic;
+}
+#signup{ 
+    position: absolute;
+    top: 300px;
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 16px;
+    text-align: center;
+}
+#forgot a:visited, #signup a:visited{
+    color: #0909FC;
+}
 .login-errbox{
     position: absolute;
     width: 502px;
     height: 179px;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     left: 50%;
-    top: 345px;
+    top: 50%;
     box-sizing: border-box;
     border: 1px solid #eee8e8;
     border-radius: 30px;
-    align-items: center;
     background: rgba(255, 229, 223, 0.2);
     box-shadow: 1px 1px 20px 1px rgba(0,0,0,0.1);
 }
 #error{
-    margin-top: 51px;
+    margin-top: 55px;
     margin-left: auto;
     margin-bottom: 22px;
     font-family: Montserrat;
@@ -129,7 +173,7 @@ input:focus{
     color: black;
 }
 #try-again{
-    margin-top: 75px;
+    margin-top: 80px;
     margin-left: 212px;
     font-family: Montserrat;
     font-style: normal;
@@ -142,53 +186,50 @@ input:focus{
 #try-again a:visited{
     color: #0909FC;
 }
-#forgot{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 13px;
-}
-#forgot p{
-    position: absolute;
-    margin-left: 101px;
-    margin-top: 27px;
-}
-#forgot a{
-    position: absolute;
-    font-style: italic;
-    left: 253px;
-    margin-top: 27px;
-}#signup{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 16px;
-}
-#signup p{
-    position: absolute;
-    margin-left: 93px;
-    margin-top: 70px;
-}
-#signup a{
-    position: absolute;
-    margin-left: 253px;
-    margin-top: 70px;
-}
-#forgot a:visited, #signup a:visited{
-    color: #0909FC;
-}
 
 /* ---------index-------- */
+#main-img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 863px;
+    opacity: 0.5;
+}
+.index-div{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+}
+.upper-div{
+    position: absolute;
+    width: 1442px;
+    height: 455px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
 .app-info{
     position: absolute;
-    width: 720px;
+    width: 701px;
     height: 455px;
     left: 0px;
     top: 0px;
-    background: #FAF2F2;
-    border-radius: 0px 0px 70px 0px;
+    background: rgba(250, 242, 242, 0.8);
+    border-radius: 70px;
+}
+.money-logo{
+    position: absolute;
+    width: 721px;
+    height: 455px;
+    left: 721px;
+    background-color: #FAF2F2;
+    border-radius: 0px 20px 70px 0px;
+}
+.money-logo img{
+    width: 100%;
+    height: 100%;
 }
 p#org-name{
     position: absolute;    
@@ -214,15 +255,6 @@ p#org-name{
     line-height: 59px;
     color: #30BB3D;
 }
-.updiv{
-    position: absolute;
-    width: 1440px;
-    height: 455px;
-    background-color: #30BB3D;
-    left: 50%;
-    top: 0px;
-    transform: translate(-50%, 0);
-}
 .app-option{
     position: absolute;
     left: 105px;
@@ -245,34 +277,20 @@ p#org-name{
     line-height: 24px;
     color: #0000FF;
 }
-.money-logo{
-    position: absolute;
-    width: 720px;
-    height: 455px;
-    right: 0px;
-    top: 0px;
-    background-color: #FAF2F2;
-    border-radius: 0px 0px 120px 10px;
-}
-.money-logo img{
-    width: 100%;
-    height: 100%;
-    border-radius: 0px 0px 0px 10px;
-}
 .logReg-box{
     position: absolute;
-    width: 1440px;
-    height: 386px;
+    width: 1442px;
+    height: 408px;
     left: 50%;
-    bottom: 0px;
     transform: translate(-50%, 0);
-    margin-top: 0px;
+    top: 455px;
     background: #729A4A;
+    border-radius: 20px;
 }
 #start{
     position: absolute;
     left: 584px;
-    top: 33px;
+    top: 20px;
     font-family: Montserrat;
     font-style: italic;
     font-weight: bold;
@@ -285,7 +303,7 @@ p#org-name{
     width: 960px;
     height: 57px;
     left: 237px;
-    top: 121px;
+    top: 108px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -379,7 +397,7 @@ p#org-name{
 }
 #fill-det{
     position: absolute;
-    left: 439px;
+    left: 350px;
     top: 133px;
     font-family: Roboto;
     font-style: normal;
@@ -400,6 +418,7 @@ p#org-name{
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border-radius: 2px;
+    text-align: center;
 }
 .log-det{
     position: absolute;
@@ -584,11 +603,11 @@ p#org-name{
     top: 143px;
 }
 .next{
-    left: 1180px;
+    left: 1095px;
     top: 525px;
 }
 .back{
-    left: 495px;
+    left: 410px;
     top: 525px;
     visibility: hidden;
 }

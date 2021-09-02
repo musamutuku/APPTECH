@@ -6,21 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving App-Login</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body>
     <img src="{{ url_for('static', filename='images/login_vec.png') }}" alt="login_vec" width="100%" class="log-img">
-    <p id="title">Login into your account</p>
-    <p id="subtitle">Enter your username and password to continue</p>
-    <div class="loginbox">
-        <form action="/login" method="POST">
-            <img src="{{ url_for('static', filename='images/username.png') }}" alt="username" id="user">
-            <input type="text" name="username" placeholder="Username" required>
-            <img src="{{ url_for('static', filename='images/password.png') }}" alt="password" id="pass">
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" class="login-btn">LOGIN</button>
-            <div id="forgot"><p>If you forgot your password</p><a href="#">Reset</a></div>
-            <div id="signup"><p>Don't have an account?</p><a href="/register">Sign-up</a></div>
-        </form>
+    <div class="login-div">
+        <p id="title">Login into your account</p>
+        <p id="subtitle">Enter your username and password to continue</p>
+        <div class="loginbox">
+            <form action="/login" method="POST">
+                <div class="input-div">
+                    <img src="{{ url_for('static', filename='images/username.png') }}" alt="username" id="user">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <img src="{{ url_for('static', filename='images/password.png') }}" alt="password" id="pass">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="login-btn">LOGIN</button>
+                <div id="forgot"><p>If you forgot your password <span><a href="#">Reset</a></span></p></div>
+                <div id="signup"><p>Don't have an account? <span><a href="/register">Sign-up</a></span></p></div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

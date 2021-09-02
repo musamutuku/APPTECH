@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving App-Register</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body>
     <div class="createAcc">
@@ -17,13 +18,13 @@
 
             <form name="myForm" action="/register" method="POST" onsubmit="return validateForm()">
                 <div id="login-det">
-                    <p class="log-det">LOGIN DETAILS</p>
-                    <label id="user-lab">Username</label><input type="text" name="username">
+                    <p class="log-det">CREATE LOGIN DETAILS</p>
+                    <label id="user-lab">Username</label><input type="text" name="username" id="usernm">
                     <label id="pass-lab">Password</label><input type="password" name="password" id="paswd">
                     <label id="confirm-lab">Confirm Password</label><input type="password" name="confirm" id="conf-paswd">
                 </div>
                 <div id="account-det">
-                    <p class="acc-det">ACCOUNT DETAILS</p>
+                    <p class="acc-det">CREATE ACCOUNT DETAILS</p>
                     <label id="fname">First name</label><br>
                     <input type="text" name="firstname" id="fName" required>
                     <label id="lname">Last name</label><br>
@@ -39,8 +40,19 @@
                     <button type="submit" id="btn-create">CREATE</button> 
                 </div>
             </form>
+            <p>
+                {% if error %}
+                {{error}}
+                {%endif%}
+            </p>
+            <p id="myerror">
+                {% if usernme %}
+                {{usernme.username}}
+                {%endif%}
+            </p>
     </div> 
     <p id="input-error"></p>
+    <p id="pin-error"></p>
     <p id="acc-ready">Already have an account?</p>
     <p id="sign-check">click sign-in option at the top to login</p>
     <button onclick="logForm()" class="btn next" id="next-btn">Next&nbsp;&#10095;</button>
@@ -52,12 +64,33 @@
         var accform = document.getElementById("account-det");
         var next_btn = document.getElementById("next-btn");
         var back_btn = document.getElementById("back-btn");
-
+        
         function logForm(){
-            logform.style.visibility = "hidden";
-            accform.style.visibility = "visible";
-            next_btn.style.visibility = "hidden";
-            back_btn.style.visibility = "visible";
+            var x = document.getElementById("usernm").value;
+            var y = document.getElementById("paswd").value;
+            var z = document.getElementById("conf-paswd").value;
+            var w = document.getElementById("input-error");
+
+            if (x != "" && y != "" && z != "") {
+                if(y == z){
+                    logform.style.visibility = "hidden";
+                    accform.style.visibility = "visible";
+                    next_btn.style.visibility = "hidden";
+                    back_btn.style.visibility = "visible";
+                    w.style.visibility = "hidden";
+                }
+                else{
+                    document.getElementById("input-error").innerHTML= "password does not match!";
+                     w.style.visibility = "visible";
+                }
+
+                // return false;
+            }
+            else{
+                document.getElementById("input-error").innerHTML= "Please check and fill all the fields of login detailzzzzs!";
+                w.style.visibility = "visible";
+            }
+            // return true;
         }
         function accForm(){
             logform.style.visibility = "visible";
@@ -68,11 +101,10 @@
     </script>
     <script>   
         function validateForm() {
-            var x = document.forms["myForm"]["username"].value;
-            var y = document.forms["myForm"]["password"].value;
-            var z = document.forms["myForm"]["confirm"].value;
-            if (x == "" || y == "" || z == "") {
-                document.getElementById("input-error").innerHTML= "Please check and fill all the fields of login details!";
+            var pin = document.forms["myForm"]["pin"].value;
+            var conf_pin = document.forms["myForm"]["confirm_pin"].value;
+            if (pin != conf_pin) {
+                document.getElementById("pin-error").innerHTML= "PIN does not match!";
                 return false;
             }
         }
