@@ -1,19 +1,22 @@
 /* -----login pages---- */
+
 .login-div{
     position: absolute;
+    max-width: 401px;
     width: 401px;
-    height: 450px;
+    height: 480px;
+    transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    align-content: center;
 }
 .loginbox{
     position: absolute;
+    max-width: 373px;
     width: 373px;
     height: 359px;
+    transform: translate(-50%, 0);
+    left: 50%;
     bottom: 0px;
-    left: 14px;
     background: rgba(255, 229, 223, 0.2);
     border: 1px solid #B8AEAE;
     box-sizing: border-box;
@@ -28,7 +31,7 @@
 p#title{
     position: absolute;
     left: 20px;
-    margin-top: 10px;
+    margin-top: 40px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -38,14 +41,14 @@ p#title{
 }
 p#subtitle{
     position: absolute;
-    margin-top: 45px;
+    margin-top: 75px;
     left: 40px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
     line-height: 16px;
-    color: #127010;
+    color: #E98C1F;
 }
 .input-div{
     position: absolute;
@@ -155,9 +158,8 @@ input:focus{
     box-shadow: 1px 1px 20px 1px rgba(0,0,0,0.1);
 }
 #error{
-    margin-top: 55px;
-    margin-left: auto;
-    margin-bottom: 22px;
+    margin-top: 60px;
+    margin-bottom: 25px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -173,8 +175,6 @@ input:focus{
     color: black;
 }
 #try-again{
-    margin-top: 80px;
-    margin-left: 212px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -183,51 +183,44 @@ input:focus{
     text-align: center;
     color: rgba(4, 4, 151, 0.8);
 }
+.try-again{
+    text-align: center;
+}
 #try-again a:visited{
     color: #0909FC;
 }
 
 /* ---------index-------- */
-#main-img{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 863px;
-    opacity: 0.5;
+.indexpg{
+    background: url(moneybg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .index-div{
-    position: absolute;
-    width: 100%;
+    max-width: 1600px;
+    margin: auto;
     height: 100%;
-    left: 0px;
-    top: 0px;
 }
 .upper-div{
-    position: absolute;
-    width: 1442px;
+    max-width: 1442px;
     height: 455px;
-    left: 50%;
-    transform: translate(-50%, 0);
+    margin: auto;
 }
 .app-info{
     position: absolute;
     width: 701px;
     height: 455px;
-    left: 0px;
-    top: 0px;
-    background: rgba(250, 242, 242, 0.8);
-    border-radius: 70px;
+    background: rgba(250, 242, 242, 0.9);
+    border-radius: 50px 70px 70px 70px;
 }
 .money-logo{
-    position: absolute;
     width: 721px;
     height: 455px;
-    left: 721px;
-    background-color: #FAF2F2;
+    right: 0px;
     border-radius: 0px 20px 70px 0px;
+    float: right;
 }
-.money-logo img{
+ .money-logo img{
     width: 100%;
     height: 100%;
 }
@@ -278,14 +271,18 @@ p#org-name{
     color: #0000FF;
 }
 .logReg-box{
+    max-width: 1442px;
+    height: 428px;
+    margin: auto;
+    background: #729A4A;
+    border-radius: 90px;
+}
+#logReg-box{
     position: absolute;
     width: 1442px;
-    height: 408px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    top: 455px;
+    height: 428px;
     background: #729A4A;
-    border-radius: 20px;
+    border-radius: 0 90px 10px 70px;
 }
 #start{
     position: absolute;
@@ -363,6 +360,23 @@ p#org-name{
     top: 88px;
     background: rgba(196, 196, 196, 0.5);
 }
+.fill-detDiv{
+    position: absolute;
+    width: 884px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 142px;
+}
+#fill-det{
+    position: absolute;
+    left: -0px;
+    top: -10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: #24521b;
+}
 .createAcc p{
     margin-left: 18px;
     margin-top: 12px;
@@ -395,18 +409,6 @@ p#org-name{
 #acc-sign a:visited{
     color: #040497; 
 }
-#fill-det{
-    position: absolute;
-    left: 350px;
-    top: 133px;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 18px;
-    text-align: center;
-    color: #000000;
-}
 .regform{
     position: absolute;
     width: 782px;
@@ -414,7 +416,7 @@ p#org-name{
     transform: translate(-50%, 0);
     left: 50%;
     top: 246px;
-    background: rgba(233, 140, 31, 0.37);
+    background: rgba(81, 205, 108, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     border-radius: 2px;
@@ -423,7 +425,7 @@ p#org-name{
 .log-det{
     position: absolute;
     left: 304px;
-    top: 20px;
+    top: 10px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -481,7 +483,6 @@ p#org-name{
     top: 193px;
 }
 .btn{
-    position: absolute;
     width: 80px;
     height: 30px;
     background: rgba(0, 0, 255, 0.5);
@@ -494,26 +495,32 @@ p#org-name{
     color: #FFFFFF;
     border: 1px solid rgba(0, 0, 255, 0.5);
 }
+.acc-readyDiv{
+    position: absolute;
+    width: 884px;
+    height: 50px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 570px;
+}
 #acc-ready{
     position: absolute;
-    left: 430px;
-    top: 350px;
+    left: 10px;
+    top: 0px;
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
-    line-height: 518px;
     color: #000000;
 }
 #sign-check{
     position: absolute;
-    left: 442px;
-    top: 623px;
+    left: 10px;
+    top: 25px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
-    line-height: 16px;
     text-decoration-line: underline;
     color: #0000FF;
 }
@@ -561,7 +568,7 @@ p#org-name{
 .acc-det{
     position: absolute;
     left: 309px;
-    top: 20px;
+    top: 10px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
@@ -602,13 +609,24 @@ p#org-name{
     position: absolute;
     top: 143px;
 }
+.backNext-div{
+    position: absolute;
+    width: 782px;
+    height: 36px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 525px;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
 .next{
-    left: 1095px;
+    float: right;
     top: 525px;
 }
 .back{
-    left: 410px;
-    top: 525px;
+    position: absolute;
+    left: 10px;
+    top: 0px;
     visibility: hidden;
 }
 #btn-create{
@@ -631,10 +649,90 @@ p#org-name{
 }
 #input-error{
     position: absolute;
-    right: 490px;
-    top: 550px;
+    left: 304px;
+    top: 220px;
     color: red;
     font-family: montserrat;
-    font-weight: 500;
-    font-size: 15px;
+    font-weight: 700;
+    font-size: 13px;
+}
+#check1{
+    position: absolute;
+    left: 304px;
+    top: 100px;
+    color: red;
+    font-family: montserrat;
+    font-weight: 600;
+    font-size: 11px;
+}
+#check2{
+    position: absolute;
+    left: 170px;
+    top: 170px;
+    color: red;
+    font-family: montserrat;
+    font-weight: 600;
+    font-size: 11px;
+}
+#pin-error{
+    position: absolute;
+    left: 440px;
+    top: 230px;
+    color: red;
+    font-family: montserrat;
+    font-weight: 700;
+    font-size: 13px;
+}
+ul{
+    position: absolute;
+}
+#nav2{
+    left: 150px;
+    list-style-type: none;
+}
+/* ---------media query---------- */
+
+@media only screen and (max-width: 600px) {
+    .loginbox{
+        width: 300px;
+    }
+    p#title{
+        font-size: 24px;
+    }
+    p#subtitle{
+        font-size: 12px;
+    }
+    .login-div{
+        width: 328px;
+    }
+    .log-img{
+        height: 120px;
+    }
+    .login-errbox{
+        width: 300px;
+        height: 150px;
+    }
+    #error{
+        font-size: 13px;
+        margin-bottom: 15px;
+        margin-top: 45px;
+    }
+    #error span{
+        font-size: 11px;
+    }
+    #try-again{
+        font-size: 11px;
+    }
+    /* .logReg-box{
+        width: 390px;
+        height: 90px;
+    }
+    #logReg-box{
+        width: 390px;
+        height: 90px;
+    }
+    .upper-div{
+        width: 390px;
+        height: 100px;
+    } */
 }

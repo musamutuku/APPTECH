@@ -85,6 +85,7 @@ def CheckRole():
 
 @app.route('/register', methods = ["POST","GET"])
 def Register():
+    users = UserAccount.query.all()
 
     # getting form details from registration form
     if request.method == "POST":
@@ -106,11 +107,13 @@ def Register():
         # check if the user_id and username are already used
         if user_ID is None:
             if current_user is not None:
-                error_msg = "false"
-                return render_template("register.html", error = error_msg, usernme = current_user)
+                error_msg = "The username you entered is already taken. Try again and use another username!"
+                return render_template("register.html", username_error = error_msg)
                 # return jsonify({"msg":"the username is already taken. Use another username"}),409
         else:
-            return jsonify({"msg":"the ID is already used"}),409
+            # return jsonify({"msg":"the ID is already used"}),409
+            idError = "The ID you entered is already used!"
+            return render_template("register.html", id_error = idError)
         
         
         # encrypting the password using hash function
@@ -124,7 +127,7 @@ def Register():
         db.session.add(registered_user)
         db.session.commit()
         return jsonify({'msg':"registered successfully"})
-    return render_template('register.html')
+    return render_template('register.html', users_list = users)
     
 
 @app.route('/login', methods=['POST','GET'])
@@ -258,4 +261,4 @@ def WithdrawCash():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")

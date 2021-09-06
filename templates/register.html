@@ -13,24 +13,26 @@
         <p>Create your account</p>
         <div id="acc-sign"><a href="/login">Sign in</a></div>
     </div>
-    <p id="fill-det">Fill in the registration details below to start saving with us</p>
+    <div class="fill-detDiv"><p id="fill-det">Fill in the registration details below to start saving with us</p></div>
     <div class="regform">
 
             <form name="myForm" action="/register" method="POST" onsubmit="return validateForm()">
                 <div id="login-det">
                     <p class="log-det">CREATE LOGIN DETAILS</p>
-                    <label id="user-lab">Username</label><input type="text" name="username" id="usernm">
-                    <label id="pass-lab">Password</label><input type="password" name="password" id="paswd">
-                    <label id="confirm-lab">Confirm Password</label><input type="password" name="confirm" id="conf-paswd">
+                    <label id="user-lab">Username</label><input type="text" name="username" id="usernm" onblur="checkValue()" oninput="waitValue()">
+                    <label id="pass-lab">Password</label><input type="password" name="password" id="paswd" oninput="waitConfirm()">
+                    <label id="confirm-lab">Confirm Password</label><input type="password" name="confirm" id="conf-paswd" oninput="waitConfirm()">
+                    <p id="check1"></p>
+                    <p id="input-error"></p>
                 </div>
                 <div id="account-det">
                     <p class="acc-det">CREATE ACCOUNT DETAILS</p>
                     <label id="fname">First name</label><br>
-                    <input type="text" name="firstname" id="fName" required>
+                    <input type="text" name="firstname" id="fName" onblur="lowCaseFn()" required>
                     <label id="lname">Last name</label><br>
-                    <input type="text" name="lastname" id="lName" required>
+                    <input type="text" name="lastname" id="lName" onblur="lowCaseLn()" required>
                     <label id="id-no">ID number</label><br>
-                    <input type="text" name="id_no" minlength="6" id="id-No" required>
+                    <input type="text" name="id_no" minlength="6" id="id-No" onblur="checkId()" oninput="waitId()" required>
                     <label id="phone-no">Phone number</label><br>
                     <input type="number" name="phone" id="phone-No" required>
                     <label id="pin-no">PIN</label><br>
@@ -38,27 +40,32 @@
                     <label id="conf-pin">Confirm PIN</label>
                     <input type="password" name="confirm_pin" id="conf-Pin" required>
                     <button type="submit" id="btn-create">CREATE</button> 
+                    <p id="check2"></p>
+                    <p id="pin-error"></p>
                 </div>
             </form>
-            <p>
-                {% if error %}
-                {{error}}
+            <p id="userError">
+                {% if username_error %}
+                {{username_error}}
                 {%endif%}
             </p>
-            <p id="myerror">
-                {% if usernme %}
-                {{usernme.username}}
+            <p id="idError">
+                {% if id_error %}
+                {{id_error}}
                 {%endif%}
             </p>
     </div> 
-    <p id="input-error"></p>
-    <p id="pin-error"></p>
-    <p id="acc-ready">Already have an account?</p>
-    <p id="sign-check">click sign-in option at the top to login</p>
-    <button onclick="logForm()" class="btn next" id="next-btn">Next&nbsp;&#10095;</button>
-    <button class="btn back" onclick="accForm()" id="back-btn">&#10094;&nbsp;Back</button>
+    <div class="acc-readyDiv">
+        <p id="acc-ready">Already have an account?</p>
+        <p id="sign-check">click sign-in option at the top to login</p>
+    </div>
+    <div class="backNext-div">
+        <button onclick="logForm()" class="btn next" id="next-btn">Next&nbsp;&#10095;</button>
+        <button class="btn back" onclick="accForm()" id="back-btn">&#10094;&nbsp;Back</button>
+    </div>
+    
 
-    <!-- form-input swap js function-->
+    <!----- form-input swap and error js function ----->
     <script>
         var logform = document.getElementById("login-det");
         var accform = document.getElementById("account-det");
@@ -80,17 +87,16 @@
                     w.style.visibility = "hidden";
                 }
                 else{
-                    document.getElementById("input-error").innerHTML= "password does not match!";
+                    document.getElementById("input-error").innerHTML= "Password does not match!";
                      w.style.visibility = "visible";
+                     document.getElementById("input-error").style.display = "block";
                 }
-
-                // return false;
             }
             else{
-                document.getElementById("input-error").innerHTML= "Please check and fill all the fields of login detailzzzzs!";
+                document.getElementById("input-error").innerHTML= "Please fill all the fields!";
                 w.style.visibility = "visible";
+                document.getElementById("input-error").style.display = "block";
             }
-            // return true;
         }
         function accForm(){
             logform.style.visibility = "visible";
@@ -109,5 +115,61 @@
             }
         }
     </script>
+    <script>
+        function checkValue(){
+            var user_check = document.getElementById("usernm").value;
+            const ul_nav1 = document.getElementById('nav2');
+            const listItems = ul_nav1.getElementsByTagName('li');
+
+            for (var i = 0; i <= listItems.length - 1; i++) {
+                if (user_check == listItems[i].innerHTML){
+                    document.getElementById("check1").innerHTML = "Username is already taken. Try another!";
+                    document.getElementById("check1").style.display = "block";
+                    }
+                }
+                
+            }
+        function checkId(){
+            var id_check = document.getElementById("id-No").value;
+            const ul_nav2 = document.getElementById('nav1');
+            const listItemz = ul_nav2.getElementsByTagName('li');
+
+            for (var i = 0; i <= listItemz.length - 1; i++) {
+                if (id_check == listItemz[i].innerHTML){
+                    document.getElementById("check2").innerHTML = "That ID number already exists!";
+                    document.getElementById("check2").style.display = "block";
+                    }
+                }
+                
+            }
+        function waitValue(){
+            document.getElementById("check1").style.display = "none";
+            document.getElementById("input-error").style.display = "none";
+        }
+        function waitId(){
+            document.getElementById("check2").style.display = "none";
+        }
+        function waitConfirm(){
+            document.getElementById("input-error").style.display = "none";
+        }
+        function lowCaseFn(){
+            var fname = document.getElementById("fName");
+            fname.value = fname.value.charAt(0).toUpperCase() + fname.value.slice(1);
+        }
+        function lowCaseLn(){
+            var lname = document.getElementById("lName");
+            lname.value = lname.value.charAt(0).toUpperCase() + lname.value.slice(1);
+        }
+    </script>
+    <ul id="nav1" style="display: none;">
+        {% for user in users_list %}
+        <li>{{user.id}}</li>
+        {% endfor %}
+    </ul>
+    <ul id="nav2" style="display: none;">
+        {% for user in users_list %}
+        <li>{{user.username}}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

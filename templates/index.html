@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat|Rosario">
 </head>
-<body>
-    <img src="{{ url_for('static', filename='images/moneybg.jpg') }}" alt="moneybg" id="main-img">
+<body class="indexpg">
     <div class="index-div">
         <div class="upper-div">
             <div class="app-info">
@@ -21,10 +20,12 @@
             <div class="money-logo"><img src="{{ url_for('static', filename='images/moneysave.png') }}" alt="moneysave"></div>
         </div>
         <div class="logReg-box">
-            <p id="start">START NOW!</p>
-            <p id="direct">You can start registering and saving now by clicking register or login links below to direct you to the pages.</p>
-            <div class="direct-reg"><a href="/register">CLICK HERE TO START REGISTRATION</a></div>
-            <div class="direct-log"><a href="/login">CLICK HERE TO START LOGIN</a></div>
+            <div id="logReg-box">
+                <p id="start">START NOW!</p>
+                <p id="direct">You can start registering and saving now by clicking register or login links below to direct you to the pages.</p>
+                <div class="direct-reg"><a href="/register">CLICK HERE TO START REGISTRATION</a></div>
+                <div class="direct-log"><a href="/login">CLICK HERE TO START LOGIN</a></div>
+            </div>
         </div>
     </div>
 </body>
