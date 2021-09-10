@@ -31,26 +31,24 @@ class UserAccount(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
-    age = db.Column(db.Integer)
-    # phone_no = db.Column(db.Integer(50))
-    # pin = db.Column(db.String(100))
+    phone = db.Column(db.Integer)
+    pin = db.Column(db.String(100))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
     account_balance = db.Column(db.Integer, default=0)
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
-    def __init__(self, id, firstname, lastname,age, username, password):
+    def __init__(self, id, firstname, lastname, username, password, phone, pin):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
-        self.age = age
         self.username = username
-        # self.phone_no = phone_no
-        # self.pin = pin
         self.password = password
-        #self.account_balance = account_balance
-        #self.float_balance = float_balance
+        self.phone = phone
+        self.pin = pin
+        # self.account_balance = account_balance
+        # self.float_balance = float_balance
         #self.role_id = role_id
 
 class RoleAccount(db.Model):  
@@ -66,6 +64,13 @@ class RoleAccount(db.Model):
 def index():
 
   return render_template('index.html')
+
+
+@app.route('/user_home')
+def index2():
+
+  return render_template('user_home.html')
+
 
 @app.route('/checkrole', methods= ["POST"])
 def CheckRole():
@@ -92,14 +97,14 @@ def Register():
         firstname = request.form.get('firstname')
         lastname = request.form.get('lastname')
         id = request.form.get('id_no')
-        # phone_no = request.form.get('phone')
-        # pin = request.form.get('pin')
-        # confirm_pin = request.form.get('pin')
-        age = request.form.get('age')
+        phone = request.form.get('phone')
+        pin = request.form.get('pin')
+        confirm_pin = request.form.get('confirm_pin')
         username = request.form.get('username')
         password = request.form.get('password')
         confirm = request.form.get('confirm')
 
+    
         # get/check the entered user_id no and username in the users' table(database) (if any)
         user_ID = UserAccount.query.filter_by(id=id).first()
         current_user = UserAccount.query.filter_by(username=username).first()
@@ -107,26 +112,25 @@ def Register():
         # check if the user_id and username are already used
         if user_ID is None:
             if current_user is not None:
-                error_msg = "The username you entered is already taken. Try again and use another username!"
-                return render_template("register.html", username_error = error_msg)
-                # return jsonify({"msg":"the username is already taken. Use another username"}),409
+                error_msg = "The username you entered is already taken!"
+                error_msg2 = "Try again and use another username."
+                return render_template("register_error2.html", username_error = error_msg, username_error2 = error_msg2)   
         else:
-            # return jsonify({"msg":"the ID is already used"}),409
-            idError = "The ID you entered is already used!"
-            return render_template("register.html", id_error = idError)
+            idError = "The ID number you entered already exists!"
+            idError2 = "Try again with another ID number."
+            return render_template("register_error.html", id_error = idError, id_error2 = idError2)
         
         
-        # encrypting the password using hash function
-        if confirm == password:
-            encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
-            registered_user = UserAccount(id,firstname,lastname,age,username,encrpted_pass.decode())
-        else:
-            return jsonify({'msg':"password does not match"}),412
+        # encrypting the password and pin using hash function
+        if confirm == password and pin == confirm_pin:
+            encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(7))
+            encrpted_pin = bcrypt.hashpw(pin.encode(), bcrypt.gensalt(7))
+            registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode())
 
         # add the details in the database
         db.session.add(registered_user)
         db.session.commit()
-        return jsonify({'msg':"registered successfully"})
+        return render_template('register_success.html')
     return render_template('register.html', users_list = users)
     
 
@@ -261,4 +265,4 @@ def WithdrawCash():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run()

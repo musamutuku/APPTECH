@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Saving App-Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body>
-    <div>
+    <div class="homeDiv">
+        <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+    </div>
+    <div class="home-links">
+        <u id="pagelink">
+            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="#" id="firstlink" style="color: #FF12AE;;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="##">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
+        </u>
+        <div class="homepage">
+            <p id="p1">Home page</p>
+        </div>
+    </div>
+    <!-- <div>
     {% if user %}
         <span>Hi {{user.firstname}} </span> Welcome!
     {%endif%}
@@ -17,6 +34,6 @@
     {% if success_message %}
         {{success_message}}
     {%endif%}
-    </div>
+    </div> -->
 </body>
 </html>

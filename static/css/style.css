@@ -358,7 +358,7 @@ p#org-name{
     transform: translate(-50%, 0);
     left: 50%;
     top: 88px;
-    background: rgba(196, 196, 196, 0.5);
+    background: rgba(196, 196, 196, 0.4);
 }
 .fill-detDiv{
     position: absolute;
@@ -676,7 +676,7 @@ p#org-name{
 }
 #pin-error{
     position: absolute;
-    left: 440px;
+    left: 438px;
     top: 230px;
     color: red;
     font-family: montserrat;
@@ -689,6 +689,158 @@ ul{
 #nav2{
     left: 150px;
     list-style-type: none;
+}
+
+/* ---------register output------- */
+
+.success-div{
+    position: relative;
+    width: 1019px;
+    height: 53px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 60px;
+    background: rgba(196, 196, 196, 0.4);
+}
+.success-div p{
+    position: absolute;
+    bottom: -23px;
+    left: 18px;
+    font-family: Rosario;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    align-items: flex-end;
+    color: #C0C421;
+}
+#error-msg{
+    color: #C42020;
+}
+.success-div1{
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 280px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 23px;
+    text-align: center;
+    color: #000000;
+}
+.success-div2{
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 344px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    text-align: center;
+    color: #000000;
+}
+.success-div3{
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 390px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-size: 18px;
+    color: blue;
+}
+.success-div3 a:visited{
+    color: blue;
+}
+.success-div4{
+    position: absolute;
+    width: 1068px;
+    height: 34px;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 680px;
+    background: rgba(196, 196, 196, 0.4);
+    text-align: center;
+}
+.success-div4 p{
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 15px;
+    margin-top: 10px;
+}
+.homeDiv{
+    position: absolute;
+    max-width: 1095px;
+    width: 1095px;
+    height: 680px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+}
+.home-img{
+    position: absolute;
+    width: 1095px;
+    height: 108px;
+    left: 0px;
+    top: 0px;
+    box-sizing: border-box;
+    border: 1px solid #C4C4C4;
+}
+.home-img img{
+    width: 100%;
+    height: 100%;
+}
+.home-links{
+    position: absolute;
+    height: 300px;
+    max-width: 1095px;
+    width: 1090px;
+    left: 0px;
+    right: 0px;
+    top: 200px;
+    margin: auto;
+    padding-top: 100px;
+    list-style-type: none;
+}
+.home-links li{
+    margin-bottom: 33px;
+    position: relative;
+}
+.home-links li img{
+    width: 34px;
+    height: 28px;
+    margin-bottom: -7px;
+}
+.home-links li a{
+    margin-bottom: 30px;
+    font-family: Montserrat;
+    font-size: 14px;
+    color: #000000;
+    text-decoration: none;
+}
+#pagelink{
+    position: absolute;
+    text-decoration: none;
+}
+.homepage{
+    width: 900px;
+    height: 270px;
+    float: right;
+    margin-right: 3px;
+    margin-top: 8px;
+    border: 1px solid #C4C4C4;
+}
+.homepage #p1{
+    margin-left: 330px;
+    margin-top: -100px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 26px;
+    color: rgba(4, 4, 151, 0.8);
 }
 /* ---------media query---------- */
 
