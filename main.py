@@ -71,6 +71,11 @@ def index2():
 
   return render_template('user_home.html')
 
+@app.route('/admin_home')
+def index3():
+
+  return render_template('admin_home.html')
+
 
 @app.route('/checkrole', methods= ["POST"])
 def CheckRole():

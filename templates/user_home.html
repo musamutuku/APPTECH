@@ -21,7 +21,24 @@
             <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
         </u>
         <div class="homepage">
-            <p id="p1">Home page</p>
+            <p class="p1">Home page</p>
+            <p id="p1">
+                {% if user %}
+                <span>Hi {{user.firstname}},</span> Welcome!
+                {%endif%}
+            </p>
+            <p class="p2">Choose a menu from the left navigation to get started</p>
+            <div class="account-info">
+                <img src="{{ url_for('static', filename='images/account_info.png') }}" alt="account_info">
+                <p class="p3">Account information</p>
+                <p class="p4">Click account info menu to check your<br><span>balance, deposit or withdraw money, view account statement.</span></p>
+            </div>     
+            </div>
+            <div class="user-info">
+                <img src="{{ url_for('static', filename='images/user_info.png') }}" alt="user_info">
+                <p class="p5">User’s information</p>
+                <p class="p6">Click user details menu to view, edit<br><span> your personal details, security information and other settings.</span></p>
+            </div>
         </div>
     </div>
     <!-- <div>

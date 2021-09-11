@@ -834,13 +834,111 @@ ul{
     margin-top: 8px;
     border: 1px solid #C4C4C4;
 }
-.homepage #p1{
+.homepage .p1{
     margin-left: 330px;
     margin-top: -100px;
     font-family: Roboto;
     font-weight: bold;
     font-size: 26px;
     color: rgba(4, 4, 151, 0.8);
+}
+.account-info{
+    position: absolute;
+    width: 322px;
+    height: 124px;
+    top: 210px;
+    left: 265px;
+    background: rgba(75, 75, 255, 0.1);
+    border: 1px solid rgba(4, 4, 151, 0.8);
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.user-info{
+    position: absolute;
+    width: 322px;
+    height: 124px;
+    top: 210px;
+    right: 77px;
+    background: rgba(75, 75, 255, 0.1);
+    border: 1px solid rgba(4, 4, 151, 0.8);
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+#p1{
+    position: absolute;
+    width: 211px;
+    height: 19px;
+    left: 200px;
+    top: 100px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+}
+.p2{
+    position: absolute;
+    left: 410px;
+    top: 140px;
+    font-family: Montserrat;
+    font-size: 15px;   
+}
+.p3{
+    position: absolute;
+    left: 70px;
+    top: 0px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    color: rgba(4, 4, 151, 0.8);
+}
+.p4{
+    position: absolute;
+    left: 70px;
+    top: 30px;
+    font-family: Roboto;
+    font-size: 14px;
+}
+.p4 span{
+    position: absolute;
+    left: -40px;
+}
+.account-info img{
+    position: absolute;
+    width: 50px;
+    height: 51px;
+    left: 15px;
+    top: 10px;
+}
+.p5{
+    position: absolute;
+    left: 70px;
+    top: 0px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    color: rgba(4, 4, 151, 0.8);
+}
+.p6{
+    position: absolute;
+    left: 70px;
+    top: 30px;
+    font-family: Roboto;
+    font-size: 14px;
+}
+.p6 span{
+    position: absolute;
+    left: -40px;
+}
+.user-info img{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 20px;
+    top: 15px;
 }
 /* ---------media query---------- */
 
