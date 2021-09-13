@@ -62,19 +62,7 @@ class RoleAccount(db.Model):
 
 @app.route('/')
 def index():
-
   return render_template('index.html')
-
-
-@app.route('/user_home')
-def index2():
-
-  return render_template('user_home.html')
-
-@app.route('/admin_home')
-def index3():
-
-  return render_template('admin_home.html')
 
 
 @app.route('/checkrole', methods= ["POST"])
@@ -112,11 +100,11 @@ def Register():
     
         # get/check the entered user_id no and username in the users' table(database) (if any)
         user_ID = UserAccount.query.filter_by(id=id).first()
-        current_user = UserAccount.query.filter_by(username=username).first()
+        new_user = UserAccount.query.filter_by(username=username).first()
 
         # check if the user_id and username are already used
         if user_ID is None:
-            if current_user is not None:
+            if new_user is not None:
                 error_msg = "The username you entered is already taken!"
                 error_msg2 = "Try again and use another username."
                 return render_template("register_error2.html", username_error = error_msg, username_error2 = error_msg2)   
@@ -157,21 +145,70 @@ def Login():
         else:
             # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
              result = bcrypt.checkpw(password.encode(), current_user.password.encode())
-            
              if result:
                  # check if he/she is the admin 
                  if current_user.role_id == 1:
                     return render_template('admin_home.html')
                  else:
-                    correct = "You have been logged in successfully"
-                    return render_template('user_home.html', success_message = correct, user = current_user)
+                    return render_template('user_home.html', user = current_user)
              else:
                  return render_template("login_error.html")
     return render_template('login.html')
 
+
+@app.route('/home')
+def Home():
+    return render_template("user_home.html")
+
+@app.route('/admin')
+def Admin():
+    return render_template("admin_home.html")
+
+@app.route('/account')
+def Account():
+    return render_template("account.html")
+
+@app.route('/account/deposit')
+def Account1():
+    return render_template("account.html")
+
+@app.route('/account/withdraw')
+def Account3():
+    return render_template("account.html")
+
+
 @app.route('/logout', methods= ['POST'])
 def Logout():
     return "logged out successfully"
+
+
+@app.route('/account/check_balance', methods=['POST','GET'])
+# @jwt_required()
+def CheckBalance():
+    # current_user = get_jwt_identity()
+    if request.method == "POST":
+        id = request.form.get('id_no')
+        pin = request.form.get('pin_no')
+        current_user = UserAccount.query.filter_by(id=id).first()
+
+        if current_user is not None:
+            if current_user.role_id != 1:
+                result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
+                if result:
+                    if current_user.role_id == 3:
+                        return render_template('balance.html', user = current_user)
+                    elif current_user.role_id == 2:
+                        return render_template('balance.html', agent = current_user)
+                else:
+                    pin_mismatch = "You have entered wrong PIN. Try again"
+                    return render_template('balance.html', errored_pin_msg = pin_mismatch)
+            else:
+                try_check = "Confirm if the ID you entered is yours"
+                return render_template('balance.html', check_msg = try_check)
+        else:
+             not_found_msg = "invalid ID number. Try again"
+             return render_template('balance.html', not_found = not_found_msg )
+    return render_template("account.html")
 
 
 @app.route('/deposit', methods= ['POST'])
@@ -226,27 +263,6 @@ def Deposit():
     else:
         return {"error": "agent not found, confirm your id"}
 
-# agent can check balance for a user
-@app.route('/checkbalance', methods= ['GET'])
-@jwt_required()
-def CheckBalance():
-    current_user = get_jwt_identity()
-    request_body = request.get_json()
-    user_id = request_body['userID']
-
-    one_user = UserAccount.query.get(user_id)
-    if current_user == one_user.username:
-        if one_user is not None:
-            user_balance = {
-                "account_balance": one_user.account_balance,
-                "firstname": one_user.firstname,
-                "lastname" : one_user.lastname
-            }
-            return jsonify(user_balance)
-        else:
-            return {"error": "user not found, confirm your id"}
-    else:
-        return "your id does not match to the registered id"
     
 
 @app.route('/withdraw', methods= ['GET'])

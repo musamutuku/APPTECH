@@ -11,11 +11,10 @@
 <body>
     <div class="homeDiv">
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
-    </div>
     <div class="home-links">
         <u id="pagelink">
             <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="#" id="firstlink" style="color: #FF12AE;;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="##">Account info</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="/account">Account info</a></li>
             <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
             <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
@@ -33,24 +32,17 @@
                 <p class="p3">Account information</p>
                 <p class="p4">Click account info menu to check your<br><span>balance, deposit or withdraw money, view account statement.</span></p>
             </div>     
-            </div>
+        </div>
             <div class="user-info">
                 <img src="{{ url_for('static', filename='images/user_info.png') }}" alt="user_info">
                 <p class="p5">User’s information</p>
                 <p class="p6">Click user details menu to view, edit<br><span> your personal details, security information and other settings.</span></p>
             </div>
+    </div>
+        <div class="footer">
+            <hr>
+            <p>Copyright 2021. <span>Beannsofts Limited. All rights reserved.</span></p>
         </div>
     </div>
-    <!-- <div>
-    {% if user %}
-        <span>Hi {{user.firstname}} </span> Welcome!
-    {%endif%}
-    {% if login_message %}
-        {{login_message}}
-    {%endif%}
-    {% if success_message %}
-        {{success_message}}
-    {%endif%}
-    </div> -->
 </body>
 </html>

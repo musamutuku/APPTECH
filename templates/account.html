@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving App-Account</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+</head>
+<body>
+    <form action="/account/check_balance" id="form1" method="POST" style="visibility: hidden;">
+        <input type="text" name="id_no">
+        <input type="password" name="pin_no">
+        <button type="submit">OK</button>
+    </form>
+    <div class="homeDiv">
+        <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+    <div class="home-links">
+        <u id="pagelink">
+            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="/home" id="firstlink">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
+        </u>
+        <div class="homepage">
+            <p class="p1">Savings Account</p>
+            <button onclick="hide()">checkbal</button>
+            <!-- <a href="/account/deposit"><button>deposit</button></a>
+            <a href="/account/withdraw"><button>withdraw</button></a> -->
+        </div>
+        <div>
+            
+            <form action="#" id="form2" style="visibility: hidden;">
+                <input type="radio">
+                <input type="radio">
+            </form>
+        </div>
+    </div>
+        <div class="footer">
+            <hr>
+            <p>Copyright 2021. <span>Beannsofts Limited. All rights reserved.</span></p>
+        </div>
+    </div>
+<script>
+    var fm = document.getElementById("form1");
+    function hide(){
+        fm.style.visibility = "visible";
+    }
+</script>
+</body>
+</html>

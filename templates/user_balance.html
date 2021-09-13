@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>balance</h1>
+    <div>
+        {% if user %}
+        <span>Your balance is {{user.account_balance}}, </span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if agent %}
+        <span>Your float balance is {{agent.float_balance}}, and account balance is {{agent.account_balance}}</span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if errored_pin_msg %}
+        <span>{{errored_pin_msg}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if not_found %}
+        <span>{{not_found}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if check_msg %}
+        <span>{{check_msg}}</span>
+        {%endif%}
+    </div>
+</body>
+</html>
