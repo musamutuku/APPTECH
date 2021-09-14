@@ -780,7 +780,6 @@ ul{
     top: 0px;
     bottom: 0px;
     margin: auto;
-    /* border: 1px solid black; */
 }
 .home-img{
     position: absolute;
@@ -829,13 +828,13 @@ ul{
 }
 .homepage{
     width: 900px;
-    height: 270px;
+    height: 300px;
     float: right;
     margin-right: 3px;
     margin-top: 8px;
     border: 1px solid #C4C4C4;
 }
-.homepage .p1{
+.p1{
     margin-left: 330px;
     margin-top: -100px;
     font-family: Roboto;
@@ -955,6 +954,122 @@ ul{
 }
 .footer hr{
     margin-top: -20px;
+}
+.btns{
+    position: relative;
+    width: 125px;
+}
+.checkbal{
+    left: 80px;
+    top: 47px;
+}
+.checkbal button{
+    background: rgba(81, 205, 108, 0.8);
+    border: 1px solid #51CD6C;
+    color: rgba(246, 18, 18, 0.5);
+    border-radius: 11px;
+}
+.checkbal button:hover{
+    background-color: #51CD6C;
+    color: #F61212;
+}
+.checkbal p{
+    font-family: Roboto;
+    font-size: 13px;
+    margin-left: 8px;
+}
+.deposit{
+    left: 390px;
+    top: -98px;
+}
+.deposit button{
+    background: rgba(81, 146, 205, 0.8);
+    border: 1px solid #5192CD;
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 11px;
+}
+.deposit button:hover{
+    background-color: #5192CD;
+    color: #FFFFFF;
+}
+.deposit p{
+    font-family: Roboto;
+    font-size: 13px;
+    margin-left: 15px;
+}
+.withdraw{
+    left: 710px;
+    top: -243px;
+}
+.withdraw button{
+    background: rgba(233, 237, 28, 0.7);
+    border: 1px solid #E9ED1C;
+    color: rgba(0, 0, 255, 0.5);
+    border-radius: 11px;
+}
+.withdraw button:hover{
+    background-color: #E9ED1C;
+    color: #0000FF;
+}
+.withdraw p{
+    font-family: Roboto;
+    font-size: 13px;
+    margin-left: 8px;
+}
+.btns button{
+    position: relative;
+    width: 120px;
+    height: 100px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 33px;
+}
+.icon-select{
+    position: relative;
+    width: 302px;
+    height: 25px;
+    left: 294px;
+    top: 12px;
+    background: #426130;
+    border-radius: 15px;
+}
+.icon-select p{
+    position: relative;
+    top: 2px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.accBtn button{
+    position: relative;
+    width: 448px;
+    height: 28px;
+    left: 2px;
+    top: 0px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+}
+#statebtn{
+    margin-left: -4px;
+    background: #C4C4C4;
+}
+#transactionbtn{
+    background: #FFFFFF;
+}
+.accSave{
+    position: absolute;
+    top: 105px;
+    left: 170px;
+}
+#theBtns{
+    height: 240px;
 }
 /* ---------media query---------- */
 

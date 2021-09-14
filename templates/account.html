@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body>
-    <form action="/account/check_balance" id="form1" method="POST" style="visibility: hidden;">
-        <input type="text" name="id_no">
-        <input type="password" name="pin_no">
-        <button type="submit">OK</button>
-    </form>
     <div class="homeDiv">
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
@@ -24,18 +19,37 @@
             <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
         </u>
+        <p class="p1 accSave">Savings Account</p>
         <div class="homepage">
-            <p class="p1">Savings Account</p>
-            <button onclick="hide()">checkbal</button>
-            <!-- <a href="/account/deposit"><button>deposit</button></a>
-            <a href="/account/withdraw"><button>withdraw</button></a> -->
+            <div class="accBtn">
+                <button id="transactionbtn" onclick="showBtns()">Transactions</button>
+                <button id="statebtn" onclick="showStatediv()">Account Statements</button>
+            </div>
+            <div id="theBtns">
+                <div class="icon-select">
+                    <p>Select an icon below to start</p>
+                </div>
+                <div class="btns checkbal">
+                    <button onclick="hideShow()">B</button>
+                    <p>CHECK BALANCE</p>
+                </div>
+                <div class="btns deposit">
+                    <button onclick="hideShow2()">D</button>
+                    <P>DEPOSIT CASH</P>
+                </div>
+                <div class="btns withdraw">
+                    <button onclick="hideShow3()">W</button>
+                    <p>WITHDRAW CASH</p>
+                </div>
+            </div>
+            <div id="stateDiv" style="visibility: hidden;position: absolute;top: 150px;"><p>This place is for account statement</p></div>
         </div>
-        <div>
-            
-            <form action="#" id="form2" style="visibility: hidden;">
-                <input type="radio">
-                <input type="radio">
-            </form>
+        <div class="formpage">
+            <!-- <form action="/account/check_balance" id="form1" method="POST" style="visibility: hidden;">
+                <input type="text" name="id_no">
+                <input type="password" name="pin_no">
+                <button type="submit">OK</button>
+             </form> -->
         </div>
     </div>
         <div class="footer">
@@ -43,11 +57,29 @@
             <p>Copyright 2021. <span>Beannsofts Limited. All rights reserved.</span></p>
         </div>
     </div>
-<script>
+    <script>
+        var thebtns = document.getElementById('theBtns');
+        var statediv = document.getElementById('stateDiv');
+        var transbtn = document.getElementById('transactionbtn');
+        var statebtn = document.getElementById('statebtn');
+        function showBtns(){
+            thebtns.style.visibility = "visible";
+            statediv.style.visibility = "hidden";
+            transbtn.style.background = "#FFFFFF";
+            statebtn.style.background = "#C4C4C4";
+        }
+        function showStatediv(){
+            statediv.style.visibility = "visible";
+            thebtns.style.visibility = "hidden";
+            statebtn.style.background = "#FFFFFF";
+            transbtn.style.background = "#C4C4C4";
+        }
+    </script>
+<!-- <script>
     var fm = document.getElementById("form1");
     function hide(){
         fm.style.visibility = "visible";
     }
-</script>
+</script> -->
 </body>
 </html>
