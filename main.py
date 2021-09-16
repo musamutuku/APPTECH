@@ -165,7 +165,11 @@ def Home():
 def Admin():
     return render_template("admin_home.html")
 
-@app.route('/account')
+@app.route('/admin/account')
+def AdminAccount():
+    return render_template("admin.html")
+
+@app.route('/home/account')
 def Account():
     return render_template("account.html")
 
@@ -178,15 +182,13 @@ def Account3():
     return render_template("account.html")
 
 
-@app.route('/logout', methods= ['POST'])
+@app.route('/logout')
 def Logout():
-    return "logged out successfully"
+    return render_template("logout.html")
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])
-# @jwt_required()
 def CheckBalance():
-    # current_user = get_jwt_identity()
     if request.method == "POST":
         id = request.form.get('id_no')
         pin = request.form.get('pin_no')
@@ -197,19 +199,43 @@ def CheckBalance():
                 result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
                 if result:
                     if current_user.role_id == 3:
-                        return render_template('balance.html', user = current_user)
+                        return render_template('user_balance.html', user = current_user)
                     elif current_user.role_id == 2:
-                        return render_template('balance.html', agent = current_user)
+                        return render_template('user_balance.html', agent = current_user)
                 else:
                     pin_mismatch = "You have entered wrong PIN. Try again"
-                    return render_template('balance.html', errored_pin_msg = pin_mismatch)
+                    return render_template('user_balance.html', errored_pin_msg = pin_mismatch)
             else:
                 try_check = "Confirm if the ID you entered is yours"
-                return render_template('balance.html', check_msg = try_check)
+                return render_template('user_balance.html', check_msg = try_check)
         else:
              not_found_msg = "invalid ID number. Try again"
-             return render_template('balance.html', not_found = not_found_msg )
+             return render_template('user_balance.html', not_found = not_found_msg )
     return render_template("account.html")
+
+
+@app.route('/admin/check_balance', methods=['POST','GET'])
+def CheckBalanceAdmin():
+    if request.method == "POST":
+        id = request.form.get('id_no')
+        pin = request.form.get('pin_no')
+        current_admin = UserAccount.query.filter_by(id=id).first()
+
+        if current_admin is not None:
+            if current_admin.role_id == 1:
+                result = bcrypt.checkpw(pin.encode(), current_admin.pin.encode())
+                if result:
+                    return render_template('admin_balance.html', admin = current_admin)
+                else:
+                    pin_mismatch = "You have entered wrong PIN. Try again"
+                    return render_template('admin_balance.html', errored_pin_msg = pin_mismatch)
+            else:
+                try_check = "Confirm if the ID you entered is yours"
+                return render_template('admin_balance.html', check_msg = try_check)
+        else:
+             not_found_msg = "invalid ID number. Try again"
+             return render_template('admin_balance.html', not_found = not_found_msg )
+    return render_template("admin.html")
 
 
 @app.route('/deposit', methods= ['POST'])

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saving App-Account</title>
+    <title>Saving App-Home</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
@@ -13,9 +13,9 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="/home" id="firstlink">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
-            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
+            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="#" id="firstlink" style="color: #FF12AE;;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="/account">Account info</a></li>
+            <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" alt="system_info" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="#" id="swap-link">System info</a></li>
             <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
         </u>
@@ -47,14 +47,14 @@
         <div class="formpage" id="formpage" style="display: none;">
             <div class="checkbal-form" id="checkbal-form">
                 <p>CHECK BALANCE</p>
-                <form action="/account/check_balance" id="form1" method="POST">
+                <form action="/admin/check_balance" id="form1" method="POST">
                     <label>Enter ID Number:</label><br>
                     <input type="text" name="id_no" required><br><br>
                     <label>Enter PIN:</label><br>
                     <input type="password" name="pin_no" required><br><br>
                     <button type="submit" class="okbtn">OK</button>
                 </form>
-                <button class="cancelbtn" onclick="showHome1()">Cancel</button>
+                <button class="cancelbtn" onclick="showHome()">Cancel</button>
             </div>
             <div class="checkbal-form the-form" id="depositcash-form">
                 <p id="deposit-topic">DEPOSIT CASH</p>
@@ -69,7 +69,7 @@
                     <input type="number" name="amount" required><br><br>
                     <button type="submit" class="okbtn the-ok">OK</button>
                 </form>
-                <button class="cancelbtn the-cancel" onclick="showHome2()">Cancel</button>
+                <button class="cancelbtn the-cancel" onclick="showHome()">Cancel</button>
             </div>
             <div class="checkbal-form the-form" id="withdrawcash-form">
                 <p id="withdraw-topic">WITHDRAW CASH</p>
@@ -84,7 +84,7 @@
                     <input type="number" name="amount" required><br><br>
                     <button type="submit" class="okbtn the-ok">OK</button>
                 </form>
-                <button class="cancelbtn the-cancel" onclick="showHome3()">Cancel</button>
+                <button class="cancelbtn the-cancel" onclick="showHome()">Cancel</button>
             </div>
         </div>
     </div>
@@ -138,18 +138,7 @@
             forms.style.display = "block";
             homepg.style.display = "none";
         }
-        function showHome1(){
-            document.getElementById("form1").reset();
-            forms.style.display = "none";
-            homepg.style.display = "block";
-        }
-        function showHome2(){
-            document.getElementById("form2").reset();
-            forms.style.display = "none";
-            homepg.style.display = "block";
-        }
-        function showHome3(){
-            document.getElementById("form3").reset();
+        function showHome(){
             forms.style.display = "none";
             homepg.style.display = "block";
         }
