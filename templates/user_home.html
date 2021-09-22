@@ -22,9 +22,11 @@
         <div class="homepage">
             <p class="p1">Home page</p>
             <p id="p1">
+                Hi
                 {% if user %}
-                <span>Hi {{user.firstname}},</span> welcome!
+                <span>{{user.firstname}},</span>
                 {%endif%}
+                welcome!
             </p>
             <p class="p2">Choose a menu from the left navigation to get started</p>
             <div class="account-info">

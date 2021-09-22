@@ -33,5 +33,57 @@
         <span>{{check_msg}}</span>
         {%endif%}
     </div>
+    <h1>deposit</h1>
+    <div>
+        {% if updated_amount %}
+        <span>{{updated_amount}} </span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if no_user_found %}
+        <span>{{no_user_found}}</span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if no_float %}
+        <span>{{no_float}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if agent_pinerror %}
+        <span>{{agent_pinerror}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if no_agent_found %}
+        <span>{{no_agent_found}}</span>
+        {%endif%}
+    </div>
+    <h1>withdraw</h1>
+    <div>
+        {% if the_updated_amount %}
+        <span>{{the_updated_amount}} </span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if user_id_error %}
+        <span>{{user_id_error}}</span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if withdraw_error_msg %}
+        <span>{{withdraw_error_msg}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if pin_err %}
+        <span>{{pin_err}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if agentID_err %}
+        <span>{{agentID_err}}</span>
+        {%endif%}
+    </div>
 </body>
 </html>

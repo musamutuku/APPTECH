@@ -24,7 +24,6 @@ db = SQLAlchemy(app)
 
 migrate = Migrate(app, db)
 
-
 class UserAccount(db.Model):
     
     __tablename__ = "users"
@@ -32,7 +31,7 @@ class UserAccount(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100))
     lastname = db.Column(db.String(100))
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String(100))
     pin = db.Column(db.String(100))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
@@ -66,21 +65,25 @@ def index():
   return render_template('index.html')
 
 
-@app.route('/checkrole', methods= ["POST"])
+@app.route('/checkrole')
 def CheckRole():
-   # role_id = 3
+    role_id = 3
+    # user_id = 33771492
    # user_role = RoleAccount.query.get(role_id)
    # print(user_role.role_name)
    # user = user_role.users
    # print(user)
    
-    request_body = request.get_json()
-    user_id = request_body['user_id']
-    myrole = UserAccount.query.get(user_id).role
-    my_role= myrole.role_name
+    # request_body = request.get_json()
+    # user_id = request_body['user_id']
+    # myrole = UserAccount.query.get(user_id).role
+    # my_role= myrole.role_name
    # myrole_id = UserAccount.query.get(user_id)
    # print(myrole_id.role_id)
-    return f"my role is {my_role}"
+    # return f"my role is {my_role}"
+    users = UserAccount.query.filter_by(role_id=role_id).all()
+    # print(users.firstname)
+    return render_template('users.html', userz = users)
 
 @app.route('/register', methods = ["POST","GET"])
 def Register():
@@ -117,8 +120,8 @@ def Register():
         
         # encrypting the password and pin using hash function
         if confirm == password and pin == confirm_pin:
-            encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(7))
-            encrpted_pin = bcrypt.hashpw(pin.encode(), bcrypt.gensalt(7))
+            encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
+            encrpted_pin = bcrypt.hashpw(pin.encode(), bcrypt.gensalt(14))
             registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode())
 
         # add the details in the database
@@ -158,7 +161,9 @@ def Login():
 
 
 @app.route('/home')
+# @Login_required
 def Home():
+    # current_user = UserAccount.query.filter_by(username=username).first()
     return render_template("user_home.html")
 
 @app.route('/admin')
@@ -171,14 +176,6 @@ def AdminAccount():
 
 @app.route('/home/account')
 def Account():
-    return render_template("account.html")
-
-@app.route('/account/deposit')
-def Account1():
-    return render_template("account.html")
-
-@app.route('/account/withdraw')
-def Account3():
     return render_template("account.html")
 
 
@@ -234,83 +231,158 @@ def CheckBalanceAdmin():
                 return render_template('admin_balance.html', check_msg = try_check)
         else:
              not_found_msg = "invalid ID number. Try again"
-             return render_template('admin_balance.html', not_found = not_found_msg )
+             return render_template('admin_balance.html', not_found = not_found_msg)
     return render_template("admin.html")
 
 
-@app.route('/deposit', methods= ['POST'])
+@app.route('/account/deposit', methods= ['GET','POST'])
 def Deposit():
-    request_body = request.get_json()
+    # a varible to get agent
+    if request.method == 'POST':
+        agent_id = request.form.get('agent_id') 
 
-    # variable to get an agent
-    agent_id = request_body['agentId']
+        # variable to store the agent by (get) to obtain one
+        # to get more than one agent use (filter_by()) 
+        agent = UserAccount.query.get(agent_id)
 
-    # variable to store the agent by (get) to obtain one
-    # to get more than one agent use (filter_by()) 
-    agent = UserAccount.query.get(agent_id)
+        # variable to define the agent_pin and the amount to deposit
+        pin = request.form.get('pin_no')
+        amount = int(request.form.get('amount'))
 
-    # varible to define the amount to deposit
-    amount = request_body['amount']
+        if agent is not None:
+            if agent.role_id == 2:
+                result = bcrypt.checkpw(pin.encode(), agent.pin.encode())
+                if result:
+                    # to check if the float is enough to deposit the amount
+                    if agent.float_balance >= amount:
 
-    if agent is not None:
+                        # go find a user
+                        user_id = request.form.get('user_id')
+                        user = UserAccount.query.get(user_id)
+                        if user:
+                            # deposit the amount to their account and update agent float_balance
+                            user.account_balance += amount
+                            db.session.add(user)
+                            db.session.commit()
 
-        # to check if the float is enough to deposit the amount
-        if agent.float_balance >= amount:
-
-            # go find a user
-            user_id = request_body['userID']
-            user = UserAccount.query.get(user_id)
-
-            # deposit the amount to their account
-            # return the user object as a json object, return the agent account with the updated float balance
-            user.account_balance += amount
-            db.session.add(user)
-            db.session.commit()
-
-            agent.float_balance -= amount
-            db.session.add(agent)
-            db.session.commit()
-            
-            one_user = UserAccount.query.get(user_id)
-            one_agent = UserAccount.query.get(agent_id)
-            user_data = {
-                "account_balance": one_user.account_balance,
-                "firstname": one_user.firstname
-            }
-            agent_data = {
-                "username": one_agent.username,
-                "float_balance": one_agent.float_balance
-            }
-            return jsonify(user_data, agent_data)
+                            agent.float_balance -= amount
+                            db.session.add(agent)
+                            db.session.commit()
+                            
+                            one_user = UserAccount.query.get(user_id)
+                            # one_agent = UserAccount.query.get(agent_id)
+                            new_balance = one_user.account_balance
+                            deposited_amount = "You have succefully deposited {}. Your new balance is {}.".format(amount,new_balance)
+                            return render_template('user_balance.html', updated_amount = deposited_amount)
+                        else:
+                            no_user = "invalid user ID, confirm the user ID"
+                            return render_template('user_balance.html', no_user_found = no_user)
+                    else:
+                        # the agent account has no enough money to deposit
+                        no_float_msg= 'no enough funds to deposit {}'.format(amount)
+                        return render_template("user_balance.html", no_float = no_float_msg)
+                else:
+                    agent_pin_error = "you have entered wrong PIN. Try again."
+                    return render_template('user_balance.html', agent_pinerror = agent_pin_error)
+            else:
+                no_agent = "agent not found, confirm your id"
+                return render_template('user_balance.html', no_agent_found = no_agent)
         else:
-            # the agent account has no enough money to deposit
-            # user goes away
-            error_message = 'no enough funds to deposit {}'.format(amount)
-            return error_message
-    else:
-        return {"error": "agent not found, confirm your id"}
-
+            no_agent = "agent not found, confirm your id"
+            return render_template('user_balance.html', no_agent_found = no_agent)
+    return render_template('account.html')
     
 
-@app.route('/withdraw', methods= ['GET'])
-def WithdrawCash():
-    request_body = request.get_json()
-    user_id = request_body['userID']
-    user = UserAccount.query.get(user_id)
-    amount = request_body['amount']
-    if user is not None:
-        if user.account_balance >= amount:
-            user.account_balance -= amount
-            db.session.add(user)
-            db.session.commit()
-            return 'Your have successfully withdrawn {0}.Your new balance is {1}'.format(amount,user.account_balance)
-        else:
-            error_message = 'You have insufficient balance to withdraw such amount'
-            return error_message
-        
-    else:
-        return {"error": "user not found, confirm your id"}
+@app.route('/admin/deposit', methods= ['GET','POST'])
+def DepositAdmin():
+    if request.method == 'POST':
+        admin_id = request.form.get('admin_id')  
+        admin = UserAccount.query.get(admin_id)
 
+        # variable to define the admin_pin and the amount to deposit
+        pin = request.form.get('pin_no')
+        amount = int(request.form.get('amount'))
+
+        if admin is not None:
+            if admin.role_id == 1:
+                result = bcrypt.checkpw(pin.encode(), admin.pin.encode())
+                if result:
+                    # to check if the float is enough to deposit the amount
+                    if admin.float_balance >= amount:
+
+                        # go find a user
+                        user_id = request.form.get('user_id')
+                        user = UserAccount.query.get(user_id)
+                        if user:
+                            # deposit the amount to their account and update admin float_balance
+                            user.account_balance += amount
+                            db.session.add(user)
+                            db.session.commit()
+
+                            admin.float_balance -= amount
+                            db.session.add(admin)
+                            db.session.commit()
+                            
+                            one_user = UserAccount.query.get(user_id)
+                            new_balance = one_user.account_balance
+                            deposited_amount = "You have succefully deposited {}. Your new balance is {}.".format(amount,new_balance)
+                            return render_template('admin_balance.html', updated_amount = deposited_amount)
+                        else:
+                            no_user = "invalid user ID, confirm the user ID"
+                            return render_template('admin_balance.html', no_user_found = no_user)
+                    else:
+                        no_float_msg= 'no enough funds to deposit {}'.format(amount)
+                        return render_template("admin_balance.html", no_float = no_float_msg)
+                else:
+                    admin_pin_error = "you have entered wrong PIN. Try again."
+                    return render_template('admin_balance.html', admin_pinerror = admin_pin_error)
+            else:
+                no_admin = "admin not found, confirm your id"
+                return render_template('admin_balance.html', no_admin_found = no_admin)
+        else:
+            no_admin = "admin not found, confirm your id"
+            return render_template('admin_balance.html', no_admin_found = no_admin)
+    return render_template('admin.html')
+
+
+@app.route('/account/withdraw', methods= ['GET','POST'])
+def Withdraw():
+
+    agent_id = request.form.get('agent_id')
+    user_id = request.form.get('user_id')
+    pin = request.form.get('pin_no')
+    amount = int(request.form.get('amount'))
+    agent = UserAccount.query.get(agent_id)
+    user = UserAccount.query.get(user_id)
+
+    if request.method == 'POST':
+        if agent is not None:
+            if agent.role_id == 2:
+                if user is not None:
+                    result = bcrypt.checkpw(pin.encode(), user.pin.encode()) 
+                    if result:
+                        if user.account_balance >= amount:
+                            user.account_balance -= amount
+                            db.session.add(user)
+                            db.session.commit()
+                            withdrawn_amount = 'Your have successfully withdrawn {0}.Your new balance is {1}'.format(amount,user.account_balance)
+                            return render_template('user_balance.html', the_updated_amount = withdrawn_amount)
+                        else:
+                            withdraw_error_message = 'You have insufficient balance to withdraw such amount'
+                            return render_template('user_balance.html', withdraw_error_msg = withdraw_error_message)  
+                    else:
+                        pin_occured_err = "You have entered wrong PIN. Try again"
+                        return render_template('user_balance.html', pin_err = pin_occured_err) 
+                else:
+                    userID_error = "invalid ID. try again"
+                    return render_template('user_balance.html', user_id_error = userID_error)
+            else:
+                agentID_error = "agent not found. Confirm the Agent ID"
+                return render_template('user_balance.html', agentID_err = agentID_error)
+        else:
+            agentID_error = "agent not found. Confirm the Agent ID"
+            return render_template('user_balance.html', agentID_err = agentID_error)
+    return render_template('account.html')
 
 if __name__ == "__main__":
     app.run()

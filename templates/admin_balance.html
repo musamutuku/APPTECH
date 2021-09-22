@@ -8,11 +8,6 @@
 </head>
 <body>
     <h1>balance</h1>
-    <!-- <div>
-        {% if user %}
-        <span>Your balance is {{user.account_balance}}, </span> Thank You.
-        {%endif%}
-    </div> -->
     <div>
         {% if admin %}
         <span>Your float balance is {{admin.float_balance}}, and account balance is {{admin.account_balance}}</span> Thank You.
@@ -31,6 +26,32 @@
     <div>
         {% if check_msg %}
         <span>{{check_msg}}</span>
+        {%endif%}
+    </div>
+    <h1>deposit</h1>
+    <div>
+        {% if updated_amount %}
+        <span>{{updated_amount}} </span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if no_user_found %}
+        <span>{{no_user_found}}</span> Thank You.
+        {%endif%}
+    </div>
+    <div>
+        {% if no_float %}
+        <span>{{no_float}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if admin_pinerror %}
+        <span>{{admin_pinerror}}</span>
+        {%endif%}
+    </div>
+    <div>
+        {% if no_admin_found %}
+        <span>{{no_admin_found}}</span>
         {%endif%}
     </div>
 </body>
