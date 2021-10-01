@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_migrate import Migrate, current
 from flask.templating import render_template
 import bcrypt
 
@@ -81,7 +81,7 @@ def CheckRole():
    # myrole_id = UserAccount.query.get(user_id)
    # print(myrole_id.role_id)
     # return f"my role is {my_role}"
-    users = UserAccount.query.filter_by(role_id=role_id).all()
+    users = UserAccount.query.filter_by(role_id=role_id).first()
     # print(users.firstname)
     return render_template('users.html', userz = users)
 
@@ -183,9 +183,11 @@ def Account():
 def Logout():
     return render_template("logout.html")
 
-@app.route('/userbal')
-def userbal():
-    return render_template("user_balance.html")
+@app.route('/users')
+def UserEditing():
+    user_id = 33771490
+    current_user = UserAccount.query.get(user_id)
+    return render_template("user_details.html", user = current_user)
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])
