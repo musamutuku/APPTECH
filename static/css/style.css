@@ -953,6 +953,8 @@ ul{
 .footer hr{
     margin-top: -20px;
 }
+
+/* ---------account page----------- */
 .btns{
     position: relative;
     width: 125px;
@@ -1025,30 +1027,30 @@ ul{
 .icon-select{
     position: relative;
     width: 302px;
-    height: 25px;
+    height: 20px;
     left: 294px;
-    top: 10px;
+    top: -5px;
     background: #426130;
     border-radius: 15px;
 }
 .icon-select p{
     position: relative;
-    top: 3px;
+    top: 1px;
     font-family: Roboto;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     color: #FFFFFF;
 }
 .accBtn button{
     position: relative;
-    width: 448px;
+    width: 450px;
     height: 28px;
-    left: 2px;
-    top: 0px;
+    left: 0px;
+    top: -28px;
     border: 1px solid #000000;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 3px;
     font-family: Montserrat;
     font-weight: bold;
     font-size: 15px;
@@ -1118,8 +1120,9 @@ ul{
     font-size: 16px;
 }
 .okbtn{
-    margin-left: 30px;
-    margin-top: 25px;
+    position: absolute;
+    left: 30px;
+    bottom: 20px;
     background: #92CC7E;
     border: #92CC7E;
 }
@@ -1128,8 +1131,8 @@ ul{
 }
 .cancelbtn{
     position: absolute;
-    right: 30px;
     bottom: 20px;
+    right: 20px;
     background: #F39F9F;
     border: #F39F9F;
 }
@@ -1146,16 +1149,71 @@ ul{
     height: 298px;
 }
 .the-ok{
-    margin-top: -2px;
+    top: 268px;
 }
 .the-cancel{
-    bottom: 4px;
+    top: 268px;
 }
 #withdraw-topic{
     margin-bottom: 2px;  
     margin-top: 0px; 
     color: #A89806; 
 }
+.formpage input{
+    padding-left: 10px;
+}
+.formpage input::placeholder{
+    font-size: 10px;
+}
+.user_bal_msg{
+    position: relative;
+    width: 700px;
+    height: 55px;
+    background: #CAFFD5;
+    left: 100px;
+    top: 100px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
+}
+.user_bal_msg p{
+    position: absolute;
+    width: 550px;
+    font-family: Montserrat;
+    font-size: 15px;
+    margin-top: 0px;
+    left: 75px;
+    top: 8px;
+}
+.user_bal_msg span{
+    font-weight: 600;
+}
+.checkpinerr{
+    height: 40px;
+    color: rgb(204, 6, 45);
+}
+.depo{
+    height: 78px;
+}
+.closediv{
+    position: absolute;
+    width: 47px;
+    height: 26px;
+    right: 5px;
+    top: 110px;
+    background: #d13c3c;
+    text-align: center;
+}
+.closediv span{
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+.closediv:hover{
+    background: #CB2B2B;
+}
+
+
 /* ---------media query---------- */
 
 @media only screen and (max-width: 600px) {

@@ -4,86 +4,141 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Saving App-Account</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body>
-    <h1>balance</h1>
-    <div>
-        {% if user %}
-        <span>Your balance is {{user.account_balance}}, </span> Thank You.
-        {%endif%}
+    <div class="homeDiv">
+        <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+    <div class="home-links">
+        <u id="pagelink">
+            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="/home" id="firstlink">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
+        </u>
+        <p class="p1 accSave">Savings Account</p>
+        <div class="homepage" id="homepage">
+            <a href="/home/account"><div class="closediv"><span>X</span></div></a>
+
+                <!------- check balance ------>
+                {% if user %}
+                <div class="user_bal_msg">
+                    <p>Dear {{user.firstname}}, Your Account balance was:  <span>Ksh {{user.account_balance}}</span> on <span>{{the_time}}</span>. Thank You.</p>
+                </div>
+                {%endif%}
+                
+            
+                {% if agent %}
+                <div class="user_bal_msg">
+                    <p>Dear {{agent.firstname}}, Your Account balance was:  <span>Ksh {{agent.account_balance}}</span>, Float balance was: <span>Ksh {{agent.float_balance}}</span> on <span>{{the_time}}</span>. Thank You.</p>
+                </div>
+                {%endif%}
+
+
+                {% if errored_pin_msg %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{errored_pin_msg}}</p>
+                </div>
+                {%endif%}
+
+
+                {% if not_found %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{not_found}}</p>
+                </div>
+                {%endif%}
+            
+
+                {% if check_msg %}
+                <div class="user_bal_msg" style="color: rgb(204, 6, 45);">
+                    <p>{{check_msg}}</p>
+                </div>
+                {%endif%}
+                
+
+
+                <!------------ deposit ------------>
+                
+                {% if the_user %}
+                <div class="user_bal_msg depo">
+                    <p>You have successfully deposited Ksh {{amount}} on <span>{{time}} </span>to ID number: <span>{{theID}}</span> via Agent ID: <span>{{theAgent}}</span>. New Account balance is: <span>Ksh {{new_balance}}</span>. Reference No. <span>100{{theID}}</span>. Thank You.</p>
+                </div>
+                {%endif%}
+
+               
+                {% if no_user_found %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{no_user_found}}</p>
+                </div>
+                {%endif%}
+                
+
+                {% if no_float %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{no_float}}</p>
+                </div>
+                {%endif%}
+
+                
+                {% if agent_pinerror %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{agent_pinerror}}</p>
+                </div>
+                {%endif%}
+                
+                
+                {% if no_agent_found %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{no_agent_found}}</p>
+                </div>
+                {%endif%}
+                
+
+                
+                <!--------------withdraw -------------->
+            
+                {% if that_user %}
+                <div class="user_bal_msg depo">
+                    <p>You have successfully withdrawn Ksh {{amount}} on <span>{{time}} </span> via Agent ID: <span>{{theAgent}}</span>. New Account balance is: <span>Ksh {{new_balance}}</span>. Reference No. <span>400{{theID}}</span>. Rate of transaction cost is 0.03%.</p>
+                </div>
+                {%endif%}
+                
+                
+                {% if user_id_error %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{user_id_error}}</p>
+                </div>
+                {%endif%}
+                
+                
+                {% if withdraw_error_msg %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{withdraw_error_msg}}</p>
+                </div>
+                {%endif%}
+                
+                
+                {% if pin_err %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{pin_err}}</p>
+                </div>
+                {%endif%}
+                
+                
+                {% if agentID_err %}
+                <div class="user_bal_msg checkpinerr">
+                    <p>{{agentID_err}}</p>
+                </div>
+                {%endif%}      
+        </div>
     </div>
-    <div>
-        {% if agent %}
-        <span>Your float balance is {{agent.float_balance}}, and account balance is {{agent.account_balance}}</span> Thank You.
-        {%endif%}
-    </div>
-    <div>
-        {% if errored_pin_msg %}
-        <span>{{errored_pin_msg}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if not_found %}
-        <span>{{not_found}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if check_msg %}
-        <span>{{check_msg}}</span>
-        {%endif%}
-    </div>
-    <h1>deposit</h1>
-    <div>
-        {% if updated_amount %}
-        <span>{{updated_amount}} </span> Thank You.
-        {%endif%}
-    </div>
-    <div>
-        {% if no_user_found %}
-        <span>{{no_user_found}}</span> Thank You.
-        {%endif%}
-    </div>
-    <div>
-        {% if no_float %}
-        <span>{{no_float}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if agent_pinerror %}
-        <span>{{agent_pinerror}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if no_agent_found %}
-        <span>{{no_agent_found}}</span>
-        {%endif%}
-    </div>
-    <h1>withdraw</h1>
-    <div>
-        {% if the_updated_amount %}
-        <span>{{the_updated_amount}} </span> Thank You.
-        {%endif%}
-    </div>
-    <div>
-        {% if user_id_error %}
-        <span>{{user_id_error}}</span> Thank You.
-        {%endif%}
-    </div>
-    <div>
-        {% if withdraw_error_msg %}
-        <span>{{withdraw_error_msg}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if pin_err %}
-        <span>{{pin_err}}</span>
-        {%endif%}
-    </div>
-    <div>
-        {% if agentID_err %}
-        <span>{{agentID_err}}</span>
-        {%endif%}
+        <div class="footer">
+            <hr>
+            <p>Copyright 2021. <span>Beannsofts Limited. All rights reserved.</span></p>
+        </div>
     </div>
 </body>
 </html>

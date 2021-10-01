@@ -23,7 +23,7 @@
         <div class="homepage" id="homepage">
             <div class="accBtn">
                 <button id="transactionbtn" onclick="showBtns()">Transactions</button>
-                <button id="statebtn" onclick="showStatediv()">Account Statements</button>
+                <button id="statebtn" onclick="showStatediv()">Account Statement</button>
             </div>
             <div id="theBtns">
                 <div class="icon-select">
@@ -49,7 +49,7 @@
                 <p>CHECK BALANCE</p>
                 <form action="/account/check_balance" id="form1" method="POST">
                     <label>Enter ID Number:</label><br>
-                    <input type="number" name="id_no" required><br><br>
+                    <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter PIN:</label><br>
                     <input type="password" name="pin_no" required><br><br>
                     <button type="submit" class="okbtn">OK</button>
@@ -60,13 +60,13 @@
                 <p id="deposit-topic">DEPOSIT CASH</p>
                 <form action="/account/deposit" id="form2" method="POST">
                     <label>Enter Agent ID:</label><br>
-                    <input type="number" name="agent_id" required><br><br>
+                    <input type="number" name="agent_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter ID Number(user):</label><br>
-                    <input type="number" name="user_id" required><br><br>
+                    <input type="number" name="user_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter PIN(agent):</label><br>
                     <input type="password" name="pin_no" required><br><br>
                     <label>Enter Amount:</label><br>
-                    <input type="number" name="amount" required><br><br>
+                    <input type="number" name="amount" min="50" placeholder="minimum amount required is ksh.50" required><br><br>
                     <button type="submit" class="okbtn the-ok">OK</button>
                 </form>
                 <button class="cancelbtn the-cancel" onclick="showHome2()">Cancel</button>
@@ -75,13 +75,13 @@
                 <p id="withdraw-topic">WITHDRAW CASH</p>
                 <form action="/account/withdraw" id="form3" method="POST">
                     <label>Enter Agent ID:</label><br>
-                    <input type="number" name="agent_id" required><br><br>
+                    <input type="number" name="agent_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter ID Number:</label><br>
-                    <input type="number" name="user_id" required><br><br>
+                    <input type="number" name="user_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter PIN:</label><br>
                     <input type="password" name="pin_no" required><br><br>
                     <label>Enter Amount:</label><br>
-                    <input type="number" name="amount" required><br><br>
+                    <input type="number" name="amount" min="50" placeholder="minimum amount required is ksh.50" required><br><br>
                     <button type="submit" class="okbtn the-ok">OK</button>
                 </form>
                 <button class="cancelbtn the-cancel" onclick="showHome3()">Cancel</button>

@@ -35,7 +35,7 @@ class UserAccount(db.Model):
     pin = db.Column(db.String(100))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
-    account_balance = db.Column(db.Integer, default=0)
+    account_balance = db.Column(db.Float, default=0.0)
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
@@ -183,6 +183,10 @@ def Account():
 def Logout():
     return render_template("logout.html")
 
+@app.route('/userbal')
+def userbal():
+    return render_template("user_balance.html")
+
 
 @app.route('/account/check_balance', methods=['POST','GET'])
 def CheckBalance():
@@ -196,17 +200,19 @@ def CheckBalance():
                 result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
                 if result:
                     if current_user.role_id == 3:
-                        return render_template('user_balance.html', user = current_user)
+                        time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                        return render_template('user_balance.html', user = current_user, the_time = time)
                     elif current_user.role_id == 2:
-                        return render_template('user_balance.html', agent = current_user)
+                        time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                        return render_template('user_balance.html', agent = current_user, the_time = time)
                 else:
-                    pin_mismatch = "You have entered wrong PIN. Try again"
+                    pin_mismatch = "Sorry! You have entered wrong PIN. Try again."
                     return render_template('user_balance.html', errored_pin_msg = pin_mismatch)
             else:
-                try_check = "Confirm if the ID you entered is yours"
+                try_check = "The ID does not match the registered ID! Please confirm your ID number and try again."
                 return render_template('user_balance.html', check_msg = try_check)
         else:
-             not_found_msg = "invalid ID number. Try again"
+             not_found_msg = "Invalid ID! Please confirm your ID number and try again."
              return render_template('user_balance.html', not_found = not_found_msg )
     return render_template("account.html")
 
@@ -222,15 +228,16 @@ def CheckBalanceAdmin():
             if current_admin.role_id == 1:
                 result = bcrypt.checkpw(pin.encode(), current_admin.pin.encode())
                 if result:
-                    return render_template('admin_balance.html', admin = current_admin)
+                    time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                    return render_template('admin_balance.html', admin = current_admin, the_time = time)
                 else:
-                    pin_mismatch = "You have entered wrong PIN. Try again"
+                    pin_mismatch = "Sorry! You have entered wrong PIN. Try again."
                     return render_template('admin_balance.html', errored_pin_msg = pin_mismatch)
             else:
-                try_check = "Confirm if the ID you entered is yours"
+                try_check = "The ID does not match the registered ID! Please confirm your ID number and try again."
                 return render_template('admin_balance.html', check_msg = try_check)
         else:
-             not_found_msg = "invalid ID number. Try again"
+             not_found_msg = "Invalid ID! Please confirm your ID number and try again."
              return render_template('admin_balance.html', not_found = not_found_msg)
     return render_template("admin.html")
 
@@ -271,24 +278,26 @@ def Deposit():
                             
                             one_user = UserAccount.query.get(user_id)
                             # one_agent = UserAccount.query.get(agent_id)
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
                             new_balance = one_user.account_balance
-                            deposited_amount = "You have succefully deposited {}. Your new balance is {}.".format(amount,new_balance)
-                            return render_template('user_balance.html', updated_amount = deposited_amount)
+                            theID = user.id
+                            theAgent = agent.id
+                            return render_template('user_balance.html', the_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
                         else:
-                            no_user = "invalid user ID, confirm the user ID"
+                            no_user = "Invalid user ID! Please confirm the user ID number and try again."
                             return render_template('user_balance.html', no_user_found = no_user)
                     else:
                         # the agent account has no enough money to deposit
-                        no_float_msg= 'no enough funds to deposit {}'.format(amount)
+                        no_float_msg= 'Sorry! You have no enough funds to deposit Ksh {}.'.format(amount)
                         return render_template("user_balance.html", no_float = no_float_msg)
                 else:
-                    agent_pin_error = "you have entered wrong PIN. Try again."
+                    agent_pin_error = "Sorry! You have entered wrong PIN. Try again."
                     return render_template('user_balance.html', agent_pinerror = agent_pin_error)
             else:
-                no_agent = "agent not found, confirm your id"
+                no_agent = "Agent not found! Confirm your ID number and try again."
                 return render_template('user_balance.html', no_agent_found = no_agent)
         else:
-            no_agent = "agent not found, confirm your id"
+            no_agent = "Agent not found! Confirm your ID number and try again."
             return render_template('user_balance.html', no_agent_found = no_agent)
     return render_template('account.html')
     
@@ -325,64 +334,123 @@ def DepositAdmin():
                             
                             one_user = UserAccount.query.get(user_id)
                             new_balance = one_user.account_balance
-                            deposited_amount = "You have succefully deposited {}. Your new balance is {}.".format(amount,new_balance)
-                            return render_template('admin_balance.html', updated_amount = deposited_amount)
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            theID = user.id
+                            theAdmin = admin.id
+                            return render_template('admin_balance.html', the_user=one_user, time=time, new_balance=new_balance, theID=theID, theAdmin=theAdmin)
                         else:
-                            no_user = "invalid user ID, confirm the user ID"
+                            no_user = "Invalid user ID! Please confirm the user ID number and try again."
                             return render_template('admin_balance.html', no_user_found = no_user)
                     else:
-                        no_float_msg= 'no enough funds to deposit {}'.format(amount)
+                        no_float_msg= 'Sorry! You have no enough funds to deposit Ksh {}.'.format(amount)
                         return render_template("admin_balance.html", no_float = no_float_msg)
                 else:
-                    admin_pin_error = "you have entered wrong PIN. Try again."
+                    admin_pin_error = "Sorry! You have entered wrong PIN. Try again."
                     return render_template('admin_balance.html', admin_pinerror = admin_pin_error)
             else:
-                no_admin = "admin not found, confirm your id"
+                no_admin = "Admin not found! Confirm your ID number and try again."
                 return render_template('admin_balance.html', no_admin_found = no_admin)
         else:
-            no_admin = "admin not found, confirm your id"
+            no_admin = "Admin not found! Confirm your ID number and try again."
             return render_template('admin_balance.html', no_admin_found = no_admin)
     return render_template('admin.html')
 
 
 @app.route('/account/withdraw', methods= ['GET','POST'])
 def Withdraw():
-
-    agent_id = request.form.get('agent_id')
-    user_id = request.form.get('user_id')
-    pin = request.form.get('pin_no')
-    amount = int(request.form.get('amount'))
-    agent = UserAccount.query.get(agent_id)
-    user = UserAccount.query.get(user_id)
-
     if request.method == 'POST':
+        agent_id = request.form.get('agent_id')
+        user_id = request.form.get('user_id')
+        pin = request.form.get('pin_no')
+        amount = int(request.form.get('amount'))
+        agent = UserAccount.query.get(agent_id)
+        user = UserAccount.query.get(user_id)
+
         if agent is not None:
             if agent.role_id == 2:
                 if user is not None:
                     result = bcrypt.checkpw(pin.encode(), user.pin.encode()) 
                     if result:
                         if user.account_balance >= amount:
-                            user.account_balance -= amount
+                            user.account_balance = user.account_balance - (amount + (0.03*amount))
                             db.session.add(user)
                             db.session.commit()
-                            withdrawn_amount = 'Your have successfully withdrawn {0}.Your new balance is {1}'.format(amount,user.account_balance)
-                            return render_template('user_balance.html', the_updated_amount = withdrawn_amount)
+
+                            agent.float_balance += amount
+                            db.session.add(agent)
+                            db.session.commit()
+
+                            one_user = UserAccount.query.get(user_id)
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            new_balance = one_user.account_balance
+                            theID = user.id
+                            theAgent = agent.id
+                            return render_template('user_balance.html', that_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
                         else:
-                            withdraw_error_message = 'You have insufficient balance to withdraw such amount'
+                            withdraw_error_message = 'Sorry! You have insufficient balance to withdraw such amount.'
                             return render_template('user_balance.html', withdraw_error_msg = withdraw_error_message)  
                     else:
-                        pin_occured_err = "You have entered wrong PIN. Try again"
+                        pin_occured_err = "Sorry! You have entered wrong PIN. Try again"
                         return render_template('user_balance.html', pin_err = pin_occured_err) 
                 else:
-                    userID_error = "invalid ID. try again"
+                    userID_error = "Invalid ID! Please confirm your ID number and try again."
                     return render_template('user_balance.html', user_id_error = userID_error)
             else:
-                agentID_error = "agent not found. Confirm the Agent ID"
+                agentID_error = "Agent not found! Confirm the Agent ID and try again."
                 return render_template('user_balance.html', agentID_err = agentID_error)
         else:
-            agentID_error = "agent not found. Confirm the Agent ID"
+            agentID_error = "Agent not found! Confirm the Agent ID and try again."
             return render_template('user_balance.html', agentID_err = agentID_error)
     return render_template('account.html')
+
+
+@app.route('/admin/withdraw', methods= ['GET','POST'])
+def WithdrawAdmin():
+
+    agent_id = request.form.get('agent_id')
+    user_id = request.form.get('user_id')
+    pin = request.form.get('pin_no')
+    amount = int(request.form.get('amount'))
+    admin = UserAccount.query.get(agent_id)
+    user = UserAccount.query.get(user_id)
+
+    if request.method == 'POST':
+        if admin is not None:
+            if admin.role_id == 1:
+                if user is not None:
+                    result = bcrypt.checkpw(pin.encode(), user.pin.encode()) 
+                    if result:
+                        if user.account_balance >= amount:
+                            user.account_balance = user.account_balance - (amount + (0.03*amount))
+                            db.session.add(user)
+                            db.session.commit()
+
+                            admin.float_balance += amount
+                            db.session.add(admin)
+                            db.session.commit()
+
+                            one_user = UserAccount.query.get(user_id)
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            new_balance = one_user.account_balance
+                            theID = user.id
+                            theAdmin = admin.id
+                            return render_template('admin_balance.html', that_user=one_user, time=time, new_balance=new_balance, theID=theID, theAdmin=theAdmin)
+                        else:
+                            withdraw_error_message = 'Sorry! You have insufficient balance to withdraw such amount'
+                            return render_template('admin_balance.html', withdraw_error_msg = withdraw_error_message)  
+                    else:
+                        pin_occured_err = "Sorry! You have entered wrong PIN. Try again"
+                        return render_template('admin_balance.html', pin_err = pin_occured_err) 
+                else:
+                    userID_error = "Invalid ID! Please confirm your ID number and try again."
+                    return render_template('admin_balance.html', user_id_error = userID_error)
+            else:
+                adminID_error = "Admin not found! Confirm the Admin ID and try again."
+                return render_template('admin_balance.html', adminID_err = adminID_error)
+        else:
+            adminID_error = "Admin not found! Confirm the Admin ID and try again."
+            return render_template('admin_balance.html', adminID_err = adminID_error)
+    return render_template('admin.html')
 
 if __name__ == "__main__":
     app.run()
