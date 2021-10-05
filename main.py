@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, current
 from flask.templating import render_template
 import bcrypt
+import os
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -11,9 +12,13 @@ from flask_jwt_extended import JWTManager
 from sqlalchemy.orm import backref
 import datetime
 
+from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'static/uploads/'
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["JWT_SECRET_KEY"] = "super-secret" 
 jwt = JWTManager(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -38,8 +43,9 @@ class UserAccount(db.Model):
     account_balance = db.Column(db.Float, default=0.0)
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
+    profile_pic = db.Column(db.String(100))
 
-    def __init__(self, id, firstname, lastname, username, password, phone, pin):
+    def __init__(self, id, firstname, lastname, username, password, phone, pin, profile_pic):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
@@ -47,9 +53,8 @@ class UserAccount(db.Model):
         self.password = password
         self.phone = phone
         self.pin = pin
-        # self.account_balance = account_balance
-        # self.float_balance = float_balance
-        #self.role_id = role_id
+        self.profile_pic = profile_pic
+
 
 class RoleAccount(db.Model):  
     
@@ -183,11 +188,50 @@ def Account():
 def Logout():
     return render_template("logout.html")
 
-@app.route('/users')
+@app.route('/userDetails')
 def UserEditing():
-    user_id = 33771490
+    user_id = 33771492
     current_user = UserAccount.query.get(user_id)
     return render_template("user_details.html", user = current_user)
+
+@app.route('/usersaving', methods = ['POST','GET'])
+# def UserSaving():
+#     if request.method == "POST":
+#         # user_id = 33771490
+#         user_id = request.form.get('id_no')
+#         name = request.form.get('name2')
+#         current_user = UserAccount.query.get(user_id)
+
+#         current_user.firstname = name
+#         db.session.add(current_user)
+#         db.session.commit()
+                            
+#         one_user = UserAccount.query.get(user_id)
+#     return render_template("user_details.html", user = one_user)
+
+def PhotoUpload():
+    if request.method == "POST":
+        user_id = 33771492
+        pic = request.files['pic']
+        if not pic:
+            return "no pic uploaded",400
+
+        # pic.save(secure_filename(pic.filename))
+        # filename1 = pic.read()
+        # nimetype = pic.mimetype
+        # filename1 = secure_filename(pic.filename)
+        user = UserAccount.query.get(user_id)
+        # img = UserAccount(profile_pic = filename)
+        filename = secure_filename(pic.filename)
+        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+        user.profile_pic = filename
+        db.session.add(user)
+        db.session.commit()
+
+        one_user = UserAccount.query.get(user_id)
+        # user.profile_pic = filename
+    return render_template("user_details.html", user= one_user)
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])

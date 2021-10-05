@@ -43,12 +43,11 @@ p#subtitle{
     position: absolute;
     margin-top: 75px;
     left: 40px;
-    font-family: Roboto;
+    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 15px;
-    line-height: 16px;
-    color: #24521b;
+    font-size: 12px;
+    color: #A4A716;
 }
 .input-div{
     position: absolute;
@@ -143,6 +142,9 @@ input:focus{
 }
 #forgot a:visited, #signup a:visited{
     color: #0909FC;
+}
+#signup a:hover{
+    color: rgb(255, 115, 0);
 }
 .login-errbox{
     position: absolute;
@@ -350,42 +352,58 @@ p#org-name{
     color: #0000FF;
 }
 
+
 /* ----------Register page----------- */
+.registerpage{
+    max-width: 1200px;
+    position: relative;
+    top: -9px;
+    height: 820px;
+    margin: auto;
+    border: 1px solid #C4C4C4;
+    background: #f0f2fc;
+}
 .createAcc{
     position: absolute;
     width: 884px;
     height: 53px;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 88px;
-    background: rgba(196, 196, 196, 0.4);
+    top: 68px;
+    background: rgba(168, 167, 167, 0.4);
 }
 .fill-detDiv{
     position: absolute;
     width: 884px;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 142px;
+    top: 122px;
 }
 #fill-det{
     position: absolute;
     left: -0px;
     top: -10px;
-    font-family: Roboto;
+    font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    color: #24521b;
+    font-size: 15px;
+    color: #A4A716;
 }
 .createAcc p{
     margin-left: 18px;
-    margin-top: 12px;
+    margin-top: 5px;
+    padding-top: 7px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
     font-size: 26px;
     line-height: 30px;
     color: #000000;
+    background: rgb(255, 186, 218);
+    width: 285px;
+    height: 36px;
+    border-radius: 10px;
+    text-align: center;
 }
 #acc-sign{
     position: absolute;
@@ -393,7 +411,7 @@ p#org-name{
     height: 22px;
     right: 18px;
     bottom: 12px;
-    background: rgba(81, 205, 108, 0.5);
+    background: #FFFFFF;
     text-align: center;
     padding-top: 4px;
 }
@@ -401,13 +419,16 @@ p#org-name{
     text-decoration: none;
     font-family: Montserrat;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 500;
     font-size: 15px;
     line-height: 17px;
-    color: #040497;
+    color: #0202fd;
 }
 #acc-sign a:visited{
-    color: #040497; 
+    color: #0202fd; 
+}
+#acc-sign a:hover{
+    color: rgb(255, 115, 0);
 }
 .regform{
     position: absolute;
@@ -415,11 +436,11 @@ p#org-name{
     height: 314px;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 246px;
+    top: 226px;
     background: rgba(81, 205, 108, 0.5);
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
-    border-radius: 2px;
+    border-radius: 10px;
     text-align: center;
 }
 .log-det{
@@ -501,7 +522,7 @@ p#org-name{
     height: 50px;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 570px;
+    top: 550px;
 }
 #acc-ready{
     position: absolute;
@@ -523,6 +544,19 @@ p#org-name{
     font-size: 13px;
     text-decoration-line: underline;
     color: #0000FF;
+}
+#follow-us{
+    position: absolute;
+    right: 55px;
+    top: 140px;
+    font-size: 11px;
+    font-family: Montserrat;
+    background-color: white;
+    width: 150px;
+    padding-left: 12px;
+}
+#follow-us a:hover{
+    color: rgb(255, 115, 0);
 }
 #account-det{
     position: absolute;
@@ -620,13 +654,14 @@ p#org-name{
     padding-right: 10px;
 }
 .next{
-    float: right;
-    top: 525px;
+    position: absolute;
+    right: 10px;
+    top: -20px;
 }
 .back{
     position: absolute;
     left: 10px;
-    top: 0px;
+    top: -20px;
     visibility: hidden;
 }
 #btn-create{
@@ -695,7 +730,7 @@ ul{
 
 .success-div{
     position: relative;
-    width: 1019px;
+    width: 1063px;
     height: 53px;
     transform: translate(-50%, 0);
     left: 50%;
@@ -704,12 +739,12 @@ ul{
 }
 .success-div p{
     position: absolute;
-    bottom: -23px;
+    bottom: -16px;
     left: 18px;
     font-family: Rosario;
     font-style: normal;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 25px;
     display: flex;
     align-items: flex-end;
     color: #C0C421;
@@ -721,11 +756,11 @@ ul{
     position: absolute;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 280px;
+    top: 275px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: 600;
-    font-size: 23px;
+    font-size: 20px;
     text-align: center;
     color: #000000;
 }
@@ -733,11 +768,11 @@ ul{
     position: absolute;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 344px;
+    top: 340px;
     font-family: Montserrat;
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
     color: #000000;
 }
@@ -745,18 +780,21 @@ ul{
     position: absolute;
     transform: translate(-50%, 0);
     left: 50%;
-    top: 390px;
+    top: 380px;
     font-family: Montserrat;
     font-style: normal;
-    font-size: 18px;
+    font-size: 15px;
     color: blue;
 }
 .success-div3 a:visited{
     color: blue;
 }
+.success-div3 a:hover{
+    color: rgb(255, 115, 0)
+}
 .success-div4{
     position: absolute;
-    width: 1068px;
+    width: 1063px;
     height: 34px;
     transform: translate(-50%, 0);
     left: 50%;
@@ -765,25 +803,26 @@ ul{
     text-align: center;
 }
 .success-div4 p{
-    font-family: Roboto;
+    font-family: montserrat;
     font-style: normal;
-    font-size: 15px;
+    font-size: 12px;
     margin-top: 10px;
 }
 .homeDiv{
     position: absolute;
-    max-width: 1095px;
-    width: 1095px;
-    height: 680px;
+    max-width: 1200px;
+    width: 1200px;
+    height: 623px;
     left: 0px;
     right: 0px;
     top: 0px;
     bottom: 0px;
     margin: auto;
+    background: #f0f2fc;
 }
 .home-img{
     position: absolute;
-    width: 1095px;
+    width: 1200px;
     height: 108px;
     left: 0px;
     top: 0px;
@@ -801,7 +840,7 @@ ul{
     width: 1090px;
     left: 0px;
     right: 0px;
-    top: 180px;
+    top: 160px;
     margin: auto;
     padding-top: 100px;
     list-style-type: none;
@@ -831,12 +870,14 @@ ul{
     height: 300px;
     float: right;
     margin-right: 3px;
-    margin-top: 8px;
+    margin-top: -5px;
     border: 1px solid #C4C4C4;
+    border-radius: 10px;
+    background: #FFFFFF;
 }
 .p1{
     margin-left: 330px;
-    margin-top: -100px;
+    margin-top: -82px;
     font-family: Roboto;
     font-weight: bold;
     font-size: 26px;
@@ -940,14 +981,16 @@ ul{
 }
 .footer{
     position: absolute;
-    width: 1095px;
+    width: 1200px;
     height: 2px;
-    top: 750px;
+    top: 650px;
     border-bottom: 5px;
 }
 .footer p{
     position: absolute;
-    left: 350px;
+    font-family: Montserrat;
+    font-size: small;
+    left: 300px;
     bottom: -15px;
 }
 .footer hr{
@@ -972,6 +1015,7 @@ ul{
 .checkbal button:hover{
     background-color: #51CD6C;
     color: #F61212;
+    cursor: pointer;
 }
 .checkbal p{
     font-family: Roboto;
@@ -991,6 +1035,7 @@ ul{
 .deposit button:hover{
     background-color: #5192CD;
     color: #FFFFFF;
+    cursor: pointer;
 }
 .deposit p{
     font-family: Roboto;
@@ -1010,6 +1055,7 @@ ul{
 .withdraw button:hover{
     background-color: #E9ED1C;
     color: #0000FF;
+    cursor: pointer;
 }
 .withdraw p{
     font-family: Roboto;
@@ -1065,7 +1111,7 @@ ul{
 }
 .accSave{
     position: absolute;
-    top: 105px;
+    top: 90px;
     left: 170px;
 }
 #theBtns{
@@ -1073,10 +1119,11 @@ ul{
 }
 .formpage{
     width: 900px;
-    height: 300px;
+    height: 325px;
     float: right;
     margin-right: 3px;
-    margin-top: 8px;
+    margin-top: -15px;
+    background: #FFFFFF;
     border: 1px solid #C4C4C4;
 }
 .checkbal-form{
@@ -1086,7 +1133,7 @@ ul{
     left: 0px;
     right: 0px;
     margin: auto;
-    top: 20px;
+    top: 30px;
     background: rgba(224, 221, 221, 0.5);
     border: 1px solid #CBC8C8;
 }
@@ -1145,7 +1192,7 @@ ul{
     color: #45789D; 
 }
 .the-form{
-    top: 0px;
+    top: 10px;
     height: 298px;
 }
 .the-ok{
@@ -1200,20 +1247,41 @@ ul{
     height: 26px;
     right: 5px;
     top: 110px;
-    background: #d13c3c;
     text-align: center;
-}
-.closediv span{
     font-family: Roboto;
     font-weight: bold;
     font-size: 20px;
-    color: #FFFFFF;
+    color: #000000;
 }
 .closediv:hover{
     background: #CB2B2B;
+    color: #FFFFFF;
 }
-
-
+.usertable{
+    position: absolute;
+    left: 400px;
+    top: 140px;
+    border-spacing: 0px 11px;
+}
+.usertable td{
+    width: 354px;
+    height: 21px;
+    background: #FFFBFB;
+    border: 1px solid #B19898;
+    font-family: Montserrat;
+    font-size: 13px;
+    color: black;
+}
+#userdata label{
+    position: relative;
+    top: 55px;
+    left: 140px;
+    display: block;
+    font-size: 13px;
+    font-family: Montserrat;
+    font-weight: bold;
+    margin-bottom: 19px;
+}
 /* ---------media query---------- */
 
 @media only screen and (max-width: 600px) {

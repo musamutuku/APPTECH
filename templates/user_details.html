@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving App-User Details</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+</head>
+<body>
+    <div class="homeDiv">
+        <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+    <div class="home-links">
+        <u id="pagelink">
+            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="#" id="firstlink" style="color: #FF12AE;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="/home/account">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#">Logout</a></li>
+        </u>
+        <div class="homepage">
+            <p class="p1">User Details</p>
+            {%if user %}
+            <p>Personal details</p>
+            <div id="userdata">
+                <label>ID number</label>
+                <label>Username</label>
+                <label>Firstname</label>
+                <label>Lastname</label>
+                <label>Phone No</label>
+                <table class="usertable">
+                    <tr>
+                        <td id="edit-id">{{user.id}}</td>
+                    </tr>
+                    <tr>
+                        <td id="edit-uname">{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td id="edit-fname">{{user.firstname}}</td>
+                    </tr>
+                    <tr>
+                        <td id="edit-lname">{{user.lastname}}</td>
+                    </tr>
+                    <tr>
+                        <td id="edit-phone">{{user.phone}}</td>
+                    </tr>
+                </table><br><br>
+                <button onclick="editName()">EDIT</button>
+            </div>
+            {%endif%}  
+            <br><br> 
+            <div id="userdata-edit">
+                <form action="/usersaving" method="POST">
+                    <input type="number" id="change-id" name="id_no" required>
+                    <!-- <input type="text" id="change-uname" name="name1" required> -->
+                    <input type="text" id="change-fname" name="name2" value="{{user.firstname}}" required>
+                    <!-- <input type="text" id="change-lname" name="name3" required> -->
+                    <!-- <input type="text" id="change-phone" name="name4" required> -->
+                    <button type="submit">SAVE</button>
+                </form>
+            </div>
+            <div>
+                <div style="width: 100px;height: 100px;border: 1px solid black;float: right;">
+                    {%if user %}
+                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" alt="imgkk" width="50px" height="50px">
+                    {%endif%}
+                </div>
+                <form action="/usersaving" method="POST" enctype="multipart/form-data">
+                    <label for="profilepic">Edit Photo</label>
+                    <input type="file" name="pic" accept="image/*" id="profilepic" style="display: none;" onchange="form.submit()" required>
+                    <!-- <input type="submit" value="save pic" style="visibility: hidden;" id="savepic"> -->
+                </form>
+                <!-- <script>
+                    var inpu = document.getElementById('savepic');
+                    function saveNow(){
+                        inpu.style.visibility = "visible";
+                    } -->
+                </script>
+            </div>
+            <br><br>
+            <div>
+                <p>Security settings</p>
+                <table>
+                    <label>Password</label>
+                    <tr>
+                        <td>*******************</td>
+                    </tr>
+                    <label>PIN</label>
+                    <tr>
+                        <td>*******************</td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <!-- <div id="imgbox"></div>
+                <label for="photo-input" class="btn">Edit Photo</label>
+                <input id="photo-input" style="display:none;" type="file">
+            </div>  -->
+        </div>
+    </div>
+        <div class="footer">
+            <hr>
+            <p>Copyright © 2021. <span>Beannsofts Limited. All rights reserved.</span><span> <a href="#">Follow this link to know about us</a></span></p>
+        </div>
+    </div>
+    <script>
+        var editid = document.getElementById("edit-id").innerHTML;
+        var editnm = document.getElementById("edit-fname").innerHTML;
+        function editName(){
+            document.getElementById("change-id").value = editid;
+            document.getElementById("change-fname").value = editnm;
+        }
+    </script>
+</body>
+</html>
