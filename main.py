@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, url_for, redirect
+from flask.globals import session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, current
 from flask.templating import render_template
@@ -18,6 +19,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads/'
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["JWT_SECRET_KEY"] = "super-secret" 
 jwt = JWTManager(app)
@@ -155,6 +157,7 @@ def Login():
             # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
              result = bcrypt.checkpw(password.encode(), current_user.password.encode())
              if result:
+                 session['id'] = current_user.id
                  # check if he/she is the admin 
                  if current_user.role_id == 1:
                     return render_template('admin_home.html')
@@ -168,8 +171,11 @@ def Login():
 @app.route('/home')
 # @Login_required
 def Home():
-    # current_user = UserAccount.query.filter_by(username=username).first()
-    return render_template("user_home.html")
+    if 'id' in session:
+        user_id = session.get('id')
+        current_user = UserAccount.query.get(user_id)
+        return render_template("user_home.html",user = current_user)
+    return "You are not logged in"
 
 @app.route('/admin')
 def Admin():
@@ -186,52 +192,59 @@ def Account():
 
 @app.route('/logout')
 def Logout():
-    return render_template("logout.html")
+    if 'id' in session:
+        session.pop('id', None)
+        return redirect (url_for('index'))
+    return "You are already out"
 
 @app.route('/userDetails')
 def UserEditing():
-    user_id = 33771492
-    current_user = UserAccount.query.get(user_id)
-    return render_template("user_details.html", user = current_user)
+    if 'id' in session:
+        user_id = session.get('id')
+        current_user = UserAccount.query.get(user_id)
+        return render_template("user_details.html", user = current_user)
+    return "You are not logged in"
 
-@app.route('/usersaving', methods = ['POST','GET'])
-# def UserSaving():
-#     if request.method == "POST":
-#         # user_id = 33771490
-#         user_id = request.form.get('id_no')
-#         name = request.form.get('name2')
-#         current_user = UserAccount.query.get(user_id)
+@app.route('/userDetails/editData', methods = ['POST','GET'])
+def UserSaving():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            name1 = request.form.get('name1')
+            name2 = request.form.get('name2')
+            name3 = request.form.get('name3')
+            name4 = request.form.get('name4')
+            current_user = UserAccount.query.get(user_id)
 
-#         current_user.firstname = name
-#         db.session.add(current_user)
-#         db.session.commit()
-                            
-#         one_user = UserAccount.query.get(user_id)
-#     return render_template("user_details.html", user = one_user)
+            current_user.username = name1
+            current_user.firstname = name2
+            current_user.lastname = name3
+            current_user.phone = name4
+            db.session.add(current_user)
+            db.session.commit()
+                                
+            one_user = UserAccount.query.get(user_id)
+            return render_template("user_details.html", user = one_user)
+    return "You are not logged in"
 
+@app.route('/userDetails/editPhoto', methods = ['POST','GET'])
 def PhotoUpload():
     if request.method == "POST":
-        user_id = 33771492
-        pic = request.files['pic']
-        if not pic:
-            return "no pic uploaded",400
+        if 'id' in session:
+            user_id = session.get('id')
+            pic = request.files['pic']
 
-        # pic.save(secure_filename(pic.filename))
-        # filename1 = pic.read()
-        # nimetype = pic.mimetype
-        # filename1 = secure_filename(pic.filename)
-        user = UserAccount.query.get(user_id)
-        # img = UserAccount(profile_pic = filename)
-        filename = secure_filename(pic.filename)
-        pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            user = UserAccount.query.get(user_id)
+            filename = secure_filename(pic.filename)
+            pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-        user.profile_pic = filename
-        db.session.add(user)
-        db.session.commit()
+            user.profile_pic = filename
+            db.session.add(user)
+            db.session.commit()
 
-        one_user = UserAccount.query.get(user_id)
-        # user.profile_pic = filename
-    return render_template("user_details.html", user= one_user)
+            one_user = UserAccount.query.get(user_id)
+            return render_template("user_details.html", user= one_user)
+    return "You are not logged in"
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])

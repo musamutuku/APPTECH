@@ -812,7 +812,7 @@ ul{
     position: absolute;
     max-width: 1200px;
     width: 1200px;
-    height: 623px;
+    height: 663px;
     left: 0px;
     right: 0px;
     top: 0px;
@@ -983,7 +983,7 @@ ul{
     position: absolute;
     width: 1200px;
     height: 2px;
-    top: 650px;
+    top: 690px;
     border-bottom: 5px;
 }
 .footer p{
@@ -995,6 +995,9 @@ ul{
 }
 .footer hr{
     margin-top: -20px;
+}
+.footer a:hover{
+    color: rgb(255, 115, 0);
 }
 
 /* ---------account page----------- */
@@ -1093,7 +1096,7 @@ ul{
     width: 450px;
     height: 28px;
     left: 0px;
-    top: -28px;
+    top: -18px;
     border: 1px solid #000000;
     box-sizing: border-box;
     border-radius: 3px;
@@ -1257,13 +1260,8 @@ ul{
     background: #CB2B2B;
     color: #FFFFFF;
 }
-.usertable{
-    position: absolute;
-    left: 400px;
-    top: 140px;
-    border-spacing: 0px 11px;
-}
-.usertable td{
+.editname-field input{
+    position: relative;
     width: 354px;
     height: 21px;
     background: #FFFBFB;
@@ -1271,17 +1269,134 @@ ul{
     font-family: Montserrat;
     font-size: 13px;
     color: black;
+    display: block;
+    margin-bottom: 11px;
+    left: 200px;
+    top: -155px;
 }
-#userdata label{
+.userpage{
+    height: 350px;
+    border-radius: 0px 0px 5px 5px;
+}
+.userdata label{
     position: relative;
-    top: 55px;
-    left: 140px;
+    top: 30px;
+    left: 94px;
     display: block;
     font-size: 13px;
     font-family: Montserrat;
     font-weight: bold;
-    margin-bottom: 19px;
+    margin-bottom: 20px;
 }
+.topuser-div{
+    position: relative;
+    width: 900px;
+    height: 22px;
+    left: -1px;
+    top: 0px;
+    background: #E8E5E5;
+    border: 1px solid #BDB8B8;
+    border-radius: 5px 5px 0px 0px;
+}
+.topuser-div p{
+    position: absolute;
+    top: -10px;
+    left: 2px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 13px;
+    color: #46B151;
+}
+.photodiv{
+    position: absolute;
+    width: 118px;
+    height: 105px;
+    right: 30px;
+    top: 115px;
+    border: 1px solid #C4C4C4;
+    border-radius: 2px;
+}
+.photodiv img{
+    border-radius: 2px;
+}
+.buttn{
+    position: absolute;
+    top: 300px;
+    left: 672px;
+    width: 72px;
+    height: 23px;
+    background: #426130;
+    border: 1px solid #426130;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 13px;
+    color: #FFFFFF;
+    text-align: center;
+}
+.editpic-label{
+    position: absolute;
+    width: 117px;
+    height: 17px;
+    right: 30px;
+    top: 230px;
+    background: #426130;
+    border: 1px solid #426130;
+    color: #FFFFFF;
+    font-family: Montserrat;
+    font-weight: 500;
+    text-align: center;
+    font-size: 13px;
+}
+.downuser-div{
+    position: absolute;
+    width: 900px;
+    height: 22px;
+    left: 185px;
+    top: 330px;
+    background: #E8E5E5;
+    border: 1px solid #BDB8B8;
+}
+.downuser-div p{
+    position: absolute;
+    top: -10px;
+    left: 2px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 13px;
+    color: #A73232;
+}
+.thelabel label{
+    position: absolute;
+    top: 375px;
+    left: 279px;
+    display: block;
+    font-size: 13px;
+    font-family: Montserrat;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.thepaswd input{
+    position: absolute;
+    top: 370px;
+    left: 385px;
+    width: 226px;
+    font-size: 16px;
+    height: 21px;
+    background: #FFFBFB;
+    border: 1px solid #B19898;
+    font-family: Montserrat;
+    color: black;
+    display: block;
+    margin-bottom: 11px;
+}
+#pin-label{
+    top: 408px;
+}
+#pin-theInput{
+    top: 403px;
+}
+
+
 /* ---------media query---------- */
 
 @media only screen and (max-width: 600px) {
