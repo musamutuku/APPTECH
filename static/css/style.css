@@ -1333,6 +1333,10 @@ ul{
     color: #FFFFFF;
     text-align: center;
 }
+#savebtn{
+    background: #301179;
+    border: 1px solid #301179;
+}
 .editpic-label{
     position: absolute;
     width: 117px;
