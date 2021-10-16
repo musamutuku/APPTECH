@@ -7,17 +7,18 @@
     <title>Saving App-Account</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
 </head>
 <body>
-    <div class="homeDiv">
+    <div class="homeDiv" id="homeDiv">
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 35px;height: 30px;">&nbsp;<a href="/admin" id="firstlink">Home</a></li>
+            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 37px;height: 30px;">&nbsp;<a href="/admin" id="firstlink" style="margin-left: -1px;">Home</a></li>
             <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
-            <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" alt="system_info" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="#" id="swap-link">System info</a></li>
+            <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" alt="system_info" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="/admin/system_info" id="swap-link">System info</a></li>
             <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
-            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="/logout">Logout</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <p class="p1 accSave">Savings account</p>
         <div class="homepage" id="homepage">
@@ -26,9 +27,6 @@
                 <button id="statebtn" onclick="showStatediv()">Account Statement</button>
             </div>
             <div id="theBtns">
-                <div class="icon-select">
-                    <p>Select an icon below to start</p>
-                </div>
                 <div class="btns checkbal">
                     <button onclick="hideShow1()">B</button>
                     <p>CHECK BALANCE</p>
@@ -93,66 +91,10 @@
             <p>Copyright © 2021. <span>Beannsofts Limited. All rights reserved.</span><span> <a href="#">Follow this link to know about us</a></span></p>
         </div>
     </div>
-    <script>
-        var thebtns = document.getElementById('theBtns');
-        var statediv = document.getElementById('stateDiv');
-        var transbtn = document.getElementById('transactionbtn');
-        var statebtn = document.getElementById('statebtn');
-        function showBtns(){
-            thebtns.style.visibility = "visible";
-            statediv.style.visibility = "hidden";
-            transbtn.style.background = "#FFFFFF";
-            statebtn.style.background = "#C4C4C4";
-        }
-        function showStatediv(){
-            statediv.style.visibility = "visible";
-            thebtns.style.visibility = "hidden";
-            statebtn.style.background = "#FFFFFF";
-            transbtn.style.background = "#C4C4C4";
-        }
-    </script>
-    <script>
-        var form1 = document.getElementById("checkbal-form");
-        var form2 = document.getElementById("depositcash-form");
-        var form3 = document.getElementById("withdrawcash-form");
-        var forms = document.getElementById("formpage");
-        var homepg = document.getElementById("homepage");
-        function hideShow1(){
-            form1.style.display = "block";
-            form2.style.display = "none";
-            form3.style.display = "none";
-            forms.style.display = "block";
-            homepg.style.display = "none";
-        }
-        function hideShow2(){
-            form1.style.display = "none";
-            form2.style.display = "block";
-            form3.style.display = "none";
-            forms.style.display = "block";
-            homepg.style.display = "none";
-        }
-        function hideShow3(){
-            form1.style.display = "none";
-            form2.style.display = "none";
-            form3.style.display = "block";
-            forms.style.display = "block";
-            homepg.style.display = "none";
-        }
-        function showHome1(){
-            document.getElementById("form1").reset();
-            forms.style.display = "none";
-            homepg.style.display = "block";
-        }
-        function showHome2(){
-            document.getElementById("form2").reset();
-            forms.style.display = "none";
-            homepg.style.display = "block";
-        }
-        function showHome3(){
-            document.getElementById("form3").reset();
-            forms.style.display = "none";
-            homepg.style.display = "block";
-        }
-    </script>
+    <div id="logout-box" style="display: none;">
+        <span onclick="closeLog()">X</span>
+        <p>Do you want to log out of the System?</p>
+        <button><a href="/logout">OK</a></button>
+    </div>
 </body>
 </html>

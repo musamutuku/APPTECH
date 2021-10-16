@@ -14,10 +14,10 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="/home/account">Account info</a></li>
-            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#" style="color: #FF12AE;">User details</a></li>
-            <li><img src="{{ url_for('static', filename='images/advert.png') }}" alt="advert" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
+            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 37px;height: 30px;">&nbsp;<a href="/admin" id="firstlink" style="margin-left: -1px;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="/admin/account">Account info</a></li>
+            <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" alt="system_info" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="#" id="swap-link"  style="color: #FF12AE;">System info</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}" alt="reports">&nbsp;<a href="#">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <div class="homepage userpage">
@@ -31,7 +31,7 @@
                 <label>Lastname</label>
                 <label>Phone No</label>
                 
-                <form action="/userDetails/editData" method="POST" class="editname-field">
+                <form action="/adminDetails/editData" method="POST" class="editname-field">
                     <input type="number" id="edit-id" name="id_no" value="{{user.id}}" required disabled>
                     <input type="text" id="edit-uname" name="name1" value="{{user.username}}" required disabled>
                     <input type="text" id="edit-fname" name="name2" value="{{user.firstname}}" onblur="lowCaseFn()" required disabled>
@@ -45,7 +45,7 @@
                 <div class="photodiv">
                     <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" alt="profile" width="100%" height="100%">
                 </div>
-                <form action="/userDetails/editPhoto" method="POST" enctype="multipart/form-data">
+                <form action="/adminDetails/editPhoto" method="POST" enctype="multipart/form-data">
                     <label for="profilepic" class="editpic-label">Edit Photo</label>
                     <input type="file" name="pic" accept="image/*" id="profilepic" style="display: none;" onchange="form.submit()" required>
                 </form>

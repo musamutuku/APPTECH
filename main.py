@@ -49,6 +49,25 @@ class RoleAccount(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role_name = db.Column(db.String(50))
     users = db.relationship('UserAccount', backref='role', lazy=True)
+
+
+class TransactionAccount(db.Model):
+    __tablename__ = "transactions"
+
+    ref_no = db.Column(db.String(100), primary_key=True)
+    id_no = db.Column(db.Integer)
+    date = db.Column(db.String(100))
+    deposit = db.Column(db.String(100))
+    withdrawal = db.Column(db.String(100))
+    status = db.Column(db.String(100))
+
+    def __init__(self, ref_no, id_no, date, deposit, withdrawal, status):
+        self.ref_no = ref_no
+        self.id_no = id_no
+        self.date = date
+        self.deposit = deposit
+        self.withdrawal = withdrawal
+        self.status = status
     
 
 @app.route('/')
@@ -71,7 +90,7 @@ def CheckRole():
    # myrole_id = UserAccount.query.get(user_id)
    # print(myrole_id.role_id)
     # return f"my role is {my_role}"
-    users = UserAccount.query.filter_by(role_id=role_id).first()
+    users = UserAccount.query.filter_by(role_id=role_id).all()
     # print(users.firstname)
     return render_template('users.html', userz = users)
 
@@ -158,7 +177,7 @@ def logout():
     if 'id' in session:
         session.pop('id', None)
         return redirect(url_for('index'))
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/home')
@@ -169,7 +188,7 @@ def Home():
         if role_id != 1:
             current_user = UserAccount.query.get(user_id)
             return render_template("user_home.html",user = current_user)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 @app.route('/admin')
 def Admin():
@@ -177,7 +196,7 @@ def Admin():
         role_id = session.get('role')
         if role_id == 1:
             return render_template("admin_home.html")
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/admin/account')
@@ -186,16 +205,18 @@ def AdminAccount():
         role_id = session.get('role')
         if role_id == 1:
             return render_template("admin.html")
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/home/account')
 def Account():
     if 'id' in session and 'role' in session:
         role_id = session.get('role')
-        if role_id != 1:
+        if role_id == 2:
             return render_template("account.html")
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+        elif role_id == 3:
+            return render_template('user_account.html')
+    return redirect(url_for('Login'))
 
 
 @app.route('/userDetails')
@@ -206,7 +227,7 @@ def UserEditing():
         if role_id != 1:
             current_user = UserAccount.query.get(user_id)
             return render_template("user_details.html", user = current_user)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/userDetails/editData', methods = ['POST','GET'])
@@ -229,7 +250,7 @@ def UserSaving():
                                 
             one_user = UserAccount.query.get(user_id)
             return render_template("user_details.html", user = one_user)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/userDetails/editPhoto', methods = ['POST','GET'])
@@ -249,7 +270,7 @@ def PhotoUpload():
 
             one_user = UserAccount.query.get(user_id)
             return render_template("user_details.html", user= one_user)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])
@@ -280,7 +301,7 @@ def CheckBalance():
             else:
                 not_found_msg = "Invalid ID! Please confirm your ID number and try again."
                 return render_template('user_balance.html', not_found = not_found_msg )
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/admin/check_balance', methods=['POST','GET'])
@@ -307,7 +328,7 @@ def CheckBalanceAdmin():
             else:
                 not_found_msg = "Invalid ID! Please confirm your ID number and try again."
                 return render_template('admin_balance.html', not_found = not_found_msg)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/account/deposit', methods= ['GET','POST'])
@@ -349,8 +370,14 @@ def Deposit():
                                 # one_agent = UserAccount.query.get(agent_id)
                                 time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
                                 new_balance = one_user.account_balance
+                                ref = datetime.datetime.now().strftime("%H%M%S")
+                                refNo = 'Tx {}'.format(ref)
                                 theID = user.id
                                 theAgent = agent.id
+                                transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
+
+                                db.session.add(transaction)
+                                db.session.commit()
                                 return render_template('user_balance.html', the_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
                             else:
                                 no_user = "Invalid user ID! Please confirm the user ID number and try again."
@@ -368,7 +395,7 @@ def Deposit():
             else:
                 no_agent = "Agent not found! Confirm your ID number and try again."
                 return render_template('user_balance.html', no_agent_found = no_agent)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
     
 
 @app.route('/admin/deposit', methods= ['GET','POST'])
@@ -423,7 +450,7 @@ def DepositAdmin():
             else:
                 no_admin = "Admin not found! Confirm your ID number and try again."
                 return render_template('admin_balance.html', no_admin_found = no_admin)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/account/withdraw', methods= ['GET','POST'])
@@ -458,6 +485,11 @@ def Withdraw():
                                     new_balance = one_user.account_balance
                                     theID = user.id
                                     theAgent = agent.id
+                                    ref = datetime.datetime.now().strftime("%H%M%S")
+                                    refNo = 'Tx {}'.format(ref)
+                                    transaction = TransactionAccount(refNo,theID,time,deposit='',withdrawal=amount,status='SUCCESS')
+                                    db.session.add(transaction)
+                                    db.session.commit()
                                     return render_template('user_balance.html', that_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
                                 else:
                                     withdraw_error_message = 'Sorry! You have insufficient balance to withdraw such amount.'
@@ -477,7 +509,7 @@ def Withdraw():
             else:
                 agentID_error = "Agent not found! Confirm the Agent ID and try again."
                 return render_template('user_balance.html', agentID_err = agentID_error)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
 
 
 @app.route('/admin/withdraw', methods= ['GET','POST'])
@@ -532,7 +564,71 @@ def WithdrawAdmin():
             else:
                 agentID_error = "Agent not found! Confirm the Agent ID and try again."
                 return render_template('admin_balance.html', agentID_err = agentID_error)
-    return "Unauthorized! Only authorized users are allowed to access this page.",401
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/system_info')
+def SystemInfo():
+    if 'id' in session and 'role' in session:
+        role_id = session.get('role')
+        if role_id == 1:
+            return render_template('system_info.html')
+    return redirect(url_for('Login'))
+
+
+@app.route('/adminDetails')
+def AdminEditing():
+    if 'id' in session and 'role' in session:
+        user_id = session.get('id')
+        role_id = session.get('role')
+        if role_id == 1:
+            current_user = UserAccount.query.get(user_id)
+            return render_template("admin_details.html", user = current_user)
+    return redirect(url_for('Login'))
+
+
+@app.route('/adminDetails/editData', methods = ['POST','GET'])
+def AdminSaving():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            name1 = request.form.get('name1')
+            name2 = request.form.get('name2')
+            name3 = request.form.get('name3')
+            name4 = request.form.get('name4')
+            current_user = UserAccount.query.get(user_id)
+
+            current_user.username = name1
+            current_user.firstname = name2
+            current_user.lastname = name3
+            current_user.phone = name4
+            db.session.add(current_user)
+            db.session.commit()
+                                
+            one_user = UserAccount.query.get(user_id)
+            return render_template("admin_details.html", user = one_user)
+    return redirect(url_for('Login'))
+
+
+@app.route('/adminDetails/editPhoto', methods = ['POST','GET'])
+def ProfileUpload():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            pic = request.files['pic']
+
+            user = UserAccount.query.get(user_id)
+            filename = secure_filename(pic.filename)
+            pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+            user.profile_pic = filename
+            db.session.add(user)
+            db.session.commit()
+
+            one_user = UserAccount.query.get(user_id)
+            return render_template("admin_details.html", user= one_user)
+    return redirect(url_for('Login'))
+    
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")

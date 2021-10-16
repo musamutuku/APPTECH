@@ -516,6 +516,9 @@ p#org-name{
     color: #FFFFFF;
     border: 1px solid rgba(0, 0, 255, 0.5);
 }
+.btn:hover{
+    cursor: pointer;
+}
 .acc-readyDiv{
     position: absolute;
     width: 884px;
@@ -893,7 +896,7 @@ ul{
     border: 1px solid rgba(4, 4, 151, 0.8);
     box-sizing: border-box;
     border-radius: 10px;
-}
+} 
 .user-info{
     position: absolute;
     width: 322px;
@@ -1007,13 +1010,14 @@ ul{
 }
 .checkbal{
     left: 80px;
-    top: 47px;
+    top: 62px;
 }
 .checkbal button{
     background: rgba(81, 205, 108, 0.8);
     border: 1px solid #51CD6C;
     color: rgba(246, 18, 18, 0.5);
     border-radius: 11px;
+    font-weight: bold;
 }
 .checkbal button:hover{
     background-color: #51CD6C;
@@ -1027,7 +1031,7 @@ ul{
 }
 .deposit{
     left: 390px;
-    top: -98px;
+    top: -83px;
 }
 .deposit button{
     background: rgba(81, 146, 205, 0.8);
@@ -1047,17 +1051,17 @@ ul{
 }
 .withdraw{
     left: 710px;
-    top: -243px;
+    top: -228px;
 }
 .withdraw button{
-    background: rgba(233, 237, 28, 0.7);
-    border: 1px solid #E9ED1C;
-    color: rgba(0, 0, 255, 0.5);
+    background: rgba(208, 76, 163, 0.7);
+    border: 1px solid #D04CA3;
+    color: rgba(7, 7, 124, 0.5);
     border-radius: 11px;
 }
 .withdraw button:hover{
-    background-color: #E9ED1C;
-    color: #0000FF;
+    background: #D04CA3;
+    color: #07077C;
     cursor: pointer;
 }
 .withdraw p{
@@ -1073,30 +1077,12 @@ ul{
     font-weight: bold;
     font-size: 33px;
 }
-.icon-select{
-    position: relative;
-    width: 302px;
-    height: 20px;
-    left: 294px;
-    top: -5px;
-    background: #426130;
-    border-radius: 15px;
-}
-.icon-select p{
-    position: relative;
-    top: 1px;
-    font-family: Roboto;
-    font-weight: bold;
-    font-size: 14px;
-    text-align: center;
-    color: #FFFFFF;
-}
 .accBtn button{
     position: relative;
     width: 450px;
     height: 28px;
     left: 0px;
-    top: -18px;
+    top: -13px;
     border: 1px solid #000000;
     box-sizing: border-box;
     border-radius: 3px;
@@ -1173,8 +1159,8 @@ ul{
     position: absolute;
     left: 30px;
     bottom: 20px;
-    background: #92CC7E;
-    border: #92CC7E;
+    background: rgba(69, 132, 47, 0.8);
+    border: rgba(69, 132, 47, 0.8);
 }
 .okbtn:hover{
     background: #45842F;
@@ -1183,8 +1169,8 @@ ul{
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background: #F39F9F;
-    border: #F39F9F;
+    background: rgba(187, 51, 51, 0.8);
+    border: rgba(187, 51, 51, 0.8);
 }
 .cancelbtn:hover{
     background: #BB3333;
@@ -1207,7 +1193,7 @@ ul{
 #withdraw-topic{
     margin-bottom: 2px;  
     margin-top: 0px; 
-    color: #A89806; 
+    color: #D04CA3;; 
 }
 .formpage input{
     padding-left: 10px;
@@ -1246,15 +1232,16 @@ ul{
 }
 .closediv{
     position: absolute;
-    width: 47px;
-    height: 26px;
+    width: 36px;
+    height: 24px;
     right: 5px;
-    top: 110px;
+    top: 100px;
     text-align: center;
     font-family: Roboto;
     font-weight: bold;
     font-size: 20px;
     color: #000000;
+    border-radius: 0 1px 0 0;
 }
 .closediv:hover{
     background: #CB2B2B;
@@ -1398,6 +1385,100 @@ ul{
 }
 #pin-theInput{
     top: 403px;
+}
+.changebtn{
+    position: absolute;
+    width: 135px;
+    height: 25px;
+    left: 615px;
+    background: #EFEAEA;
+    border: 1px solid #B19898;
+    font-family: Montserrat;
+    font-size: 13px;
+    color: #FF0E0E;
+    box-sizing: border-box;
+}
+.passwd{
+    top: 370px;
+}
+.pinset{
+    top: 403px;
+}
+.sys-users{
+    position: absolute;
+    width: 360px;
+    height: 107px;
+    left: 423px;
+    top: 110px;
+    background: #D0ECCB;
+}
+.sys-users ul{
+    position: absolute;
+    top: 3px;
+    left: 80px;
+}
+.sys-users ul li{
+    margin-bottom: 2px;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration-line: underline;
+    color: #30BB3D;
+}
+.sys-users ul li a{
+    color: #0000FF;
+}
+#logout-box{
+    position: absolute;
+    width: 452px;
+    height: 176px;
+    left: 574px;
+    top: 330px;
+    font-family: Roboto;
+    background: #b7cfe4;
+    border: 1px solid #2e2c2c;
+    box-sizing: border-box;
+}
+#logout-box span{
+    position: absolute;
+    width: 14px;
+    height: 17px;
+    right: 5px;
+    top: 3px;
+    font-size: 15px;
+    text-align: center;
+}
+#logout-box span:hover{
+    background: rgb(207, 22, 22);
+    color: white;
+    cursor: pointer;
+}
+#logout-box p{
+    position: absolute;
+    top: 40px;
+    left: 90px;
+    font-size: 15px;
+    color: #8B3333;
+}
+#logout-box button{
+    position: absolute;
+    width: 76px;
+    height: 29px;
+    left: 183px;
+    top: 131px;
+    background: #4A9848;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+}
+#logout-box button a{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+#logout-box button:hover{
+    cursor: pointer;
 }
 
 

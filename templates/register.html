@@ -7,6 +7,7 @@
     <title>Saving App-Register</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
 </head>
 <body>
    <div class="registerpage">
@@ -34,7 +35,7 @@
                     <label id="id-no">ID number</label><br>
                     <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" id="id-No" autocomplete="off" onblur="checkId()" oninput="waitId()" required>
                     <label id="phone-no">Phone number</label><br>
-                    <input type="number" name="phone" id="phone-No" required>
+                    <input type="number" name="phone" id="phone-No" onkeydown="if(this.value.length==12 && event.keyCode!=8) return false;" required>
                     <label id="pin-no">PIN</label><br>
                     <input type="password" name="pin" id="pin-No" oninput="waitPin()" required >
                     <label id="conf-pin">Confirm PIN</label>
@@ -55,120 +56,6 @@
         <button class="btn back" onclick="accForm()" id="back-btn">&#10094;&nbsp;Back</button>
     </div>
    </div>
-    
-
-    <!----- form-input swap and error js function ----->
-    <script>
-        var logform = document.getElementById("login-det");
-        var accform = document.getElementById("account-det");
-        var next_btn = document.getElementById("next-btn");
-        var back_btn = document.getElementById("back-btn");
-        
-        function logForm(){
-            var x = document.getElementById("usernm").value;
-            var y = document.getElementById("paswd").value;
-            var z = document.getElementById("conf-paswd").value;
-            var w = document.getElementById("input-error");
-
-            if (x != "" && y != "" && z != "") {
-                if(y == z && y.length >= 6){
-                    logform.style.visibility = "hidden";
-                    accform.style.visibility = "visible";
-                    next_btn.style.visibility = "hidden";
-                    back_btn.style.visibility = "visible";
-                    w.style.visibility = "hidden";
-                }
-                else if(y.length < 6){
-                    document.getElementById("input-error").innerHTML= "Minimum length of password required is 6 characters!";
-                     w.style.visibility = "visible";
-                     document.getElementById("input-error").style.display = "block";
-                }
-                else{
-                    document.getElementById("input-error").innerHTML= "Password does not match!";
-                     w.style.visibility = "visible";
-                     document.getElementById("input-error").style.display = "block";
-                }
-            }
-            else{
-                document.getElementById("input-error").innerHTML= "Please fill all the fields!";
-                w.style.visibility = "visible";
-                document.getElementById("input-error").style.display = "block";
-            }
-        }
-        function accForm(){
-            logform.style.visibility = "visible";
-            accform.style.visibility = "hidden";
-            next_btn.style.visibility = "visible";
-            back_btn.style.visibility = "hidden";
-        }
-    </script>
-    <script>   
-        function validateForm() {
-            var pin = document.forms["myForm"]["pin"].value;
-            var conf_pin = document.forms["myForm"]["confirm_pin"].value;
-            if(pin.length >= 4){
-                if (pin != conf_pin) {
-                    document.getElementById("pin-error").innerHTML= "PIN does not match!";
-                    document.getElementById("pin-error").style.display = "block";
-                    return false;
-                }
-            } 
-            else{
-                document.getElementById("pin-error").innerHTML= "Minimum length of PIN required is 4 characters!";
-                document.getElementById("pin-error").style.display = "block";
-                return false;
-            }
-        }
-    </script>
-    <script>
-        function checkValue(){
-            var user_check = document.getElementById("usernm").value;
-            const ul_nav1 = document.getElementById('nav2');
-            const listItems = ul_nav1.getElementsByTagName('li');
-
-            for (var i = 0; i <= listItems.length - 1; i++) {
-                if (user_check == listItems[i].innerHTML){
-                    document.getElementById("check1").innerHTML = "Username is already taken. Try another!";
-                    document.getElementById("check1").style.display = "block";
-                    }
-                }
-                
-            }
-        function checkId(){
-            var id_check = document.getElementById("id-No").value;
-            const ul_nav2 = document.getElementById('nav1');
-            const listItemz = ul_nav2.getElementsByTagName('li');
-
-            for (var i = 0; i <= listItemz.length - 1; i++) {
-                if (id_check == listItemz[i].innerHTML){
-                    document.getElementById("check2").innerHTML = "That ID number already exists!";
-                    document.getElementById("check2").style.display = "block";
-                    }
-                }
-                
-            }
-        function waitValue(){
-            document.getElementById("check1").style.display = "none";
-            document.getElementById("input-error").style.display = "none";
-        }
-        function waitId(){
-            document.getElementById("check2").style.display = "none";
-        }
-        function waitConfirm(){
-            document.getElementById("input-error").style.display = "none";
-        }
-        function waitPin(){
-            document.getElementById("pin-error").style.display = "none";
-        }
-        function lowCaseFn(){
-            var fname = document.getElementById("fName");
-            fname.value = fname.value.charAt(0).toUpperCase() + fname.value.slice(1);
-        }
-        function lowCaseLn(){
-            var lname = document.getElementById("lName");
-            lname.value = lname.value.charAt(0).toUpperCase() + lname.value.slice(1);
-        }
-    </script>
     <ul id="nav1" style="display: none;">
         {% for user in users_list %}
         <li>{{user.id}}</li>
