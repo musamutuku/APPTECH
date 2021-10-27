@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving App-Account Statement</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+</head>
+<body>
+    <div class="homeDiv" id="homeDiv">
+        <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+    <div class="home-links">
+        <u id="pagelink">
+            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="/userDetails">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/advert.png') }}" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
+        </u>
+        <p class="p1 accSave">Savings account</p>
+        <div class="homepage userpage" style="height: 370px;">
+            <div class="accBtn">
+                <a href="/home/account"><button id="transactionbtn" style="background: #C4C4C4;">Transactions</button></a>
+                <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
+            </div>
+            <div class="t-onediv">
+                <table id="t-one" style="top: 0px;left: 0px;">
+                    <tr id="row-a">
+                        <td>Transaction Date</td>
+                        <td>Reference No</td>
+                        <td>Description</td>
+                        <td>Deposits</td>
+                        <td>Withdrawals</td>
+                        <td>Status</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="user-all" style="top: 167px;">
+                {% if no_tx %}
+                 {{no_tx}}
+                 {%endif%}
+                {% for transaction in transactions %}
+                <table id="t-two" onload="download()">
+                    <tr>
+                        <td class="row-b">{{transaction.date}}</td>
+                        <td class="row-b">{{transaction.ref_no}}</td>
+                        <td id="td-one" style="border-right: 1px solid #FFFFFF;">Transaction performed in account {{transaction.id_no}}. Ref# {{transaction.ref_no}}</td>
+                        <td class="row-b">{{transaction.deposit}}</td>
+                        <td class="row-b">{{transaction.withdrawal}}</td>  
+                        <td class="row-b">{{transaction.status}}</td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+            {% if download %}
+            <span style="display: none;">{{download}}</span><button id="downloadbtn">DOWNLOAD</button>
+            {%endif%}
+        </div>
+    </div>
+        <div class="footer">
+            <hr>
+            <p>Copyright © 2021. <span>Beannsofts Limited. All rights reserved.</span><span> <a href="#">Follow this link to know about us</a></span></p>
+        </div>
+    </div>
+    <div id="logout-box" style="display: none;">
+        <span onclick="closeLog()">X</span>
+        <p>Do you want to log out of the System?</p>
+        <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
+    </div>
+</body>
+</html>

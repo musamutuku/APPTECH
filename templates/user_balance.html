@@ -14,11 +14,11 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 37px;height: 30px;">&nbsp;<a href="#" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
-            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="#">User details</a></li>
-            <li><img src="{{ url_for('static', filename='images/advert.png') }}" alt="advert" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
-            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
+            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="/userDetails">User details</a></li>
+            <li><img src="{{ url_for('static', filename='images/advert.png') }}" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <p class="p1 accSave">Savings account</p>
         <div class="homepage" id="homepage">
@@ -27,14 +27,14 @@
                 <!------- check balance ------>
                 {% if user %}
                 <div class="user_bal_msg">
-                    <p>Dear {{user.firstname}}, Your Account balance was:  <span>Ksh {{user.account_balance}}</span> on <span>{{the_time}}</span>. Thank You.</p>
+                    <p>Dear {{user.firstname}}, Your Account balance was:  <span>Ksh {{'%0.2f'| format(user.account_balance)}}</span> on <span>{{the_time}}</span>. Thank You.</p>
                 </div>
                 {%endif%}
                 
             
                 {% if agent %}
                 <div class="user_bal_msg">
-                    <p>Dear {{agent.firstname}}, Your Account balance was:  <span>Ksh {{agent.account_balance}}</span>, Float balance was: <span>Ksh {{agent.float_balance}}</span> on <span>{{the_time}}</span>. Thank You.</p>
+                    <p>Dear {{agent.firstname}}, Your Account balance was:  <span>Ksh {{'%0.2f'| format(agent.account_balance)}}</span>, Float balance was: <span>Ksh {{agent.float_balance}}</span> on <span>{{the_time}}</span>. Thank You.</p>
                 </div>
                 {%endif%}
 
@@ -65,7 +65,7 @@
                 
                 {% if the_user %}
                 <div class="user_bal_msg depo">
-                    <p>You have successfully deposited Ksh {{amount}} on <span>{{time}} </span>to ID number: <span>{{theID}}</span> via Agent ID: <span>{{theAgent}}</span>. New Account balance is: <span>Ksh {{new_balance}}</span>. Reference No. <span>100{{theID}}</span>. Thank You.</p>
+                    <p>You have successfully deposited <span>Ksh {{amount}}.00 </span> on <span>{{time}} </span>to ID number: <span>{{theID}}</span> via Agent ID: <span>{{theAgent}}</span>. Reference No. <span>{{refNo}}</span>. Thank You.</p>
                 </div>
                 {%endif%}
 
@@ -103,7 +103,7 @@
             
                 {% if that_user %}
                 <div class="user_bal_msg depo">
-                    <p>You have successfully withdrawn Ksh {{amount}} on <span>{{time}} </span> via Agent ID: <span>{{theAgent}}</span>. New Account balance is: <span>Ksh {{new_balance}}</span>. Reference No. <span>400{{theID}}</span>. Rate of transaction cost is 0.03%.</p>
+                    <p>You have successfully withdrawn <span>Ksh {{amount}}.00</span> on <span>{{time}} </span> via Agent ID: <span>{{theAgent}}</span>. New Account balance is: <span>Ksh {{'%0.2f'| format(new_balance)}}</span>. Reference No. <span>{{refNo}}</span>. Rate of transaction cost is 0.03%.</p>
                 </div>
                 {%endif%}
                 
@@ -144,7 +144,7 @@
     <div id="logout-box" style="display: none;">
         <span onclick="closeLog()">X</span>
         <p>Do you want to log out of the System?</p>
-        <button><a href="/logout">OK</a></button>
+        <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
 </body>
 </html>

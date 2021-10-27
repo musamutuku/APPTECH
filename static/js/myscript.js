@@ -1,11 +1,17 @@
 // logout script
 function logOut(){
-    document.getElementById('homeDiv').style.opacity ="0.3";
+    document.getElementById('homeDiv').style.opacity ="0.2";
+    document.getElementById('homeDiv').style.pointerEvents ='none';
+    document.getElementById('homeDiv').style.opacity ="0.2";
     document.getElementById('logout-box').style.display = "block";
 }
 function closeLog(){
     document.getElementById('logout-box').style.display = "none";
     document.getElementById('homeDiv').style.opacity ="1";
+    document.getElementById('homeDiv').style.pointerEvents = 'all';
+}
+function clickOk(){
+    document.getElementById('click-okbtn').click();
 }
 
 

@@ -3,7 +3,8 @@ from flask.globals import session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask.templating import render_template
-import bcrypt, os , datetime
+import bcrypt
+import os , datetime
 from sqlalchemy.orm import backref
 from werkzeug.utils import secure_filename
 
@@ -54,7 +55,7 @@ class RoleAccount(db.Model):
 class TransactionAccount(db.Model):
     __tablename__ = "transactions"
 
-    ref_no = db.Column(db.String(100), primary_key=True)
+    ref_no = db.Column(db.String(15), primary_key=True)
     id_no = db.Column(db.Integer)
     date = db.Column(db.String(100))
     deposit = db.Column(db.String(100))
@@ -74,9 +75,27 @@ class TransactionAccount(db.Model):
 def index():
   return render_template('index.html')
 
-@app.route('/checkrole')
-def CheckRole():
-    role_id = 3
+@app.route('/admin/system_users')
+def ViewUsers():
+    if 'id' in session and 'role' in session:
+        role_id = session.get('role')
+        if role_id == 1:
+            role_id = 3
+            users = UserAccount.query.filter_by(role_id=role_id).all()
+            return render_template('users.html', users = users)
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/system_agents')
+def ViewAgents():
+    if 'id' in session and 'role' in session:
+        role_id = session.get('role')
+        if role_id == 1:
+            role_id = 2
+            users = UserAccount.query.filter_by(role_id=role_id).all()
+            return render_template('agents.html', users = users)
+    return redirect(url_for('Login'))
+
     # user_id = 33771492
    # user_role = RoleAccount.query.get(role_id)
    # print(user_role.role_name)
@@ -90,9 +109,6 @@ def CheckRole():
    # myrole_id = UserAccount.query.get(user_id)
    # print(myrole_id.role_id)
     # return f"my role is {my_role}"
-    users = UserAccount.query.filter_by(role_id=role_id).all()
-    # print(users.firstname)
-    return render_template('users.html', userz = users)
 
 @app.route('/register', methods = ["POST","GET"])
 def Register():
@@ -163,7 +179,7 @@ def Login():
                  session['role'] = current_user.role_id
                  # check if he/she is the admin 
                  if current_user.role_id == 1:
-                    return render_template('admin_home.html')
+                    return render_template('admin_home.html', user = current_user)
                  else:
                     return render_template('user_home.html', user = current_user)
              else:
@@ -227,6 +243,9 @@ def UserEditing():
         if role_id != 1:
             current_user = UserAccount.query.get(user_id)
             return render_template("user_details.html", user = current_user)
+        else:
+            current_user = UserAccount.query.get(user_id)
+            return render_template("admin_details.html", user = current_user)
     return redirect(url_for('Login'))
 
 
@@ -249,7 +268,11 @@ def UserSaving():
             db.session.commit()
                                 
             one_user = UserAccount.query.get(user_id)
-            return render_template("user_details.html", user = one_user)
+            role_id = session.get('role')
+            if role_id != 1:
+                return render_template("user_details.html", user = one_user)
+            else:
+                return render_template("admin_details.html", user = one_user)
     return redirect(url_for('Login'))
 
 
@@ -269,7 +292,11 @@ def PhotoUpload():
             db.session.commit()
 
             one_user = UserAccount.query.get(user_id)
-            return render_template("user_details.html", user= one_user)
+            role_id = session.get('role')
+            if role_id != 1:
+                return render_template("user_details.html", user= one_user)
+            else:
+                return render_template("admin_details.html", user= one_user)
     return redirect(url_for('Login'))
 
 
@@ -367,18 +394,17 @@ def Deposit():
                                 db.session.commit()
                                 
                                 one_user = UserAccount.query.get(user_id)
-                                # one_agent = UserAccount.query.get(agent_id)
+                            
                                 time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
-                                new_balance = one_user.account_balance
                                 ref = datetime.datetime.now().strftime("%H%M%S")
-                                refNo = 'Tx {}'.format(ref)
+                                refNo = 'TX{}'.format(ref)
                                 theID = user.id
                                 theAgent = agent.id
                                 transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
 
                                 db.session.add(transaction)
                                 db.session.commit()
-                                return render_template('user_balance.html', the_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
+                                return render_template('user_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAgent=theAgent)
                             else:
                                 no_user = "Invalid user ID! Please confirm the user ID number and try again."
                                 return render_template('user_balance.html', no_user_found = no_user)
@@ -430,11 +456,16 @@ def DepositAdmin():
                                 db.session.commit()
                                 
                                 one_user = UserAccount.query.get(user_id)
-                                new_balance = one_user.account_balance
                                 time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                                ref = datetime.datetime.now().strftime("%H%M%S")
+                                refNo = 'TX{}'.format(ref)
                                 theID = user.id
                                 theAdmin = admin.id
-                                return render_template('admin_balance.html', the_user=one_user, time=time, new_balance=new_balance, theID=theID, theAdmin=theAdmin)
+                                transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
+
+                                db.session.add(transaction)
+                                db.session.commit()
+                                return render_template('admin_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAdmin=theAdmin)
                             else:
                                 no_user = "Invalid user ID! Please confirm the user ID number and try again."
                                 return render_template('admin_balance.html', no_user_found = no_user)
@@ -471,8 +502,9 @@ def Withdraw():
                         if user is not None:
                             result = bcrypt.checkpw(pin.encode(), user.pin.encode()) 
                             if result:
-                                if user.account_balance >= amount:
+                                if user.account_balance > amount:
                                     user.account_balance = user.account_balance - (amount + (0.03*amount))
+                                    user.account_balance = "{:.2f}".format(user.account_balance)
                                     db.session.add(user)
                                     db.session.commit()
 
@@ -486,11 +518,11 @@ def Withdraw():
                                     theID = user.id
                                     theAgent = agent.id
                                     ref = datetime.datetime.now().strftime("%H%M%S")
-                                    refNo = 'Tx {}'.format(ref)
+                                    refNo = 'TX{}'.format(ref)
                                     transaction = TransactionAccount(refNo,theID,time,deposit='',withdrawal=amount,status='SUCCESS')
                                     db.session.add(transaction)
                                     db.session.commit()
-                                    return render_template('user_balance.html', that_user=one_user, time=time, new_balance=new_balance, theID=theID, theAgent=theAgent)
+                                    return render_template('user_balance.html', that_user=one_user, time=time, amount=amount, new_balance=new_balance, refNo=refNo, theID=theID, theAgent=theAgent)
                                 else:
                                     withdraw_error_message = 'Sorry! You have insufficient balance to withdraw such amount.'
                                     return render_template('user_balance.html', withdraw_error_msg = withdraw_error_message)  
@@ -531,8 +563,9 @@ def WithdrawAdmin():
                         if user is not None:
                             result = bcrypt.checkpw(pin.encode(), user.pin.encode()) 
                             if result:
-                                if user.account_balance >= amount:
+                                if user.account_balance > amount:
                                     user.account_balance = user.account_balance - (amount + (0.03*amount))
+                                    user.account_balance = "{:.2f}".format(user.account_balance)
                                     db.session.add(user)
                                     db.session.commit()
 
@@ -545,7 +578,12 @@ def WithdrawAdmin():
                                     new_balance = one_user.account_balance
                                     theID = user.id
                                     theAgent = agent.id
-                                    return render_template('admin_balance.html', that_user=one_user, time=time, new_balance=new_balance, theID=theID, theAdmin=theAgent)
+                                    ref = datetime.datetime.now().strftime("%H%M%S")
+                                    refNo = 'TX{}'.format(ref)
+                                    transaction = TransactionAccount(refNo,theID,time,deposit='',withdrawal=amount,status='SUCCESS')
+                                    db.session.add(transaction)
+                                    db.session.commit()
+                                    return render_template('admin_balance.html', that_user=one_user, time=time, amount=amount, refNo=refNo, new_balance=new_balance, theID=theID, theAdmin=theAgent)
                                 else:
                                     withdraw_error_message = 'Sorry! You have insufficient balance to withdraw such amount'
                                     return render_template('admin_balance.html', withdraw_error_msg = withdraw_error_message)  
@@ -576,57 +614,18 @@ def SystemInfo():
     return redirect(url_for('Login'))
 
 
-@app.route('/adminDetails')
-def AdminEditing():
+@app.route('/account/statement')
+def ViewStatement():
     if 'id' in session and 'role' in session:
-        user_id = session.get('id')
         role_id = session.get('role')
-        if role_id == 1:
-            current_user = UserAccount.query.get(user_id)
-            return render_template("admin_details.html", user = current_user)
-    return redirect(url_for('Login'))
-
-
-@app.route('/adminDetails/editData', methods = ['POST','GET'])
-def AdminSaving():
-    if request.method == "POST":
-        if 'id' in session:
-            user_id = session.get('id')
-            name1 = request.form.get('name1')
-            name2 = request.form.get('name2')
-            name3 = request.form.get('name3')
-            name4 = request.form.get('name4')
-            current_user = UserAccount.query.get(user_id)
-
-            current_user.username = name1
-            current_user.firstname = name2
-            current_user.lastname = name3
-            current_user.phone = name4
-            db.session.add(current_user)
-            db.session.commit()
-                                
-            one_user = UserAccount.query.get(user_id)
-            return render_template("admin_details.html", user = one_user)
-    return redirect(url_for('Login'))
-
-
-@app.route('/adminDetails/editPhoto', methods = ['POST','GET'])
-def ProfileUpload():
-    if request.method == "POST":
-        if 'id' in session:
-            user_id = session.get('id')
-            pic = request.files['pic']
-
-            user = UserAccount.query.get(user_id)
-            filename = secure_filename(pic.filename)
-            pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            user.profile_pic = filename
-            db.session.add(user)
-            db.session.commit()
-
-            one_user = UserAccount.query.get(user_id)
-            return render_template("admin_details.html", user= one_user)
+        user_id = session.get('id')
+        if role_id != 1:
+            transactions = TransactionAccount.query.filter_by(id_no=user_id).all()
+            if(len(transactions)< 1):
+                no_tx = "You have zero transaction!"
+                return render_template('account_statement.html', no_tx = no_tx)
+            download = "download"
+            return render_template('account_statement.html', transactions = transactions, download=download)
     return redirect(url_for('Login'))
     
 

@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
 </head>
 <body id="loginbg">
-    <img src="{{ url_for('static', filename='images/login_vec.png') }}" alt="login_vec1" width="100%" class="log-img">
+    <img src="{{ url_for('static', filename='images/login_vec.png') }}" width="100%" class="log-img">
         <div class="login-div">
             <p id="title">Login to your account</p>
             <p id="subtitle">Enter your username and password to continue</p>
             <div class="loginbox">
                 <form action="/login" method="POST">
                     <div class="input-div">
-                        <img src="{{ url_for('static', filename='images/username.png') }}" alt="username" id="user">
+                        <img src="{{ url_for('static', filename='images/username.png') }}" id="user">
                         <input type="text" name="username" placeholder="Username" required>
-                        <img src="{{ url_for('static', filename='images/password.png') }}" alt="password" id="pass">
+                        <img src="{{ url_for('static', filename='images/password.png') }}" id="pass">
                         <input type="password" name="password" placeholder="Password" required>
                     </div>
                     <button type="submit" class="login-btn">LOGIN</button>

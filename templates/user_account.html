@@ -14,11 +14,11 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" alt="home" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" alt="account_details" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
             <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="/userDetails">User details</a></li>
-            <li><img src="{{ url_for('static', filename='images/advert.png') }}" alt="advert" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
-            <li><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
+            <li><img src="{{ url_for('static', filename='images/advert.png') }}" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
+            <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <p class="p1 accSave">Savings account</p>
         <div class="homepage" id="homepage">
@@ -40,7 +40,7 @@
                     <p style="margin-left: 14px;">CASH DEPOSITS</p>
                 </div>
             </div>
-            <div id="stateDiv" style="visibility: hidden;position: absolute;top: 150px;"><p>This place is for account statement</p></div>
+            <div id="stateDiv" style="visibility: hidden;position: absolute;top: 150px;"><p><a href="/account/statement">acc statement</a></p></div>
         </div>
         <div class="formpage" id="formpage" style="display: none;">
             <div class="checkbal-form" id="checkbal-form">
@@ -70,7 +70,7 @@
                 <button class="cancelbtn the-cancel" onclick="showHome2()">Cancel</button>
             </div>
             <div class="checkbal-form the-form" id="withdrawcash-form">
-                <p id="withdraw-topic">WITHDRAW CASH</p>
+                <p id="withdraw-topic" style="color: #45789D;">WITHDRAW CASH</p>
                 <form action="/account/withdraw" id="form3" method="POST">
                     <label>Enter Agent ID:</label><br>
                     <input type="number" name="agent_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
@@ -94,7 +94,7 @@
     <div id="logout-box" style="display: none;">
         <span onclick="closeLog()">X</span>
         <p>Do you want to log out of the System?</p>
-        <button><a href="/logout">OK</a></button>
+        <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
 </body>
 </html>

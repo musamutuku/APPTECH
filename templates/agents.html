@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saving App-System info</title>
+    <title>Saving App-System Users</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
     <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
@@ -22,22 +22,30 @@
         </u>
         <div class="homepage userpage">
             <p class="p1">System information</p>
-            <div class="topuser-div"><p style="color: #79830F;">System users</p></div>  
-            <div class="sys-users">
-                <ul>
-                    <li><a href="/userDetails">ADMIN</a></li>
-                    <li><a href="/admin/system_agents">AGENTS</a></li>
-                    <li><a href="/admin/system_users">MEMBERS</a></li>
-                </ul>
-            </div>
-            <div class="topuser-div centerdiv"><p style="color: #BB7230;">System updates</p></div> 
-            <div class="sys-users settingsdiv">
-                <ul>
-                    <li><a href="#">System settings</a></li>
-                    <li><a href="#">System backups</a></li>
-                    <li><a href="#">Place ads</a></li>
-                </ul>
-            </div>
+            <table id="t-one">
+                <tr id="row-1">
+                    <td>AGENT ID</td>
+                    <td>USERNAME</td>
+                    <td>F_NAME</td>
+                    <td>L_NAME</td>
+                    <td>ACC_BAL</td>
+                    <td>FLOAT_BAL</td>
+                    <td>PHONE NO</td>
+                </tr>
+            </table>
+            {% for user in users %}
+            <table id="t-two">
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                    <td>{{user.account_balance}}</td>
+                    <td>{{user.float_balance}}</td>  
+                    <td>{{user.phone}}</td>
+                </tr>
+            </table>
+            {% endfor %}
         </div>
     </div>
         <div class="footer">
