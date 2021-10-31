@@ -40,7 +40,16 @@
                     <p style="margin-left: 14px;">CASH DEPOSITS</p>
                 </div>
             </div>
-            <div id="stateDiv" style="visibility: hidden;position: absolute;top: 150px;"><p><a href="/account/statement">acc statement</a></p></div>
+            <div id="stateDiv" style="visibility: hidden;position: absolute;top: 150px;">
+                <div class="viewdiv"><p>VIEW ACCOUNT STATEMENT</p></div>
+                <form action="/account/statement" class="stateform" method="POST">
+                    <label>ENTER ID NO</label><br><br>
+                    <label id="reset-label">ENTER PIN</label>
+                    <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
+                    <input type="password" name="pin_no" id="reset-pass-input" required>
+                    <button type="submit">SUBMIT</button>
+                </form>    
+            </div>
         </div>
         <div class="formpage" id="formpage" style="display: none;">
             <div class="checkbal-form" id="checkbal-form">

@@ -96,19 +96,7 @@ def ViewAgents():
             return render_template('agents.html', users = users)
     return redirect(url_for('Login'))
 
-    # user_id = 33771492
-   # user_role = RoleAccount.query.get(role_id)
-   # print(user_role.role_name)
-   # user = user_role.users
-   # print(user)
-   
-    # request_body = request.get_json()
-    # user_id = request_body['user_id']
-    # myrole = UserAccount.query.get(user_id).role
-    # my_role= myrole.role_name
-   # myrole_id = UserAccount.query.get(user_id)
-   # print(myrole_id.role_id)
-    # return f"my role is {my_role}"
+
 
 @app.route('/register', methods = ["POST","GET"])
 def Register():
@@ -166,6 +154,8 @@ def Login():
 
         # get/check the person with the entered username in the database
         current_user = UserAccount.query.filter_by(username=username).first()
+        user_role = current_user.role
+        my_role = user_role.role_name
 
         # check the existence of the person in the database
         # if current_user is not None:(opposite statement)
@@ -179,14 +169,39 @@ def Login():
                  session['role'] = current_user.role_id
                  # check if he/she is the admin 
                  if current_user.role_id == 1:
-                    return render_template('admin_home.html', user = current_user)
+                    return render_template('admin_home.html', user = current_user, my_role=my_role)
                  else:
-                    return render_template('user_home.html', user = current_user)
+                    return render_template('user_home.html', user = current_user,my_role=my_role)
              else:
                  return render_template("login_error.html")
     return render_template('login.html')
 
 
+
+@app.route('/reset', methods = ['POST','GET'])
+def Reset():
+    if request.method=="POST":
+        id=request.form.get('id_no')
+        username=request.form.get('username')
+
+        current_user = UserAccount.query.filter_by(id=id).first()
+        if current_user is not None:
+            correct_username = current_user.username
+            if username == correct_username:
+                param = datetime.datetime.now().strftime("%S")
+                new_pass = '{}Q{}kX'.format(current_user.firstname,param)
+                encrpted_pass =  bcrypt.hashpw(new_pass.encode(), bcrypt.gensalt(14))
+                current_user.password = encrpted_pass.decode()
+                db.session.add(current_user)
+                db.session.commit()
+                return "Your password has been reset. Your new password is <u><b>{}</b></u> <br> Login and change the password for security purposes.".format(new_pass)
+            else:
+                msg2 = "Enter a valid username. if you forgot your username contact the admin"
+                return render_template('reset.html', msg2=msg2)
+        else:
+            msg= "unregistered ID"
+            return render_template('reset.html',msg=msg)
+    return render_template('reset.html')
 
 @app.route('/logout')
 def logout():
@@ -203,15 +218,21 @@ def Home():
         role_id = session.get('role')
         if role_id != 1:
             current_user = UserAccount.query.get(user_id)
-            return render_template("user_home.html",user = current_user)
+            user_role = UserAccount.query.get(user_id).role
+            my_role = user_role.role_name
+            return render_template("user_home.html",user = current_user, my_role=my_role)
     return redirect(url_for('Login'))
 
 @app.route('/admin')
 def Admin():
     if 'id' in session and 'role' in session:
+        user_id = session.get('id')
         role_id = session.get('role')
         if role_id == 1:
-            return render_template("admin_home.html")
+            current_user = UserAccount.query.get(user_id)
+            user_role = UserAccount.query.get(user_id).role
+            my_role = user_role.role_name
+            return render_template("admin_home.html",user = current_user, my_role=my_role)
     return redirect(url_for('Login'))
 
 
@@ -614,18 +635,36 @@ def SystemInfo():
     return redirect(url_for('Login'))
 
 
-@app.route('/account/statement')
+@app.route('/account/statement', methods =['POST','GET'])
 def ViewStatement():
-    if 'id' in session and 'role' in session:
-        role_id = session.get('role')
-        user_id = session.get('id')
-        if role_id != 1:
-            transactions = TransactionAccount.query.filter_by(id_no=user_id).all()
-            if(len(transactions)< 1):
-                no_tx = "You have zero transaction!"
-                return render_template('account_statement.html', no_tx = no_tx)
-            download = "download"
-            return render_template('account_statement.html', transactions = transactions, download=download)
+    if request.method == 'POST':
+        id = int(request.form.get('id_no'))
+        pin = request.form.get('pin_no')
+        if 'id' in session and 'role' in session:
+            role_id = session.get('role')
+            user_id = session.get('id')
+            if id == user_id:
+                user = UserAccount.query.get(user_id)
+                result = bcrypt.checkpw(pin.encode(), user.pin.encode())
+                if result:
+                    if role_id != 1:
+                        transactions = TransactionAccount.query.filter_by(id_no=user_id).all()
+                        if(len(transactions)< 1):
+                            no_tx = "You have zero transaction!"
+                            return render_template('account_statement.html', no_tx = no_tx)
+                        download = "download"
+                        return render_template('account_statement.html', transactions = transactions, download=download)
+                    else:
+                        transactions = TransactionAccount.query.all()
+                        if(len(transactions)< 1):
+                            no_tx = "You have zero transaction!"
+                            return render_template('admin_statement.html', no_tx = no_tx)
+                        download = "download"
+                        return render_template('admin_statement.html', transactions = transactions, download=download)
+                else:
+                    return "You have entered wrong PIN try again later"
+            else:
+                return "You have entered wrong ID try again later"
     return redirect(url_for('Login'))
     
 

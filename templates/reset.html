@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saving App- Reset password</title>
+</head>
+<body>
+    <div>
+        <p style="color: red;font-weight: bold;">
+            {% if msg %}
+            {{msg}}
+            {%endif%}
+        </p>
+        <p style="color: red;font-weight: bold;">
+            {% if msg2 %}
+            {{msg2}}
+            {%endif%}
+        </p>
+        <form action="/reset" method="POST">
+            <label>Enter your username</label><br>
+            <input type="text" name="username" required><br><br>
+            <label>Enter your ID</label><br>
+            <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
+            <input type="submit" value="SUBMIT">
+        </form>
+    </div>
+</body>
+</html>
