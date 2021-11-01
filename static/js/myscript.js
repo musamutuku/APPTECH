@@ -224,3 +224,22 @@ function lowCaseLn(){
     var lname = document.getElementById("edit-lname");
     lname.value = lname.value.charAt(0).toUpperCase() + lname.value.slice(1);
 }
+
+
+// show notification and profile icon
+function showIcon(){
+    document.getElementById('notify-name').style.display = "block";
+    document.getElementById('pic-icon').style.display = "none";
+}
+function showNotify(){
+    document.getElementById('notify-div').style.display = "block";
+    document.getElementById('notify-icon').style.display = "none";
+}
+function closeNotify(){
+    document.getElementById('notify-div').style.display = "none";
+    document.getElementById('notify-icon').style.display = "block"
+}
+function closeName(){
+    document.getElementById('notify-name').style.display = "none";
+    document.getElementById('pic-icon').style.display = "block";
+}

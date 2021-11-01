@@ -1601,6 +1601,57 @@ td{
     left: 204px;
     border: 1px solid #c4c4c4;
 }
+#user-row{
+    font-family: Montserrat;
+    font-size: 13px;
+    color: #000000;
+}
+#user-row td{
+    text-align: center;
+}
+.search-user{
+    position: absolute;
+    width: 306px;
+    height: 22px;
+    left: 450px;
+    top: 113px;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+#search-input{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 262px;
+    height: 20px;
+    border: none;
+    box-sizing: border-box;
+    border-right: 1px solid #000000;
+}
+.search-user img{
+    position:absolute; 
+    width:22px;
+    height:20px;
+    right: 10px;
+    top: 0px;
+}
+.search-label{
+    position: absolute;
+    left: 390px;
+    top: 115px;
+    font-family: Montserrat;
+    font-size: 15px;
+    color: #000000;
+}
+.members-title{
+    position: absolute;
+    left: 190px;
+    top: 85px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 15px;
+    color: #5E0B9E;
+}
 
 /* account statement */
 #row-a td{
@@ -1717,7 +1768,25 @@ td{
 #logout-box button:hover{
     cursor: pointer;
 }
-
+.backto-div{
+    position: absolute;
+    width: 59px;
+    height: 20px;
+    left: 185px;
+    bottom: -45.2px;
+    background: #C4C4C4;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    color: #0000FF;
+}
+.backto-div a{
+    text-decoration: none;
+}
+.backto-div a:visited{
+    color: #0000FF;
+}
 
 /* ---------media query---------- */
 

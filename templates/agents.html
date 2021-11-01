@@ -20,11 +20,13 @@
             <li><img src="{{ url_for('static', filename='images/reports.png') }}">&nbsp;<a href="#">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
-        <div class="homepage userpage">
+        <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
+            <p class="members-title">Agents</p>
+            <label class="search-label">Search</label><div class="search-user"><input type="number" id="search-input" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" id="id-No" autocomplete="off"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()"></div>
             <table id="t-one">
                 <tr id="row-1">
-                    <td>AGENT ID</td>
+                    <td>USER ID</td>
                     <td>USERNAME</td>
                     <td>F_NAME</td>
                     <td>L_NAME</td>
@@ -33,19 +35,22 @@
                     <td>PHONE NO</td>
                 </tr>
             </table>
-            {% for user in users %}
-            <table id="t-two">
-                <tr>
-                    <td>{{user.id}}</td>
-                    <td>{{user.username}}</td>
-                    <td>{{user.firstname}}</td>
-                    <td>{{user.lastname}}</td>
-                    <td>{{user.account_balance}}</td>
-                    <td>{{user.float_balance}}</td>  
-                    <td>{{user.phone}}</td>
-                </tr>
-            </table>
-            {% endfor %}
+            <div class="user-all">
+                {% for user in users %}
+                <table id="t-two">
+                    <tr id="user-row">
+                        <td>{{user.id}}</td>
+                        <td>{{user.username}}</td>
+                        <td>{{user.firstname}}</td>
+                        <td>{{user.lastname}}</td>
+                        <td>{{user.account_balance}}</td>  
+                        <td>{{user.float_balance}}</td>  
+                        <td>{{user.phone}}</td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_info">Back</a></div>
         </div>
     </div>
         <div class="footer">
