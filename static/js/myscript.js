@@ -260,6 +260,11 @@ function closeName(){
     document.getElementById('notify-div').style.display = "none";
 }
 
+//systeminfo
+function clickBack(){
+    document.getElementById('clicklink').click();
+}
+
 // search user
 function searchUser(){
     var input, filter, table, tr, td, i;

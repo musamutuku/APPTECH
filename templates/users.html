@@ -47,12 +47,12 @@
                     </tr>
                  {% endfor %}
                 </table>
-                <form action="/admin/manageUser" method="POST">
+                <!-- <form action="/admin/manageUser" method="POST">
                     <input type="number" id="manage-input">
                     <button type="submit" id="managebtn">submit</button>
-                </form>
+                </form> -->
             </div>
-            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_info">Back</a></div>
+            <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
         </div>
         <p id="trshow"></p>
         <script>

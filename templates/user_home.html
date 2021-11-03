@@ -27,7 +27,7 @@
         <div class="notify-icon" onclick="showNotify()" id="notify-icon"><img src="{{ url_for('static', filename='images/notify2.png') }}" width="100%" height="100%"></div>
         <div class="notify-div" style="display: none;" id="notify-div"><p style="margin-top: 10px;">{{notify_msg}}</p><div class="inner-close" title="Close" onclick="closeNotify2()"><p>x</p></div></div>
         {%endif%}
-        <form action="/notificationViewed" method="POST">
+        <form action="/notificationViewed" method="POST" style="display: none;">
             <input type="text">
             <button id="notifybtn" type="submit">Submit</button>
         </form>

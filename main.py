@@ -513,7 +513,7 @@ def DepositAdmin():
                                 theID = user.id
                                 theAdmin = admin.id
                                 new_balance = one_user.account_balance
-                                notification="You have deposited Ksh. {} via admin ID {}. New balance is {}".format(amount,new_balance)
+                                notification="You have deposited Ksh. {} via admin ID {}. New balance is {}".format(amount,theAdmin,new_balance)
                                 one_user.notification = notification
                                 db.session.add(one_user)
                                 db.session.commit()
