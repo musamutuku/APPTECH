@@ -33,8 +33,9 @@ class UserAccount(db.Model):
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
     profile_pic = db.Column(db.String(100))
+    notification = db.Column(db.String(100))
 
-    def __init__(self, id, firstname, lastname, username, password, phone, pin, profile_pic):
+    def __init__(self, id, firstname, lastname, username, password, phone, pin, profile_pic, notification):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
@@ -43,6 +44,7 @@ class UserAccount(db.Model):
         self.phone = phone
         self.pin = pin
         self.profile_pic = profile_pic
+        self.notification = notification
 
 class RoleAccount(db.Model):   
     __tablename__ = "roles"
@@ -135,7 +137,7 @@ def Register():
         if confirm == password and pin == confirm_pin:
             encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
             encrpted_pin = bcrypt.hashpw(pin.encode(), bcrypt.gensalt(14))
-            registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode(),profile_pic='default.png')
+            registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode(),profile_pic='default.png',notification='0')
 
         # add the details in the database
         db.session.add(registered_user)
@@ -169,9 +171,21 @@ def Login():
                  session['role'] = current_user.role_id
                  # check if he/she is the admin 
                  if current_user.role_id == 1:
-                    return render_template('admin_home.html', user = current_user, my_role=my_role)
+                    user_msg = current_user.notification
+                    if user_msg == '0':
+                        no_msg = "no notification"
+                        return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                    else:
+                        notify_msg = user_msg
+                        return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
                  else:
-                    return render_template('user_home.html', user = current_user,my_role=my_role)
+                    user_msg = current_user.notification
+                    if user_msg == '0':
+                        no_msg = "no notification"
+                        return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                    else:
+                        notify_msg = user_msg
+                        return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
              else:
                  return render_template("login_error.html")
     return render_template('login.html')
@@ -220,7 +234,13 @@ def Home():
             current_user = UserAccount.query.get(user_id)
             user_role = UserAccount.query.get(user_id).role
             my_role = user_role.role_name
-            return render_template("user_home.html",user = current_user, my_role=my_role)
+            user_msg = current_user.notification
+            if user_msg == '0':
+                no_msg = "no notification"
+                return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+            else:
+                notify_msg = user_msg
+                return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
     return redirect(url_for('Login'))
 
 @app.route('/admin')
@@ -232,7 +252,13 @@ def Admin():
             current_user = UserAccount.query.get(user_id)
             user_role = UserAccount.query.get(user_id).role
             my_role = user_role.role_name
-            return render_template("admin_home.html",user = current_user, my_role=my_role)
+            user_msg = current_user.notification
+            if user_msg == '0':
+                no_msg = "no notification"
+                return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+            else:
+                notify_msg = user_msg
+                return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
     return redirect(url_for('Login'))
 
 
@@ -415,14 +441,18 @@ def Deposit():
                                 db.session.commit()
                                 
                                 one_user = UserAccount.query.get(user_id)
-                            
                                 time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
                                 ref = datetime.datetime.now().strftime("%H%M%S")
                                 refNo = 'TX{}'.format(ref)
                                 theID = user.id
                                 theAgent = agent.id
-                                transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
+                                new_balance = one_user.account_balance
+                                notification="You have deposited Ksh. {} via agent ID {}. New balance is {}".format(amount,theAgent,new_balance)
+                                one_user.notification = notification
+                                db.session.add(one_user)
+                                db.session.commit()
 
+                                transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
                                 db.session.add(transaction)
                                 db.session.commit()
                                 return render_template('user_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAgent=theAgent)
@@ -482,8 +512,13 @@ def DepositAdmin():
                                 refNo = 'TX{}'.format(ref)
                                 theID = user.id
                                 theAdmin = admin.id
+                                new_balance = one_user.account_balance
+                                notification="You have deposited Ksh. {} via admin ID {}. New balance is {}".format(amount,new_balance)
+                                one_user.notification = notification
+                                db.session.add(one_user)
+                                db.session.commit()
+                                
                                 transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
-
                                 db.session.add(transaction)
                                 db.session.commit()
                                 return render_template('admin_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAdmin=theAdmin)
@@ -666,6 +701,49 @@ def ViewStatement():
             else:
                 return "You have entered wrong ID try again later"
     return redirect(url_for('Login'))
+
+
+
+@app.route('/notificationViewed', methods = ['POST','GET'])
+def ChangeNotification():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            notify = request.form.get('notify')
+            notify = "0"
+            current_user = UserAccount.query.get(user_id)
+
+            current_user.notification = notify
+            db.session.add(current_user)
+            db.session.commit()
+                                
+            user_role = UserAccount.query.get(user_id).role
+            my_role = user_role.role_name
+            role_id = session.get('role')
+            if role_id != 1:
+                no_msg = "no notification"
+                return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+            else:
+                no_msg = "no notification"
+                return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/manageUser')
+def manageUser():
+    if 'id' in session and 'role' in session:
+        user_id = session.get('id')
+        role_id = session.get('role')
+        if role_id == 1:
+            current_user = UserAccount.query.get(user_id)
+            user_role = UserAccount.query.get(user_id).role
+            my_role = user_role.role_name
+            return render_template("admin_home.html",user = current_user, my_role=my_role)
+    return redirect(url_for('Login'))
+
+@app.route('/account/change_pass')
+def ChangePass():
+    return render_template('change_pass.html')
     
 
 if __name__ == "__main__":

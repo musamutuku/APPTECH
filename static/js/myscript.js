@@ -230,16 +230,60 @@ function lowCaseLn(){
 function showIcon(){
     document.getElementById('notify-name').style.display = "block";
     document.getElementById('pic-icon').style.display = "none";
+    document.getElementById('notify-icon').style.display = "none";
+    document.getElementById('notify-div').style.display = "none";
+
 }
 function showNotify(){
     document.getElementById('notify-div').style.display = "block";
     document.getElementById('notify-icon').style.display = "none";
+    document.getElementById('pic-icon').style.display = "none";
+    document.getElementById('notify-name').style.display = "none";
 }
 function closeNotify(){
     document.getElementById('notify-div').style.display = "none";
     document.getElementById('notify-icon').style.display = "block"
+    document.getElementById('pic-icon').style.display = "block";
+    document.getElementById('notify-name').style.display = "none";
+}
+function closeNotify2(){
+    document.getElementById('notify-div').style.display = "none";
+    document.getElementById('notify-icon').style.display = "block"
+    document.getElementById('pic-icon').style.display = "block";
+    document.getElementById('notify-name').style.display = "none";
+    document.getElementById('notifybtn').click();
 }
 function closeName(){
     document.getElementById('notify-name').style.display = "none";
     document.getElementById('pic-icon').style.display = "block";
+    document.getElementById('notify-icon').style.display = "block";
+    document.getElementById('notify-div').style.display = "none";
 }
+
+// search user
+function searchUser(){
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("search-input");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("t-two");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td") ; 
+        for(j=0 ; j<td.length ; j++)
+        {
+          let tdata = td[j] ;
+            if (tdata) {
+                if (tdata.innerHTML.toUpperCase().indexOf(filter)>-1) {
+                    tr[i].style.display = "";
+                    break;
+                 }
+                else {
+                    tr[i].style.display = "none";
+                    // document.getElementById('trshow').innerHTML = "No any match!"
+                }
+            }  
+          } 
+        } 
+     }

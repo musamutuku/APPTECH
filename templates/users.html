@@ -23,7 +23,7 @@
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
             <p class="members-title">Members</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" id="id-No" autocomplete="off"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()"></div>
+            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()"></div>
             <table id="t-one">
                 <tr id="row-1">
                     <td>USER ID</td>
@@ -38,7 +38,7 @@
                 <table id="t-two">
                 {% for user in users %}
                     <tr id="user-row">
-                        <td>{{user.id}}</td>
+                        <td><a onclick="manage()">{{user.id}}</a></td>
                         <td>{{user.username}}</td>
                         <td>{{user.firstname}}</td>
                         <td>{{user.lastname}}</td>
@@ -47,44 +47,41 @@
                     </tr>
                  {% endfor %}
                 </table>
+                <form action="/admin/manageUser" method="POST">
+                    <input type="number" id="manage-input">
+                    <button type="submit" id="managebtn">submit</button>
+                </form>
             </div>
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_info">Back</a></div>
         </div>
         <p id="trshow"></p>
+        <script>
+            function manage(){
+                var input, table, tr, td, i;
+                input = document.getElementById("manage-input");
+                table = document.getElementById("t-two");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td") ; 
+                    for(j=0 ; j<td.length ; j++)
+                    {
+                    let tdata = td[j] ;
+                        if (tdata) {
+                            input.value = tdata.innerHTML.clickOk()
+                            }
+                        }  
+                    } 
+                    
+            
+            }
+        </script>
     </div>
         <div class="footer">
             <hr>
             <p>Copyright © 2021. <span>Beannsofts Limited. All rights reserved.</span><span> <a href="#">Follow this link to know about us</a></span></p>
         </div>
     </div>
-    <script>
-        function searchUser(){
-            var input, table, tr, td, i;
-            input = document.getElementById("search-input");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("t-two");
-            tr = table.getElementsByTagName("tr");
-
-            // Loop through all table rows, and hide those who don't match the search query
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td") ; 
-                for(j=0 ; j<td.length ; j++)
-                {
-                let tdata = td[j] ;
-                if (tdata) {
-                    if (tdata.innerHTML.toUpperCase() == filter) {
-                        tr[i].style.display = "";
-                        document.getElementById('trshow').innerHTML = "no user with such ID";
-                        break;
-                    }else {
-                        tr[i].style.display = "none";
-                    }
-                } 
-                }
-            }
-            }
-
-    </script>
     <div id="logout-box" style="display: none;">
         <span onclick="closeLog()">X</span>
         <p>Do you want to log out of the System?</p>

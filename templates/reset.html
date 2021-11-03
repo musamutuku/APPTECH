@@ -18,13 +18,25 @@
             {{msg2}}
             {%endif%}
         </p>
-        <form action="/reset" method="POST">
-            <label>Enter your username</label><br>
-            <input type="text" name="username" required><br><br>
-            <label>Enter your ID</label><br>
-            <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
-            <input type="submit" value="SUBMIT">
-        </form>
+        <div>
+            position: absolute;
+            width: 705px;
+            height: 432px;
+            left: 401px;
+            top: 290px;
+
+            background: rgba(86, 153, 157, 0.5);
+            border: 1px solid #C4C4C4;
+            box-sizing: border-box;
+            border-radius: 10px;
+            <form action="/reset" method="POST">
+                <label>Enter your username</label><br>
+                <input type="text" name="username" required><br><br>
+                <label>Enter your ID</label><br>
+                <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
+                <input type="submit" value="SUBMIT">
+            </form>
+        </div>
     </div>
 </body>
 </html>

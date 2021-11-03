@@ -65,16 +65,18 @@
                     <button class="changebtn pinset" id="changePin">Change PIN</button>
                 </div>
             </div>
-            {%endif%} 
-            </div>  
+            {%endif%}
+            </div> 
             <div>
                 <div class="viewdiv"><p>CHANGE PASSWORD</p></div>
-                <form action="/account/edit_pass" class="stateform" method="POST">
-                    <label id="reset-label">ENTER CURRENT PASSWORD</label>
+                <form action="/account/change_pass" class="stateform" method="POST">
+                    <label>ENTER NEW PASSWORD</label><br><br>
+                    <label id="reset-label">CONFIRM NEW PASSWORD</label>
+                    <input type="number" name="id_no" required>
                     <input type="password" name="pin_no" id="reset-pass-input" required>
                     <button type="submit">SUBMIT</button>
-                </form>
-            </div>  
+                </form>    
+            </div>    
         </div>
     </div>
         <div class="footer">

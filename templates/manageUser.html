@@ -22,37 +22,31 @@
         </u>
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
-            <p class="members-title">Agents</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input"  id="id-No"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()"></div>
-            <table id="t-one">
-                <tr id="row-1">
-                    <td>USER ID</td>
-                    <td>USERNAME</td>
-                    <td>F_NAME</td>
-                    <td>L_NAME</td>
-                    <td>ACC_BAL</td>
-                    <td>FLOAT_BAL</td>
-                    <td>PHONE NO</td>
-                </tr>
-            </table>
-            <div class="user-all">
-                <table id="t-two">
-                    {% for user in users %}
-                    <tr id="user-row">
-                        <td><a href="/admin/manageUser">{{user.id}}</a></td>
-                        <td>{{user.username}}</td>
-                        <td>{{user.firstname}}</td>
-                        <td>{{user.lastname}}</td>
-                        <td>{{user.account_balance}}</td>  
-                        <td>{{user.float_balance}}</td>  
-                        <td>{{user.phone}}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <p class="members-title">Members</p>
+            {%if user %}
+            <div>
+                <p>MEMBER ID: {{user.id}}</p>
+                <p>NAME: {{user.firstname}} <span>{{user.lastname}}</span></p>
+                <div class="photodiv">
+                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
+                </div>
+                <div><a>Deactivate Account</a></div>
+                <div><a>Change Role</a></div>
             </div>
+            {%endif%}
+            {%if agent %}
+            <div>
+                <p>MEMBER ID: {{agent.id}}</p>
+                <p>NAME: {{agent.firstname}} <span>{{agent.lastname}}</span></p>
+                <div class="photodiv">
+                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
+                </div>
+                <div><a>Deactivate Account</a></div>
+                <div><a>Change Role</a></div>
+            </div>
+            {%endif%}
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_info">Back</a></div>
         </div>
-        <p id="trshow"></p>
     </div>
         <div class="footer">
             <hr>
