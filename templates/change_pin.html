@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saving App- Reset password</title>
+    <title>Saving App- Reset PIN</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
     <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
@@ -18,11 +18,11 @@
                 {%endif%}
             </p>
             <div id="stateDiv" style="position: absolute;top: 100px;left: -90px;">
-                <div class="viewdiv"><p>CHANGE PASSWORD</p></div>
-                <form action="/account/pass_reset" class="stateform" method="POST">
-                    <label style="top: 70px;">ENTER NEW PASSWORD</label><br><br>
-                    <label id="reset-label" style="top: 130px;">CONFIRM NEW PASSWORD</label>
-                    <input type="password" name="password" oninput="hideErrorMsg()" required>
+                <div class="viewdiv"><p>CHANGE PIN</p></div>
+                <form action="/account/pin_reset" class="stateform" method="POST">
+                    <label style="top: 70px;">ENTER NEW PIN</label><br><br>
+                    <label id="reset-label" style="top: 130px;">CONFIRM NEW PIN</label>
+                    <input type="password" name="pin" oninput="hideErrorMsg()" required>
                     <input type="password" name="confirm" id="reset-pass-input" oninput="hideErrorMsg()" required>
                     <button type="submit">SUBMIT</button>
                 </form>    

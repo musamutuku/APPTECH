@@ -204,7 +204,17 @@ function showHome3(){
     forms.style.display = "none";
     homepg.style.display = "block";
 }
-
+function showDepo(){
+    document.getElementById("depobtn").click();
+}
+function showStatement(){
+    document.getElementById('content').style.display = "none";
+    document.getElementById('stateDiv').style.display = "block";
+    document.getElementById('transactionbtn').style.background = "#C4C4C4";
+    document.getElementById('transactionlink').style.pointerEvents = "all";
+    document.getElementById('statebtn').style.background = "#FFFFFF";
+    document.getElementById('backto-div').style.display = "none";
+}
 
 // user_details page script
 function editName(){
@@ -223,6 +233,9 @@ function lowCaseFn(){
 function lowCaseLn(){
     var lname = document.getElementById("edit-lname");
     lname.value = lname.value.charAt(0).toUpperCase() + lname.value.slice(1);
+}
+function hideErrorMsg(){
+    document.getElementById('reset-error').style.display = "none";
 }
 
 

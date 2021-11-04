@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saving App-Account Statement</title>
+    <title>Saving App-Account Deposits</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
     <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -27,44 +25,51 @@
         <p class="p1 accSave">Savings account</p>
         <div class="homepage userpage" style="height: 370px;">
             <div class="accBtn">
-                <a href="/home/account"><button id="transactionbtn" style="background: #C4C4C4;">Transactions</button></a>
-                <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
+                <a href="/home/account" id="transactionlink" style="pointer-events: none;"><button id="transactionbtn" style="background: #FFFFFF;">Transactions</button></a>
+                <button id="statebtn" style="background: #C4C4C4;" onclick="showStatement()">Account Statement</button>
             </div>
             <div id="content">
                 <div class="t-onediv">
                     <table id="t-one" style="top: 0px;left: 0px;">
                         <tr id="row-a">
-                            <td>Transaction Date</td>
-                            <td>Reference No</td>
-                            <td>Description</td>
-                            <td>Deposits</td>
-                            <td>Withdrawals</td>
-                            <td>Status</td>
+                            <td style="background: #e5ece5;color: rgba(8, 8, 61);border-right: 1px solid rgb(66, 65, 65);">Transaction Date</td>
+                            <td style="background: #e5ece5;color: rgb(8, 8, 61);border-right: 1px solid rgb(66, 65, 65);">Reference No</td>
+                            <td style="background: #e5ece5;color: rgb(8, 8, 61);border-right: 1px solid rgb(66, 65, 65);">Amount</td>
+                            <td style="background: #e5ece5;color: rgb(8, 8, 61);border-right: 1px solid rgb(66, 65, 65)">Remove from list</td>
                         </tr>
                     </table>
                 </div>
                 <div class="user-all" style="top: 167px;">
-                    {% if no_tx %}
-                    <p id="no_transaction">{{no_tx}}</p>
+                    {% if no_dp %}
+                    <p id="no_transaction">{{no_dp}}</p>
                      {%endif%}
                     <table id="t-two">
-                        {% for transaction in transactions %}
+                        {% for deposit in deposits %}
                         <tr>
-                            <td class="row-b">{{transaction.date}}</td>
-                            <td class="row-b">{{transaction.ref_no}}</td>
-                            <td id="td-one" style="border-right: 1px solid #FFFFFF;">Transaction performed in account {{transaction.id_no}}. Ref# {{transaction.ref_no}}</td>
-                            <td class="row-b">{{transaction.deposit}}</td>
-                            <td class="row-b">{{transaction.withdrawal}}</td>  
-                            <td class="row-b">{{transaction.status}}</td>
+                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.date}}</td>
+                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.ref_no}}</td>
+                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.amount}}</td>
+                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);"><button style="color: red;width:80px;">Delete</button></td>
                         </tr>
                         {% endfor %}
-                    </table>
+                    </table>   
                 </div>
             </div>
-            <div id="editor"></div>
-            {% if download %}
-            <span style="display: none;">{{download}}</span><button id="downloadbtn">DOWNLOAD</button>
-            {%endif%}
+            <div id="stateDiv" style="display: none;position: absolute;top: 150px;">
+                <div class="viewdiv"><p>VIEW ACCOUNT STATEMENT</p></div>
+                <form action="/account/statement" class="stateform" method="POST">
+                    <label>ENTER ID NO</label><br><br>
+                    <label id="reset-label">ENTER PIN</label>
+                    <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
+                    <input type="password" name="pin_no" id="reset-pass-input" required>
+                    <button type="submit">SUBMIT</button>
+                </form>    
+            </div>
+            <form action="/account/deposits" method="POST" style="display: none;">
+                <input type="text">
+                <button id="depobtn" type="submit">Submit</button>
+            </form>
+            <div class="backto-div" id="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/home/account" id="clicklink">Back</a></div>
         </div>
     </div>
         <div class="footer">
@@ -77,8 +82,9 @@
         <p>Do you want to log out of the System?</p>
         <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
-
-    
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     var doc = new jsPDF();
     var specialElementHandlers = {
@@ -94,6 +100,4 @@
         doc.save('statement.pdf');
     });
 </script>
-</body>
-
 </html>

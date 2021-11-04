@@ -1815,6 +1815,29 @@ td{
 .backto-div a:visited{
     color: #0000FF;
 }
+.reset-div{
+    position: absolute;
+    max-width: 705px;
+    width: 705px;
+    height: 432px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    top: 190px;
+    background: rgba(86, 153, 157, 0.5);
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+.reset-error{
+    color: red;
+    font-weight: bold;
+    position: absolute;
+    left: 118px;
+    top: 130px;
+    font-family: Montserrat;
+    font-size: 12px;
+}
 
 /* ---------media query---------- */
 

@@ -71,6 +71,21 @@ class TransactionAccount(db.Model):
         self.deposit = deposit
         self.withdrawal = withdrawal
         self.status = status
+
+
+class DepositsAccount(db.Model):
+    __tablename__ = "deposits"
+
+    ref_no = db.Column(db.String(15), primary_key=True)
+    id_no = db.Column(db.Integer)
+    date = db.Column(db.String(100))
+    amount = db.Column(db.String(100))
+
+    def __init__(self, ref_no, id_no, date, amount):
+        self.ref_no = ref_no
+        self.id_no = id_no
+        self.date = date
+        self.amount = amount
     
 
 @app.route('/')
@@ -210,10 +225,10 @@ def Reset():
                 db.session.commit()
                 return "Your password has been reset. Your new password is <u><b>{}</b></u> <br> Login and change the password for security purposes.".format(new_pass)
             else:
-                msg2 = "Enter a valid username. if you forgot your username contact the admin"
+                msg2 = "Enter a valid username. If you forgot your username contact the Admin!"
                 return render_template('reset.html', msg2=msg2)
         else:
-            msg= "unregistered ID"
+            msg= "You have entered unregistered ID!"
             return render_template('reset.html',msg=msg)
     return render_template('reset.html')
 
@@ -350,58 +365,46 @@ def PhotoUpload():
 @app.route('/account/check_balance', methods=['POST','GET'])
 def CheckBalance():
     if request.method == "POST":
-        if 'id' in session:
+        if 'id' in session and 'role' in session:
             user_id = session.get('id')
             id = int(request.form.get('id_no'))
             pin = request.form.get('pin_no')
+            user_role = session.get('role')
             if user_id == id:
                 current_user = UserAccount.query.filter_by(id=id).first()
                 if current_user is not None:
-                    if current_user.role_id != 1:
-                        result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
-                        if result:
-                            if current_user.role_id == 3:
-                                time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
-                                return render_template('user_balance.html', user = current_user, the_time = time)
-                            elif current_user.role_id == 2:
-                                time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
-                                return render_template('user_balance.html', agent = current_user, the_time = time)
+                    result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
+                    if result:
+                        if current_user.role_id == 3:
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            return render_template('user_balance.html', user = current_user, the_time = time)
+                        elif current_user.role_id == 2:
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            return render_template('user_balance.html', agent = current_user, the_time = time)
                         else:
+                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
+                            return render_template('admin_balance.html', admin = current_user, the_time = time)
+                    else:
+                        if current_user.role_id != 1:
                             pin_mismatch = "Sorry! You have entered wrong PIN. Try again."
                             return render_template('user_balance.html', errored_pin_msg = pin_mismatch)
-                else:
-                    not_found_msg = "Invalid ID! Please confirm your ID number and try again."
-                    return render_template('user_balance.html', not_found = not_found_msg )
-            else:
-                not_found_msg = "Invalid ID! Please confirm your ID number and try again."
-                return render_template('user_balance.html', not_found = not_found_msg )
-    return redirect(url_for('Login'))
-
-
-@app.route('/admin/check_balance', methods=['POST','GET'])
-def CheckBalanceAdmin():
-    if request.method == "POST":
-        if 'id' in session:
-            user_id = session.get('id')
-            id = int(request.form.get('id_no'))
-            pin = request.form.get('pin_no')
-            current_admin = UserAccount.query.filter_by(id=id).first()
-            if user_id == id:
-                if current_admin is not None:
-                    if current_admin.role_id == 1:
-                        result = bcrypt.checkpw(pin.encode(), current_admin.pin.encode())
-                        if result:
-                            time = datetime.datetime.now().strftime("%d/%m/%Y at %I:%M %p")
-                            return render_template('admin_balance.html', admin = current_admin, the_time = time)
                         else:
                             pin_mismatch = "Sorry! You have entered wrong PIN. Try again."
                             return render_template('admin_balance.html', errored_pin_msg = pin_mismatch)
                 else:
+                    if current_user.role_id != 1:
+                        not_found_msg = "Invalid ID! Please confirm your ID number and try again."
+                        return render_template('user_balance.html', not_found = not_found_msg )
+                    else:
+                        not_found_msg = "Invalid ID! Please confirm your ID number and try again."
+                        return render_template('admin_balance.html', not_found = not_found_msg)
+            else:
+                if user_role != 1:
+                    not_found_msg = "Invalid ID! Please confirm your ID number and try again."
+                    return render_template('user_balance.html', not_found = not_found_msg )
+                else:
                     not_found_msg = "Invalid ID! Please confirm your ID number and try again."
                     return render_template('admin_balance.html', not_found = not_found_msg)
-            else:
-                not_found_msg = "Invalid ID! Please confirm your ID number and try again."
-                return render_template('admin_balance.html', not_found = not_found_msg)
     return redirect(url_for('Login'))
 
 
@@ -454,6 +457,10 @@ def Deposit():
 
                                 transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
                                 db.session.add(transaction)
+                                db.session.commit()
+
+                                deposits = DepositsAccount(refNo,theID,time,amount)
+                                db.session.add(deposits)
                                 db.session.commit()
                                 return render_template('user_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAgent=theAgent)
                             else:
@@ -520,6 +527,10 @@ def DepositAdmin():
                                 
                                 transaction = TransactionAccount(refNo,theID,time,amount,withdrawal='',status='SUCCESS')
                                 db.session.add(transaction)
+                                db.session.commit()
+
+                                deposits = DepositsAccount(refNo,theID,time,amount)
+                                db.session.add(deposits)
                                 db.session.commit()
                                 return render_template('admin_balance.html', the_user=one_user, time=time, amount=amount, refNo=refNo, theID=theID, theAdmin=theAdmin)
                             else:
@@ -703,6 +714,21 @@ def ViewStatement():
     return redirect(url_for('Login'))
 
 
+@app.route('/account/deposits', methods =['POST','GET'])
+def ViewDeposit():
+    if request.method == 'POST':
+        user_depo = request.form.get('depo')
+        if 'id' in session and 'role' in session:
+            role_id = session.get('role')
+            user_id = session.get('id') 
+            if role_id != 1:
+                deposits = DepositsAccount.query.filter_by(id_no=user_id).all()
+                if(len(deposits)< 1):
+                    no_dp = "You have zero deposit!"
+                    return render_template('deposits.html', no_dp = no_dp)
+                return render_template('deposits.html', deposits = deposits)
+    return redirect(url_for('Login'))
+
 
 @app.route('/notificationViewed', methods = ['POST','GET'])
 def ChangeNotification():
@@ -741,9 +767,88 @@ def manageUser():
             return render_template("admin_home.html",user = current_user, my_role=my_role)
     return redirect(url_for('Login'))
 
-@app.route('/account/change_pass')
-def ChangePass():
-    return render_template('change_pass.html')
+
+@app.route('/account/edit_pass')
+def EditPass():
+    return render_template('edit_pass.html')
+    
+    
+@app.route('/account/change_pass', methods= ['POST','GET'])
+def changePass():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            passwd = request.form.get('password')
+
+            current_user = UserAccount.query.get(user_id)
+            result = bcrypt.checkpw(passwd.encode(), current_user.password.encode())
+            if result:
+                return render_template('change_pass.html')
+            msg= "You have entered wrong Password!"
+            return render_template('edit_pass.html', msg=msg)
+    return redirect(url_for('Login'))
+    
+
+@app.route('/account/pass_reset', methods= ['POST','GET'])
+def PassChanged():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            passwd = request.form.get('password')
+            confirm = request.form.get('confirm')
+
+            current_user = UserAccount.query.get(user_id)
+            if passwd == confirm:
+                encrpted_pass =  bcrypt.hashpw(passwd.encode(), bcrypt.gensalt(14))
+                current_user.password = encrpted_pass.decode()
+                db.session.add(current_user)
+                db.session.commit()
+                return "Your Password has been reset successfully. You can now login with your new Password."
+            msg2= "Password does not match!"
+            return render_template('change_pass.html', msg2=msg2)
+    return redirect(url_for('Login'))
+
+
+@app.route('/account/edit_pin')
+def EditPin():
+    return render_template('edit_pin.html')
+    
+    
+@app.route('/account/change_pin', methods= ['POST','GET'])
+def changePin():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            pin = request.form.get('pin')
+
+            current_user = UserAccount.query.get(user_id)
+            result = bcrypt.checkpw(pin.encode(), current_user.pin.encode())
+            if result:
+                return render_template('change_pin.html')
+            msg= "You have entered wrong PIN!"
+            return render_template('edit_pin.html', msg=msg)
+    return redirect(url_for('Login'))
+    
+
+@app.route('/account/pin_reset', methods= ['POST','GET'])
+def PinChanged():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            pin = request.form.get('pin')
+            confirm = request.form.get('confirm')
+
+            current_user = UserAccount.query.get(user_id)
+            if pin == confirm:
+                encrpted_pin =  bcrypt.hashpw(pin.encode(), bcrypt.gensalt(14))
+                current_user.pin = encrpted_pin.decode()
+                db.session.add(current_user)
+                db.session.commit()
+                return "Your PIN has been reset successfully. You can now transact with your new PIN."
+            msg2= "PIN does not match!"
+            return render_template('change_pin.html', msg2=msg2)
+    return redirect(url_for('Login'))
+
     
 
 if __name__ == "__main__":

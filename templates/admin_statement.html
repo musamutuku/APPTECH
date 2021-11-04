@@ -45,8 +45,8 @@
                     {% if no_tx %}
                      {{no_tx}}
                      {%endif%}
-                    {% for transaction in transactions %}
                     <table id="t-two" onload="download()">
+                        {% for transaction in transactions %}
                         <tr>
                             <td class="row-b">{{transaction.date}}</td>
                             <td class="row-b">{{transaction.ref_no}}</td>
@@ -55,8 +55,8 @@
                             <td class="row-b">{{transaction.withdrawal}}</td>  
                             <td class="row-b">{{transaction.status}}</td>
                         </tr>
+                        {% endfor %}
                     </table>
-                    {% endfor %}
                 </div>
             </div>
             <div id="editor"></div>

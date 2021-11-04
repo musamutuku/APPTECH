@@ -36,7 +36,7 @@
                     <P style="margin-left: 8px;">WITHDRAW CASH</P>
                 </div>
                 <div class="btns withdraw">
-                    <button onclick="hideShow22()">D</button>
+                    <button onclick="showDepo()">D</button>
                     <p style="margin-left: 14px;">CASH DEPOSITS</p>
                 </div>
             </div>
@@ -50,6 +50,10 @@
                     <button type="submit">SUBMIT</button>
                 </form>    
             </div>
+            <form action="/account/deposits" method="POST" style="display: none;">
+                <input type="text">
+                <button id="depobtn" type="submit">Submit</button>
+            </form>
         </div>
         <div class="formpage" id="formpage" style="display: none;">
             <div class="checkbal-form" id="checkbal-form">

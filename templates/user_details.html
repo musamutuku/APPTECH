@@ -22,7 +22,7 @@
         </u>
         <div class="homepage userpage">
             <p class="p1">User details</p>
-            <div style="display: none;">
+            <div>
                 {%if user %}
             <div class="topuser-div"><p>Personal details</p></div>
             <div class="userdata">
@@ -61,20 +61,12 @@
                         <input type="password" value="********" disabled>
                         <input type="password" value="********" id="pin-theInput" disabled>
                     </form>
-                    <button class="changebtn passwd" id="changePass">Change Password</button>
-                    <button class="changebtn pinset" id="changePin">Change PIN</button>
+                    <a href="/account/edit_pass"><button class="changebtn passwd" id="changePass">Change Password</button></a>
+                    <a href="/account/edit_pin"><button class="changebtn pinset" id="changePin">Change PIN</button></a>
                 </div>
             </div>
             {%endif%} 
-            </div>  
-            <div>
-                <div class="viewdiv"><p>CHANGE PASSWORD</p></div>
-                <form action="/account/edit_pass" class="stateform" method="POST">
-                    <label id="reset-label">ENTER CURRENT PASSWORD</label>
-                    <input type="password" name="pin_no" id="reset-pass-input" required>
-                    <button type="submit">SUBMIT</button>
-                </form>
-            </div>  
+            </div>   
         </div>
     </div>
         <div class="footer">

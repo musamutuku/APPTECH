@@ -12,21 +12,19 @@
 <body>
     <div>
         <div class="reset-div">
-            <p class="reset-error" id="reset-error" style="left: 235px;">
-                {% if msg2 %}
-                {{msg2}}
-                {%endif%}
-            </p>
             <div id="stateDiv" style="position: absolute;top: 100px;left: -90px;">
                 <div class="viewdiv"><p>CHANGE PASSWORD</p></div>
-                <form action="/account/pass_reset" class="stateform" method="POST">
-                    <label style="top: 70px;">ENTER NEW PASSWORD</label><br><br>
-                    <label id="reset-label" style="top: 130px;">CONFIRM NEW PASSWORD</label>
-                    <input type="password" name="password" oninput="hideErrorMsg()" required>
-                    <input type="password" name="confirm" id="reset-pass-input" oninput="hideErrorMsg()" required>
+                <form action="/account/change_pass" class="stateform" method="POST">
+                    <label style="top: 92px;">ENTER CURRENT PASSWORD</label><br><br>
+                    <input type="password" name="password" style="top:92px;" oninput="hideErrorMsg()" required>
                     <button type="submit">SUBMIT</button>
-                </form>    
+                </form>   
             </div>
+            <p class="reset-error" id="reset-error" style="top: 150px;left: 235px;">
+                {% if msg %}
+                {{msg}}
+                {%endif%}
+            </p> 
         </div>
     </div>
 </body>

@@ -5,37 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving App- Reset password</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
 </head>
 <body>
     <div>
-        <p style="color: red;font-weight: bold;">
+        <div class="reset-div">
             {% if msg %}
-            {{msg}}
+            <p class="reset-error" id="reset-error">   
+                {{msg}}       
+            </p>
             {%endif%}
-        </p>
-        <p style="color: red;font-weight: bold;">
-            {% if msg2 %}
-            {{msg2}}
-            {%endif%}
-        </p>
-        <div>
-            position: absolute;
-            width: 705px;
-            height: 432px;
-            left: 401px;
-            top: 290px;
 
-            background: rgba(86, 153, 157, 0.5);
-            border: 1px solid #C4C4C4;
-            box-sizing: border-box;
-            border-radius: 10px;
-            <form action="/reset" method="POST">
-                <label>Enter your username</label><br>
-                <input type="text" name="username" required><br><br>
-                <label>Enter your ID</label><br>
-                <input type="number" name="id_no" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required>
-                <input type="submit" value="SUBMIT">
-            </form>
+            {% if msg2 %}
+            <p class="reset-error" id="reset-error">    
+                {{msg2}}  
+            </p>
+            {%endif%}
+            
+            <div id="stateDiv" style="position: absolute;top: 100px;left: -90px;">
+                <div class="viewdiv"><p>RESET PASSWORD</p></div>
+                <form action="/reset" class="stateform" method="POST">
+                    <label>ENTER USERNAME</label><br><br>
+                    <label id="reset-label">ENTER ID NO</label>
+                    <input type="text" name="username" oninput="hideErrorMsg()" required>
+                    <input type="number" name="id_no" id="reset-pass-input" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" oninput="hideErrorMsg()" required>
+                    <button type="submit">SUBMIT</button>
+                </form>    
+            </div>
         </div>
     </div>
 </body>
