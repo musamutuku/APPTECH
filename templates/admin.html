@@ -65,9 +65,9 @@
             </div>
             <div class="checkbal-form the-form" id="depositcash-form">
                 <p id="deposit-topic">DEPOSIT CASH</p>
-                <form action="/admin/deposit" id="form2" method="POST">
+                <form action="/account/deposit" id="form2" method="POST">
                     <label>Enter Admin ID:</label><br>
-                    <input type="number" name="admin_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
+                    <input type="number" name="agent_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter ID Number(user):</label><br>
                     <input type="number" name="user_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter PIN(admin):</label><br>
@@ -80,7 +80,7 @@
             </div>
             <div class="checkbal-form the-form" id="withdrawcash-form">
                 <p id="withdraw-topic">WITHDRAW CASH</p>
-                <form action="/admin/withdraw" id="form3" method="POST">
+                <form action="/account/withdraw" id="form3" method="POST">
                     <label>Enter Agent ID:</label><br>
                     <input type="number" name="agent_id" onkeydown="if(this.value.length==9 && event.keyCode!=8) return false;" autocomplete="off" required><br><br>
                     <label>Enter ID Number:</label><br>
