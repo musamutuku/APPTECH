@@ -215,6 +215,13 @@ function showStatement(){
     document.getElementById('statebtn').style.background = "#FFFFFF";
     document.getElementById('backto-div').style.display = "none";
 }
+// function generatePDF(){
+//     const element = document.getElementById('content');
+
+//     html2pdf()
+//     .from(element)
+//     .save('state.pdf');
+// }
 
 // user_details page script
 function editName(){
@@ -237,7 +244,6 @@ function lowCaseLn(){
 function hideErrorMsg(){
     document.getElementById('reset-error').style.display = "none";
 }
-
 
 // show notification and profile icon
 function showIcon(){

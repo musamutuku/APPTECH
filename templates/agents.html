@@ -23,7 +23,7 @@
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
             <p class="members-title">Agents</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input"  id="id-No"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()"></div>
+            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input"  id="id-No"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
             <table id="t-one">
                 <tr id="row-1">
                     <td>USER ID</td>
@@ -64,5 +64,14 @@
         <p>Do you want to log out of the System?</p>
         <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
+    <script>
+        var input = document.getElementById("search-input");
+        input.addEventListener("keyup", function(event) {
+          if (event.keyCode === 13) {
+           event.preventDefault();
+           document.getElementById("search-icon").click();
+          }
+        });
+    </script>
 </body>
 </html>
