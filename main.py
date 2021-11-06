@@ -92,7 +92,7 @@ class DepositsAccount(db.Model):
 def index():
   return render_template('index.html')
 
-@app.route('/admin/system_users')
+@app.route('/admin/system_members')
 def ViewUsers():
     if 'id' in session and 'role' in session:
         role_id = session.get('role')
@@ -687,6 +687,16 @@ def manageUser():
                 return render_template('manage_user.html', agent=current_user)
             else:
                 return render_template('manage_user.html', user=current_user)               
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/updateFloat', methods= ['POST','GET'])
+def updateFloat():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id')
+            current_user = UserAccount.query.get(id)
+            return render_template('manage_user.html', agent_float=current_user)              
     return redirect(url_for('Login'))
 
 

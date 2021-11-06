@@ -1703,7 +1703,7 @@ td{
     position: absolute;
     text-align: center;
     width: 150px;
-    height: 32px;
+    height: 23px;
     left: 8px;
     bottom: 7px;
     background: #1FC9EE;
@@ -1717,7 +1717,7 @@ td{
     position: absolute;
     text-align: center;
     width: 150px;
-    height: 32px;
+    height: 23px;
     right: 8px;
     bottom: 7px;
     background: #1FC9EE;
@@ -1728,7 +1728,7 @@ td{
     color: #FF12AE;
 }
 .deAccount-div, .role-div{
-    padding-top: 10px;
+    padding-top: 5px;
 }
 .user-title{
     position: absolute;

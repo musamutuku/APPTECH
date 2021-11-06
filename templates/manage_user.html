@@ -33,7 +33,9 @@
                 <div class="deAccount-div"><a>Deactivate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_members">Back</a></div>
             {%endif%}
+
             {%if agent %}
             <p class="members-title">Agents</p>
             <div class="deactivate-div">
@@ -45,8 +47,22 @@
                 <div class="deAccount-div"><a>Deactivate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_agents">Back</a></div>
             {%endif%}
-            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_info">Back</a></div>
+
+            {%if agent_float %}
+            <p class="members-title">Agents</p>
+            <div class="deactivate-div">
+                <p class="user-title">AGENT ID: <span> {{agent_float.id}}</span></p>
+                <p class="user-title name-title">FLOAT_BAL: <span> {{agent_float.float_balance}}</span></p>
+                <div class="photodiv" style="top: 27px;right: 22px;">
+                    <img src="{{ url_for('static', filename='uploads/'+agent_float.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
+                </div>
+                <div class="role-div" style="right: 30px; width: 297px;"><a>UPDATE FLOAT BALANCE</a></div>
+            </div>
+            <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_agents">Back</a></div>
+            {%endif%}
+            
         </div>
     </div>
         <div class="footer">

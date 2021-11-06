@@ -308,9 +308,7 @@ function searchUser(){
 
 // manage users
 function manageUser(){
-    var input = document.getElementById("manage-input");
     var table = document.getElementById("t-two");
-
     for (var i = 0; i < table.rows.length; i++) {
         var firstCol = table.rows[i].cells[0];
         btn = firstCol.childNodes[0];
@@ -319,5 +317,19 @@ function manageUser(){
             input.value = event.target.innerHTML;
             var input = document.getElementById("managebtn").click();
         });      
+    }
 }
+
+// update float
+function updateFloat(){
+    var table = document.getElementById("t-two");
+    for (var i = 0; i < table.rows.length; i++) {
+        var firstCol = table.rows[i].cells[5];
+        btn = firstCol.childNodes[0];
+        btn.addEventListener("click", function(event){
+            var input = document.getElementById("float-input");
+            input.value = event.target.innerHTML;
+            var input = document.getElementById("floatbtn").click();
+        });      
+    }
 }

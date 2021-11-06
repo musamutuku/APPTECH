@@ -44,7 +44,7 @@
                         <td>{{user.firstname}}</td>
                         <td>{{user.lastname}}</td>
                         <td>{{user.account_balance}}</td>  
-                        <td>{{user.float_balance}}</td>  
+                        <td><button onclick="getIndex()" id="get-user" title="double click to update float">{{user.float_balance}}</button></td>  
                         <td>{{user.phone}}</td>
                     </tr>
                     {% endfor %}
@@ -52,6 +52,10 @@
                 <form action="/admin/manageUser" method="POST" style="display: none;">
                     <input type="number" id="manage-input" name="id">
                     <button type="submit" id="managebtn">submit</button>
+                </form>
+                <form action="/admin/updateFloat" method="POST" style="display: none;">
+                    <input type="number" id="float-input" name="id">
+                    <button type="submit" id="floatbtn">submit</button>
                 </form>
             </div>
             <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
@@ -68,6 +72,7 @@
         <p>Do you want to log out of the System?</p>
         <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
+
     <script>
         var input = document.getElementById("search-input");
         input.addEventListener("keyup", function(event) {
@@ -76,6 +81,27 @@
            document.getElementById("search-icon").click();
           }
         });
+    </script>
+    <script>
+        function getIndex(){
+            var table = document.getElementById('t-two');
+            const cells = document.querySelectorAll('td');
+            cells.forEach(cell => {
+            cell.addEventListener('click', function(e){
+                var x = cell.closest('tr').rowIndex;
+                var table = document.getElementById("t-two");
+                for (var i = 0; i < table.rows.length; i++) {
+                    var firstCol = table.rows[x].cells[0];
+                    btn = firstCol.childNodes[0].innerHTML;
+                    var input = document.getElementById("float-input");
+                    input.value = btn;
+                    var input = document.getElementById("floatbtn").click();
+                    break;      
+                }
+            })
+        });
+    }
+        
     </script>
 </body>
 </html>
