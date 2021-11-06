@@ -38,7 +38,7 @@
                 <table id="t-two">
                 {% for user in users %}
                     <tr id="user-row">
-                        <td><a onclick="manage()">{{user.id}}</a></td>
+                        <td><button onclick="manageUser()" id="get-user" title="double click to manage user's account">{{user.id}}</button></td>
                         <td>{{user.username}}</td>
                         <td>{{user.firstname}}</td>
                         <td>{{user.lastname}}</td>
@@ -47,35 +47,14 @@
                     </tr>
                  {% endfor %}
                 </table>
-                <!-- <form action="/admin/manageUser" method="POST">
-                    <input type="number" id="manage-input">
+                <form action="/admin/manageUser" method="POST" style="display: none;">
+                    <input type="number" id="manage-input" name="id">
                     <button type="submit" id="managebtn">submit</button>
-                </form> -->
+                </form>
             </div>
             <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
         </div>
         <p id="trshow"></p>
-        <script>
-            function manage(){
-                var input, table, tr, td, i;
-                input = document.getElementById("manage-input");
-                table = document.getElementById("t-two");
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td") ; 
-                    for(j=0 ; j<td.length ; j++)
-                    {
-                    let tdata = td[j] ;
-                        if (tdata) {
-                            input.value = tdata.innerHTML.clickOk()
-                            }
-                        }  
-                    } 
-                    
-            
-            }
-        </script>
     </div>
         <div class="footer">
             <hr>

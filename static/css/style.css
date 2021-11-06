@@ -1677,7 +1677,77 @@ td{
     font-size: 15px;
     color: #5E0B9E;
 }
-
+#get-user{
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: #0000FF;
+    border: none;
+    background: none;
+}
+#get-user:hover{
+    cursor: pointer;
+}
+.deactivate-div{
+    position: absolute;
+    width: 359px;
+    height: 247px;
+    left: 445px;
+    top: 154px;
+    background: #EEEBEB;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+.deAccount-div{
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 32px;
+    left: 8px;
+    bottom: 7px;
+    background: #1FC9EE;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #F82929;
+}
+.role-div{
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 32px;
+    right: 8px;
+    bottom: 7px;
+    background: #1FC9EE;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #FF12AE;
+}
+.deAccount-div, .role-div{
+    padding-top: 10px;
+}
+.user-title{
+    position: absolute;
+    width: 162px;
+    height: 23px;
+    left: 30px;
+    top: 35px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #000000;
+}
+.name-title{
+    top: 65px;
+}
+.user-title span{
+    color: #9B1F71;
+}
 /* account statement */
 #row-a td{
     font-family: Roboto;

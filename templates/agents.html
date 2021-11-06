@@ -39,7 +39,7 @@
                 <table id="t-two">
                     {% for user in users %}
                     <tr id="user-row">
-                        <td><a href="/admin/manageUser">{{user.id}}</a></td>
+                        <td><button onclick="manageUser()" id="get-user" title="double click to manage user's account">{{user.id}}</button></td>
                         <td>{{user.username}}</td>
                         <td>{{user.firstname}}</td>
                         <td>{{user.lastname}}</td>
@@ -49,6 +49,10 @@
                     </tr>
                     {% endfor %}
                 </table>
+                <form action="/admin/manageUser" method="POST" style="display: none;">
+                    <input type="number" id="manage-input" name="id">
+                    <button type="submit" id="managebtn">submit</button>
+                </form>
             </div>
             <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
         </div>

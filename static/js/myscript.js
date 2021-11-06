@@ -215,13 +215,6 @@ function showStatement(){
     document.getElementById('statebtn').style.background = "#FFFFFF";
     document.getElementById('backto-div').style.display = "none";
 }
-// function generatePDF(){
-//     const element = document.getElementById('content');
-
-//     html2pdf()
-//     .from(element)
-//     .save('state.pdf');
-// }
 
 // user_details page script
 function editName(){
@@ -311,3 +304,20 @@ function searchUser(){
           } 
         } 
      }
+
+
+// manage users
+function manageUser(){
+    var input = document.getElementById("manage-input");
+    var table = document.getElementById("t-two");
+
+    for (var i = 0; i < table.rows.length; i++) {
+        var firstCol = table.rows[i].cells[0];
+        btn = firstCol.childNodes[0];
+        btn.addEventListener("click", function(event){
+            var input = document.getElementById("manage-input");
+            input.value = event.target.innerHTML;
+            var input = document.getElementById("managebtn").click();
+        });      
+}
+}

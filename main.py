@@ -677,22 +677,24 @@ def ChangeNotification():
     return redirect(url_for('Login'))
 
 
-@app.route('/admin/manageUser')
+@app.route('/admin/manageUser', methods= ['POST','GET'])
 def manageUser():
-    if 'id' in session and 'role' in session:
-        user_id = session.get('id')
-        role_id = session.get('role')
-        if role_id == 1:
-            current_user = UserAccount.query.get(user_id)
-            user_role = UserAccount.query.get(user_id).role
-            my_role = user_role.role_name
-            return render_template("admin_home.html",user = current_user, my_role=my_role)
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id')
+            current_user = UserAccount.query.get(id)
+            if current_user.role_id == 2:
+                return render_template('manage_user.html', agent=current_user)
+            else:
+                return render_template('manage_user.html', user=current_user)               
     return redirect(url_for('Login'))
 
 
 @app.route('/account/edit_pass')
 def EditPass():
-    return render_template('edit_pass.html')
+    if 'id' in session:
+      return render_template('edit_pass.html')
+    return redirect(url_for('Login'))
     
     
 @app.route('/account/change_pass', methods= ['POST','GET'])
@@ -733,7 +735,9 @@ def PassChanged():
 
 @app.route('/account/edit_pin')
 def EditPin():
-    return render_template('edit_pin.html')
+    if 'id' in session:
+        return render_template('edit_pin.html')
+    return redirect(url_for('Login'))
     
     
 @app.route('/account/change_pin', methods= ['POST','GET'])
