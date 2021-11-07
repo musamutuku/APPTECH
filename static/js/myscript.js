@@ -285,8 +285,10 @@ function searchUser(){
     table = document.getElementById("t-two");
     tr = table.getElementsByTagName("tr");
 
+
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
+    
         td = tr[i].getElementsByTagName("td") ; 
         for(j=0 ; j<td.length ; j++)
         {
@@ -298,13 +300,15 @@ function searchUser(){
                  }
                 else {
                     tr[i].style.display = "none";
-                    // document.getElementById('trshow').innerHTML = "No any match!"
                 }
             }  
           } 
         } 
      }
 
+function hideSearchError(){
+    document.getElementById('trshow').innerHTML = "";
+}
 
 // manage users
 function manageUser(){
@@ -320,16 +324,9 @@ function manageUser(){
     }
 }
 
-// update float
-function updateFloat(){
-    var table = document.getElementById("t-two");
-    for (var i = 0; i < table.rows.length; i++) {
-        var firstCol = table.rows[i].cells[5];
-        btn = firstCol.childNodes[0];
-        btn.addEventListener("click", function(event){
-            var input = document.getElementById("float-input");
-            input.value = event.target.innerHTML;
-            var input = document.getElementById("floatbtn").click();
-        });      
-    }
+function deactivateAccount(){
+    var userid = document.getElementById('span-id').innerHTML;
+    var user_input = document.getElementById('input-id').innerHTML;
+    user_input.value = userid;
+    document.getElementById('deactivatebtn').click();
 }

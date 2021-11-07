@@ -23,7 +23,7 @@
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
             <p class="members-title">Members</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
+            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No" oninput="hideSearchError()"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
             <table id="t-one">
                 <tr id="row-1">
                     <td>USER ID</td>

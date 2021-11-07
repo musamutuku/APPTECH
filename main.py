@@ -86,8 +86,13 @@ class DepositsAccount(db.Model):
         self.id_no = id_no
         self.date = date
         self.amount = amount
-    
 
+class InactiveUserAccount(db.Model):   
+    __tablename__ = "inactive_users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100))
+    
 @app.route('/')
 def index():
   return render_template('index.html')
@@ -683,10 +688,32 @@ def manageUser():
         if request.method == "POST":
             id = request.form.get('id')
             current_user = UserAccount.query.get(id)
-            if current_user.role_id == 2:
-                return render_template('manage_user.html', agent=current_user)
+            inactive_user = InactiveUserAccount.query.get(id)
+            if inactive_user:
+                if current_user.role_id == 2:
+                    return render_template('manage_user.html', inactive_agent=current_user)
+                else:
+                    return render_template('manage_user.html', inactive_user=current_user) 
             else:
-                return render_template('manage_user.html', user=current_user)               
+                if current_user.role_id == 2:
+                    return render_template('manage_user.html', agent=current_user)
+                else:
+                    return render_template('manage_user.html', user=current_user)               
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/deactivateUser', methods= ['POST','GET'])
+def deactivateUser():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id')
+            current_user = UserAccount.query.get(id)
+            username = current_user.username
+
+            user_account = InactiveUserAccount(id,username)
+            db.session.add(user_account)
+            db.session.commit()
+            return "User's account with ID:{} has been deactivated".format(id)              
     return redirect(url_for('Login'))
 
 

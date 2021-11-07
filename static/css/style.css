@@ -1585,7 +1585,7 @@ ul{
 #t-two{
     box-sizing: border-box;
     border-collapse: collapse;
-    position: relative;
+    position: absolute;
     width: 860px;
     left: 0px;
     top: 0px;
@@ -1729,6 +1729,9 @@ td{
 }
 .deAccount-div, .role-div{
     padding-top: 5px;
+}
+.deAccount-div:hover, .role-div:hover{
+    cursor: pointer;
 }
 .user-title{
     position: absolute;
