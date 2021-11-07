@@ -92,7 +92,12 @@ class InactiveUserAccount(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
+
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
     
+
 @app.route('/')
 def index():
   return render_template('index.html')
@@ -175,39 +180,43 @@ def Login():
         password=request.form.get('password')
 
         # get/check the person with the entered username in the database
-        current_user = UserAccount.query.filter_by(username=username).first()
-        user_role = current_user.role
-        my_role = user_role.role_name
-
-        # check the existence of the person in the database
-        # if current_user is not None:(opposite statement)
-        if current_user is None:
-             return render_template("login_error.html")
+        inactive_user = InactiveUserAccount.query.filter_by(username=username).first()
+        if inactive_user:
+            return "Sorry your account has been deactivated! Please contact the administrator."
         else:
-            # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
-             result = bcrypt.checkpw(password.encode(), current_user.password.encode())
-             if result:
-                 session['id'] = current_user.id
-                 session['role'] = current_user.role_id
-                 # check if he/she is the admin 
-                 if current_user.role_id == 1:
-                    user_msg = current_user.notification
-                    if user_msg == '0':
-                        no_msg = "no notification"
-                        return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+            current_user = UserAccount.query.filter_by(username=username).first()
+            user_role = current_user.role
+            my_role = user_role.role_name
+
+            # check the existence of the person in the database
+            # if current_user is not None:(opposite statement)
+            if current_user is None:
+                return render_template("login_error.html")
+            else:
+                # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
+                result = bcrypt.checkpw(password.encode(), current_user.password.encode())
+                if result:
+                    session['id'] = current_user.id
+                    session['role'] = current_user.role_id
+                    # check if he/she is the admin 
+                    if current_user.role_id == 1:
+                        user_msg = current_user.notification
+                        if user_msg == '0':
+                            no_msg = "no notification"
+                            return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                        else:
+                            notify_msg = user_msg
+                            return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
                     else:
-                        notify_msg = user_msg
-                        return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
-                 else:
-                    user_msg = current_user.notification
-                    if user_msg == '0':
-                        no_msg = "no notification"
-                        return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
-                    else:
-                        notify_msg = user_msg
-                        return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
-             else:
-                 return render_template("login_error.html")
+                        user_msg = current_user.notification
+                        if user_msg == '0':
+                            no_msg = "no notification"
+                            return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                        else:
+                            notify_msg = user_msg
+                            return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
+                else:
+                    return render_template("login_error.html")
     return render_template('login.html')
 
 
@@ -709,11 +718,23 @@ def deactivateUser():
             id = request.form.get('id')
             current_user = UserAccount.query.get(id)
             username = current_user.username
-
             user_account = InactiveUserAccount(id,username)
             db.session.add(user_account)
             db.session.commit()
-            return "User's account with ID:{} has been deactivated".format(id)              
+            return "User's account with ID:{} has been deactivated.".format(id)              
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/activateUser', methods= ['POST','GET'])
+def activateUser():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id')
+            user_id = id
+            active_user = InactiveUserAccount.query.filter_by(id=user_id).one()
+            db.session.delete(active_user)
+            db.session.commit()
+            return "User's account with ID:{} has been activated.".format(id)              
     return redirect(url_for('Login'))
 
 

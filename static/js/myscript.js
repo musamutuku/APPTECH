@@ -326,7 +326,7 @@ function manageUser(){
 
 function deactivateAccount(){
     var userid = document.getElementById('span-id').innerHTML;
-    var user_input = document.getElementById('input-id').innerHTML;
+    var user_input = document.getElementById('input-id');
     user_input.value = userid;
     document.getElementById('deactivatebtn').click();
 }

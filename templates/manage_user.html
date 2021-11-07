@@ -25,7 +25,7 @@
             {%if user %}
             <p class="members-title">Members</p>
             <div class="deactivate-div">
-                <p class="user-title">MEMBER ID: <span> {{user.id}}</span></p>
+                <p class="user-title">MEMBER ID: <span id="span-id"> {{user.id}}</span></p>
                 <p class="user-title name-title">NAME: <span>{{user.firstname}} {{user.lastname}}</span></p>
                 <div class="photodiv" style="top: 27px;right: 22px;">
                     <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
@@ -33,8 +33,8 @@
                 <div class="deAccount-div" onclick="deactivateAccount()"><a>Deactivate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
-            <form action="/admin/deactivateUser" method="POST">
-                 <input type="number">
+            <form action="/admin/deactivateUser" method="POST" style="display: none;">
+                 <input type="text" id="input-id" name="id">
                  <button type="submit" id="deactivatebtn">submit</button>
             </form>
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_members">Back</a></div>
@@ -43,21 +43,25 @@
             {%if inactive_user %}
             <p class="members-title">Members</p>
             <div class="deactivate-div">
-                <p class="user-title">MEMBER ID: <span> {{user.id}}</span></p>
-                <p class="user-title name-title">NAME: <span>{{user.firstname}} {{user.lastname}}</span></p>
+                <p class="user-title">MEMBER ID: <span id="span-id"> {{inactive_user.id}}</span></p>
+                <p class="user-title name-title">NAME: <span>{{inactive_user.firstname}} {{inactive_user.lastname}}</span></p>
                 <div class="photodiv" style="top: 27px;right: 22px;">
-                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
+                    <img src="{{ url_for('static', filename='uploads/'+inactive_user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
                 </div>
-                <div class="deAccount-div"><a>Activate Account</a></div>
+                <div class="deAccount-div" onclick="deactivateAccount()"><a>Activate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <form action="/admin/activateUser" method="POST" style="display:none">
+                <input type="text" id="input-id" name="id">
+                <button type="submit" id="deactivatebtn">submit</button>
+            </form> 
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_members">Back</a></div>
             {%endif%}
 
             {%if agent %}
             <p class="members-title">Agents</p>
             <div class="deactivate-div">
-                <p class="user-title">AGENT ID: <span> {{agent.id}}</span></p>
+                <p class="user-title">AGENT ID: <span id="span-id"> {{agent.id}}</span></p>
                 <p class="user-title name-title">NAME: <span>{{agent.firstname}} {{agent.lastname}}</span></p>
                 <div class="photodiv" style="top: 27px;right: 22px;">
                     <img src="{{ url_for('static', filename='uploads/'+agent.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
@@ -65,20 +69,28 @@
                 <div class="deAccount-div" onclick="deactivateAccount()"><a>Deactivate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <form action="/admin/deactivateUser" method="POST" style="display:none">
+                <input type="text" id="input-id" name="id">
+                <button type="submit" id="deactivatebtn">submit</button>
+            </form>
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_agents">Back</a></div>
             {%endif%}
 
             {%if inactive_agent %}
             <p class="members-title">Agents</p>
             <div class="deactivate-div">
-                <p class="user-title">AGENT ID: <span> {{agent.id}}</span></p>
-                <p class="user-title name-title">NAME: <span>{{agent.firstname}} {{agent.lastname}}</span></p>
+                <p class="user-title">AGENT ID: <span id="span-id"> {{inactive_agent.id}}</span></p>
+                <p class="user-title name-title">NAME: <span>{{inactive_agent.firstname}} {{inactive_agent.lastname}}</span></p>
                 <div class="photodiv" style="top: 27px;right: 22px;">
-                    <img src="{{ url_for('static', filename='uploads/'+agent.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
+                    <img src="{{ url_for('static', filename='uploads/'+inactive_agent.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%">
                 </div>
-                <div class="deAccount-div"><a>Activate Account</a></div>
+                <div class="deAccount-div" onclick="deactivateAccount()"><a>Activate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <form action="/admin/activateUser" method="POST" style="display:none">
+                <input type="text" id="input-id" name="id">
+                <button type="submit" id="deactivatebtn">submit</button>
+            </form>
             <div class="backto-div" style="bottom: -65px;"><a href="/admin/system_agents">Back</a></div>
             {%endif%}
 
