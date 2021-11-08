@@ -39,6 +39,68 @@
             height: 33px;
             font-size: 9px;
         }
+        td{
+            border: 1px solid #C4C4C4;
+            text-align: left;
+            padding-left: 2px;
+            width: 100px;
+        }
+        .row-b1{
+            font-family: Montserrat;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 11px;
+            color: #000000;
+            text-align: center;
+            height: 33px;
+            border-right: 1px solid #FFFFFF;
+        }
+        #row-a1 td{
+            font-family: Roboto;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            color: #FFFFFF;
+            background: #607E8E;
+            height: 33px;
+            text-align: center;
+        }
+        .user-all1{
+            overflow: auto;
+            height: 255px;
+            width: 877px;
+            position: absolute;
+            top: 175px;
+            left: 204px;
+            border: 1px solid #c4c4c4;
+        }
+        #t-one1{
+            position: absolute;
+            border-top: 2px solid #C4C4C4;
+            border-left: 1px solid #C4C4C4;
+            border-right: 1px solid #C4C4C4;
+            border-bottom: 1px solid #C4C4C4;
+            border-collapse: collapse;
+            width: 860px;
+            top: 151px;
+            left: 205px;
+        }
+        #t-two1{
+            box-sizing: border-box;
+            border-collapse: collapse;
+            position: absolute;
+            width: 860px;
+            left: 0px;
+            top: 0px;
+            background: #EEEBEB;
+        }
+        #no_transaction1{
+            font-size: 14px;
+            font-weight: 600;
+            font-family: Montserrat;
+            margin-top: 30px;
+            margin-left: 30px;
+        }
     </style>
 </head>
 <body>
@@ -59,9 +121,9 @@
                 <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
             </div>
             <div id="content">
-                <div class="t-onediv">
-                    <table id="t-one" style="top: 0px;left: 0px;">
-                        <tr id="row-a">
+                <div class="t-onediv1">
+                    <table id="t-one1" style="top: 0px;left: 0px;">
+                        <tr id="row-a1">
                             <td>Transaction Date</td>
                             <td>Reference No</td>
                             <td>Description</td>
@@ -71,19 +133,19 @@
                         </tr>
                     </table>
                 </div>
-                <div class="user-all" style="top: 167px;">
+                <div class="user-all1" style="top: 167px;">
                     {% if no_tx %}
-                    <p id="no_transaction">{{no_tx}}</p>
+                    <p id="no_transaction1">{{no_tx}}</p>
                      {%endif%}
-                    <table id="t-two">
+                    <table id="t-two1">
                         {% for transaction in transactions %}
                         <tr>
-                            <td class="row-b">{{transaction.date}}</td>
-                            <td class="row-b">{{transaction.ref_no}}</td>
-                            <td id="td-one" style="border-right: 1px solid #FFFFFF;">Transaction performed in account {{transaction.id_no}}. Ref# {{transaction.ref_no}}</td>
-                            <td class="row-b">{{transaction.deposit}}</td>
-                            <td class="row-b">{{transaction.withdrawal}}</td>  
-                            <td class="row-b">{{transaction.status}}</td>
+                            <td class="row-b1">{{transaction.date}}</td>
+                            <td class="row-b1">{{transaction.ref_no}}</td>
+                            <td id="td-one1" style="border-right: 1px solid #FFFFFF;">Transaction performed in account {{transaction.id_no}}. Ref# {{transaction.ref_no}}</td>
+                            <td class="row-b1">{{transaction.deposit}}</td>
+                            <td class="row-b1">{{transaction.withdrawal}}</td>  
+                            <td class="row-b1">{{transaction.status}}</td>
                         </tr>
                         {% endfor %}
                     </table>

@@ -87,6 +87,11 @@
                 <div class="deAccount-div" onclick="deactivateAccount()"><a>Activate Account</a></div>
                 <div class="role-div"><a>Change Role</a></div>
             </div>
+            <p>
+                {%if msg %}
+                {{msg}}
+                {%endif%}
+            </p>
             <form action="/admin/activateUser" method="POST" style="display:none">
                 <input type="text" id="input-id" name="id">
                 <button type="submit" id="deactivatebtn">submit</button>

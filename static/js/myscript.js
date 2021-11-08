@@ -272,10 +272,11 @@ function closeName(){
     document.getElementById('notify-div').style.display = "none";
 }
 
-//systeminfo
+//system info
 function clickBack(){
     document.getElementById('clicklink').click();
 }
+
 
 // search user
 function searchUser(){
@@ -285,10 +286,8 @@ function searchUser(){
     table = document.getElementById("t-two");
     tr = table.getElementsByTagName("tr");
 
-
     // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-    
+    for (i = 0; i < tr.length; i++) { 
         td = tr[i].getElementsByTagName("td") ; 
         for(j=0 ; j<td.length ; j++)
         {
@@ -304,14 +303,28 @@ function searchUser(){
             }  
           } 
         } 
-     }
 
-function hideSearchError(){
-    document.getElementById('trshow').innerHTML = "";
+    // count the rows that matches and display error if no row(i.e compare with number of existing rows)
+    var rowCount = 0;
+    for (var i=0;i<tr.length;i++){
+        if(tr[i].style.display == "none"){
+            rowCount++
+        }
+    }
+    if (rowCount == tr.length){
+        document.getElementById('trshow').style.display = "";
+    }
+    else{
+        document.getElementById('trshow').style.display = "none";
+    }
 }
+
+
 
 // manage users
 function manageUser(){
+
+    // loop through table data to get the clicked element and then obtain its innerHTML
     var table = document.getElementById("t-two");
     for (var i = 0; i < table.rows.length; i++) {
         var firstCol = table.rows[i].cells[0];
@@ -322,6 +335,28 @@ function manageUser(){
             var input = document.getElementById("managebtn").click();
         });      
     }
+}
+
+
+function deleteDeposit(){
+    var table = document.getElementById('t-two');
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => {
+
+    // get row index of clicked element then go and get the data of the second cell of that row(ref_no)
+    cell.addEventListener('click', function(e){
+        var x = cell.closest('tr').rowIndex;
+        for (var i = 0; i < table.rows.length; i++) {
+            var firstCol = table.rows[x].cells[1];
+            cell_value = firstCol.innerHTML;
+            var input = document.getElementById("delete-input");
+            console.log(cell_value);
+            input.value = cell_value;
+            var input = document.getElementById("deletebtn").click();
+            break;      
+        }
+    })
+});
 }
 
 function deactivateAccount(){

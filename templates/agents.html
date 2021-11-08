@@ -23,7 +23,7 @@
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
             <p class="members-title">Agents</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No" oninput="hideSearchError()"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
+            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No" onkeyup="searchUser()"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
             <table id="t-one">
                 <tr id="row-1">
                     <td>USER ID</td>
@@ -60,7 +60,7 @@
             </div>
             <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
         </div>
-        <p id="trshow"></p>
+        <p id="trshow" style="display: none;font-size: 12px;color: brown;">No any match found!</p>
     </div>
         <div class="footer">
             <hr>
@@ -87,14 +87,15 @@
             var table = document.getElementById('t-two');
             const cells = document.querySelectorAll('td');
             cells.forEach(cell => {
+
+            // get row index of clicked element then go and get the data of childnode(button) of the first cell of that row(user id)
             cell.addEventListener('click', function(e){
                 var x = cell.closest('tr').rowIndex;
-                var table = document.getElementById("t-two");
                 for (var i = 0; i < table.rows.length; i++) {
                     var firstCol = table.rows[x].cells[0];
-                    btn = firstCol.childNodes[0].innerHTML;
+                    btn_value = firstCol.childNodes[0].innerHTML;
                     var input = document.getElementById("float-input");
-                    input.value = btn;
+                    input.value = btn_value;
                     var input = document.getElementById("floatbtn").click();
                     break;      
                 }

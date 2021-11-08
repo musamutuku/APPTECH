@@ -29,7 +29,7 @@ class UserAccount(db.Model):
     pin = db.Column(db.String(100))
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
-    account_balance = db.Column(db.Float, default=0.0)
+    account_balance = db.Column(db.Float, default=0.00)
     float_balance = db.Column(db.Integer)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
     profile_pic = db.Column(db.String(100))
@@ -173,7 +173,6 @@ def Register():
 
 @app.route('/login', methods=['POST','GET'])
 def Login():
-
     # getting form details from login form
     if request.method=="POST":
         username=request.form.get('username')
@@ -182,7 +181,8 @@ def Login():
         # get/check the person with the entered username in the database
         inactive_user = InactiveUserAccount.query.filter_by(username=username).first()
         if inactive_user:
-            return "Sorry your account has been deactivated! Please contact the administrator."
+            msg = "Sorry! Your account has been deactivated. Please contact the administrator."
+            return render_template('login.html', msg=msg)
         else:
             current_user = UserAccount.query.filter_by(username=username).first()
             user_role = current_user.role
@@ -464,8 +464,8 @@ def Deposit():
                                 refNo = 'TX{}'.format(ref)
                                 theID = user.id
                                 theAgent = agent.id
-                                new_balance = one_user.account_balance
-                                notification="You have deposited Ksh. {} via agent ID {}. New balance is {}".format(amount,theAgent,new_balance)
+                                new_balance = "{:.2f}".format(one_user.account_balance)
+                                notification="You have deposited Ksh. {} via agent ID {}. New balance is Ksh. {}".format(amount,theAgent,new_balance)
                                 one_user.notification = notification
                                 db.session.add(one_user)
                                 db.session.commit()
@@ -665,6 +665,21 @@ def ViewDeposit():
                 return render_template('deposits.html', deposits = deposits)
     return redirect(url_for('Login'))
 
+@app.route('/account/deleteDeposit', methods =['POST','GET'])
+def DeleteDeposit():
+    if request.method == 'POST':
+        ref_No = request.form.get('ref_no')
+        if 'id' in session and 'role' in session:
+            role_id = session.get('role')
+            user_id = session.get('id') 
+            if role_id != 1:
+                delete_transaction = DepositsAccount.query.filter_by(ref_no=ref_No).one()
+                db.session.delete(delete_transaction)
+                db.session.commit()
+                new_deposits = DepositsAccount.query.filter_by(id_no=user_id).all()
+                return render_template('deposits.html', deposits = new_deposits)
+    return redirect(url_for('Login'))
+
 
 @app.route('/notificationViewed', methods = ['POST','GET'])
 def ChangeNotification():
@@ -731,7 +746,7 @@ def activateUser():
         if request.method == "POST":
             id = request.form.get('id')
             user_id = id
-            active_user = InactiveUserAccount.query.filter_by(id=user_id).one()
+            active_user = InactiveUserAccount.query.filter_by(id=user_id).all()
             db.session.delete(active_user)
             db.session.commit()
             return "User's account with ID:{} has been activated.".format(id)              
@@ -743,7 +758,11 @@ def updateFloat():
     if 'id' in session:
         if request.method == "POST":
             id = request.form.get('id')
+            inactive_user = InactiveUserAccount.query.get(id)
             current_user = UserAccount.query.get(id)
+            if inactive_user:
+                msg = "The user's account is not active!"
+                return render_template('manage_user.html', inactive_agent=current_user, msg=msg) 
             return render_template('manage_user.html', agent_float=current_user)              
     return redirect(url_for('Login'))
 

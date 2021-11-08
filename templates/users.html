@@ -23,7 +23,7 @@
         <div class="homepage userpage" style="height: 370px;">
             <p class="p1">System information</p>
             <p class="members-title">Members</p>
-            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No" oninput="hideSearchError()"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
+            <label class="search-label">Search</label><div class="search-user"><input type="search" id="search-input" id="id-No" onkeyup="searchUser()"><img src="{{ url_for('static', filename='images/search.png') }}" onclick="searchUser()" id="search-icon"></div>
             <table id="t-one">
                 <tr id="row-1">
                     <td>USER ID</td>
@@ -54,7 +54,7 @@
             </div>
             <div class="backto-div" style="bottom: -65px;" onclick="clickBack()"><a href="/admin/system_info" id="clicklink">Back</a></div>
         </div>
-        <p id="trshow"></p>
+        <p id="trshow" style="display: none;font-size: 12px;color: brown;">No any match found!</p>
     </div>
         <div class="footer">
             <hr>

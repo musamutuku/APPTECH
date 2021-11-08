@@ -49,11 +49,15 @@
                             <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.date}}</td>
                             <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.ref_no}}</td>
                             <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);">{{deposit.amount}}</td>
-                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);"><button style="color: red;width:80px;">Delete</button></td>
+                            <td class="row-b" style="background: #fffff3;border-right: 1px solid rgb(192, 187, 187);"><button style="color: red;width:80px;" onclick="deleteDeposit()">Delete</button></td>
                         </tr>
                         {% endfor %}
                     </table>   
                 </div>
+                <form action="/account/deleteDeposit" method="POST" style="display: none;">
+                    <input type="text" id="delete-input" name="ref_no">
+                    <button type="submit" id="deletebtn">submit</button>
+                </form>
             </div>
             <div id="stateDiv" style="display: none;position: absolute;top: 150px;">
                 <div class="viewdiv"><p>VIEW ACCOUNT STATEMENT</p></div>
