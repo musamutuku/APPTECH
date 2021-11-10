@@ -12,23 +12,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <style>
-        #row-a1 td{
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 12px;
-            color: #FFFFFF;
-            background: #607E8E;
-            height: 33px;
-            text-align: center;
-        }
         .t-onediv1{
-            position: absolute;
             border: 1px solid #C4C4C4;
             width: 860px;
             height: 33px;
-            top: 130px;
-            left: 204px;
         }
         #td-one1{
             font-family: Montserrat;
@@ -67,31 +54,24 @@
         }
         .user-all1{
             overflow: auto;
-            height: 255px;
+            height: 302px;
             width: 877px;
-            position: absolute;
-            top: 175px;
-            left: 204px;
+            margin-top: 0px;
+            margin-left: 18px;
             border: 1px solid #c4c4c4;
         }
         #t-one1{
-            position: absolute;
             border-top: 2px solid #C4C4C4;
             border-left: 1px solid #C4C4C4;
             border-right: 1px solid #C4C4C4;
             border-bottom: 1px solid #C4C4C4;
             border-collapse: collapse;
             width: 860px;
-            top: 151px;
-            left: 205px;
         }
         #t-two1{
             box-sizing: border-box;
             border-collapse: collapse;
-            position: absolute;
             width: 860px;
-            left: 0px;
-            top: 0px;
             background: #EEEBEB;
         }
         #no_transaction1{
@@ -120,10 +100,9 @@
                 <a href="/home/account"><button id="transactionbtn" style="background: #C4C4C4;">Transactions</button></a>
                 <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
             </div>
-            <div id="content">
-                <div class="t-onediv1">
-                    <table id="t-one1" style="top: 0px;left: 0px;">
-                        <tr id="row-a1">
+                <div class="t-onediv" style="display: none;">
+                    <table id="t-one" style="top: 0px;left: 0px;">
+                        <tr id="row-a">
                             <td>Transaction Date</td>
                             <td>Reference No</td>
                             <td>Description</td>
@@ -133,11 +112,18 @@
                         </tr>
                     </table>
                 </div>
-                <div class="user-all1" style="top: 167px;">
-                    {% if no_tx %}
-                    <p id="no_transaction1">{{no_tx}}</p>
-                     {%endif%}
-                    <table id="t-two1">
+                <div class="user-all1">
+                    <div id="content">
+                    <label style="font-size: 14px;">ACCOUNT STATEMENT. TRANSACTIONS. PRINTED FORM.</label>
+                    <table id="t-two1" style="margin-top: -1px;">
+                        <tr id="row-a1" class="row-b1" style="margin-top: 10px;">
+                            <td>Transaction Date</td>
+                            <td>Reference No</td>
+                            <td>Description</td>
+                            <td>Deposits</td>
+                            <td>Withdrawals</td>
+                            <td>Status</td>
+                        </tr>
                         {% for transaction in transactions %}
                         <tr>
                             <td class="row-b1">{{transaction.date}}</td>
@@ -149,6 +135,9 @@
                         </tr>
                         {% endfor %}
                     </table>
+                    {% if no_tx %}
+                    <p id="no_transaction1">{{no_tx}}</p>
+                     {%endif%}
                 </div>
             </div>
             {% if download %}
@@ -168,13 +157,14 @@
     </div>
 
 <script>
-     function PrintThis(ElementContent)	{   
-		w=window.open();
-		w.document.write(ElementContent);
-		w.print();
-		w.close();
-    }
+    //  function PrintThis(ElementContent)	{   
+	// 	w=window.open();
+	// 	w.document.write(ElementContent);
+	// 	w.print();
+	// 	w.close();
+    // }
     function pdfdownload(){
+        document.getElementById('row-a1').style.display = "";
         var element = document.getElementById('content');
 
         var opt = {
@@ -182,13 +172,11 @@
         filename:     'statement.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
         };
          
-        // PrintThis(document.getElementById('content').html())
         html2pdf().set(opt).from(element).save();
-
-}
+    }  
 </script>
 </body>
 </html>

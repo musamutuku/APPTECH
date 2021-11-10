@@ -49,13 +49,13 @@
             font-weight: bold;
             font-size: 12px;
             color: #FFFFFF;
-            background: #607E8E;
+            background: #60b69c;
             height: 33px;
             text-align: center;
         }
         .user-all1{
             overflow: auto;
-            height: 302px;
+            height: 337px;
             width: 877px;
             margin-top: 0px;
             margin-left: 18px;
@@ -90,16 +90,14 @@
     <div class="home-links">
         <u id="pagelink">
             <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/admin" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
+            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="/admin/account">Account info</a></li>
             <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="/admin/system_info" id="swap-link">System info</a></li>
-            <li><img src="{{ url_for('static', filename='images/reports.png') }}">&nbsp;<a href="/admin/reports">Reports</a></li>
+            <li><img src="{{ url_for('static', filename='images/reports.png') }}">&nbsp;<a href="#" style="color: #FF12AE;">Reports</a></li>
             <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
-        <p class="p1 accSave">Savings account</p>
-        <div class="homepage userpage" style="height: 370px;">
+        <p class="p1 accSave">Reports</p>
+        <div class="homepage userpage" style="height: 390px;margin-top: -20px;">
             <div class="accBtn">
-                <a href="/admin/account"><button id="transactionbtn" style="background: #C4C4C4;">Transactions</button></a>
-                <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
             </div>
                 <div class="t-onediv" style="display: none;">
                     <table id="t-one" style="top: 0px;left: 0px;">
@@ -114,11 +112,8 @@
                     </table>
                 </div>
                 <div class="user-all1">
-                    {% if no_tx %}
-                    <p id="no_transaction1">{{no_tx}}</p>
-                     {%endif%}
                     <div id="content">
-                    <label style="font-size: 14px;">ACCOUNT STATEMENT. TRANSACTIONS. PRINTED FORM.</label>
+                        <label style="font-size: 14px;">GENERATED MONTHLY REPORT. PRINTED TRANSACTIONS FORM © 2021.</label>
                     <table id="t-two1" style="margin-top: -1px;">
                         <tr id="row-a1" class="row-b1" style="margin-top: 7px;">
                             <td>Transaction Date</td>
@@ -139,10 +134,13 @@
                         </tr>
                         {% endfor %}
                     </table>
+                    {% if no_tx %}
+                    <p id="no_transaction1">{{no_tx}}</p>
+                     {%endif%}
                 </div>
             </div>
             {% if download %}
-            <span style="display: none;">{{download}}</span><button id="downloadbtn" onclick="pdfdownload()">DOWNLOAD</button>
+            <span style="display: none;">{{download}}</span><button id="downloadbtn" onclick="pdfdownload()" style="background-color: rgb(27, 27, 126);">GENERATE</button>
             {%endif%}
         </div>
     </div>
@@ -158,19 +156,13 @@
     </div>
 
     <script>
-        //  function PrintThis(ElementContent)	{   
-        // 	w=window.open();
-        // 	w.document.write(ElementContent);
-        // 	w.print();
-        // 	w.close();
-        // }
         function pdfdownload(){
             document.getElementById('row-a1').style.display = "";
             var element = document.getElementById('content');
     
             var opt = {
             margin:       1,
-            filename:     'statement.pdf',
+            filename:     'report.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }

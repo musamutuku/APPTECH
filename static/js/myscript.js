@@ -365,3 +365,10 @@ function deactivateAccount(){
     user_input.value = userid;
     document.getElementById('deactivatebtn').click();
 }
+
+function changeRole(){
+    var userid = document.getElementById('span-id').innerHTML;
+    var user_input = document.getElementById('input-role');
+    user_input.value = userid;
+    document.getElementById('rolebtn').click();
+}

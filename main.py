@@ -1,7 +1,7 @@
 from flask import Flask, request, url_for, redirect
 from flask.globals import session
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_migrate import Migrate, current
 from flask.templating import render_template
 import bcrypt
 import os , datetime
@@ -30,12 +30,13 @@ class UserAccount(db.Model):
     username = db.Column(db.String(100))
     password = db.Column(db.String(100))
     account_balance = db.Column(db.Float, default=0.00)
-    float_balance = db.Column(db.Integer)
+    float_balance = db.Column(db.Integer, default=0)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
     profile_pic = db.Column(db.String(100))
     notification = db.Column(db.String(100))
+    userID = db.Column(db.Integer)
 
-    def __init__(self, id, firstname, lastname, username, password, phone, pin, profile_pic, notification):
+    def __init__(self, id, firstname, lastname, username, password, phone, pin, profile_pic, notification,userID):
         self.id = id
         self.firstname = firstname
         self.lastname = lastname
@@ -45,6 +46,7 @@ class UserAccount(db.Model):
         self.pin = pin
         self.profile_pic = profile_pic
         self.notification = notification
+        self.userID = userID
 
 class RoleAccount(db.Model):   
     __tablename__ = "roles"
@@ -162,7 +164,7 @@ def Register():
         if confirm == password and pin == confirm_pin:
             encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
             encrpted_pin = bcrypt.hashpw(pin.encode(), bcrypt.gensalt(14))
-            registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode(),profile_pic='default.png',notification='0')
+            registered_user = UserAccount(id,firstname,lastname,username,encrpted_pass.decode(),phone,encrpted_pin.decode(),profile_pic='default.png',notification='0', userID=id)
 
         # add the details in the database
         db.session.add(registered_user)
@@ -358,7 +360,6 @@ def PhotoUpload():
         if 'id' in session:
             user_id = session.get('id')
             pic = request.files['pic']
-
             user = UserAccount.query.get(user_id)
             filename = secure_filename(pic.filename)
             pic.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -629,15 +630,14 @@ def ViewStatement():
                 user = UserAccount.query.get(user_id)
                 result = bcrypt.checkpw(pin.encode(), user.pin.encode())
                 if result:
+                    transactions = TransactionAccount.query.filter_by(id_no=user_id).all()
                     if role_id != 1:
-                        transactions = TransactionAccount.query.filter_by(id_no=user_id).all()
                         if(len(transactions)< 1):
                             no_tx = "You have zero transaction!"
                             return render_template('account_statement.html', no_tx = no_tx)
                         download = "download"
                         return render_template('account_statement.html', transactions = transactions, download=download)
                     else:
-                        transactions = TransactionAccount.query.all()
                         if(len(transactions)< 1):
                             no_tx = "You have zero transaction!"
                             return render_template('admin_statement.html', no_tx = no_tx)
@@ -647,6 +647,18 @@ def ViewStatement():
                     return "You have entered wrong PIN try again later"
             else:
                 return "You have entered wrong ID try again later"
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/reports')
+def GenerateReports():
+    if 'id' in session:
+        transactions = TransactionAccount.query.all()
+        if(len(transactions)< 1):
+            no_tx = "No reports yet!"
+            return render_template('repors.html', no_tx = no_tx)
+        download = "download"
+        return render_template('reports.html', transactions = transactions, download=download)
     return redirect(url_for('Login'))
 
 
@@ -732,11 +744,27 @@ def deactivateUser():
         if request.method == "POST":
             id = request.form.get('id')
             current_user = UserAccount.query.get(id)
+            role_1 = 2
+            role_2 = 3
+            users = UserAccount.query.filter_by(role_id=role_1).all()
+            users1 = UserAccount.query.filter_by(role_id=role_2).all()
+            unexisting_user = InactiveUserAccount.query.get(id)
+            if unexisting_user is not None:
+                msg = "User's account with ID: {} is already inactive.".format(id)
+                if current_user.role_id == 3:
+                    return render_template('users.html', msg=msg, users=users1)
+                else:
+                    return render_template('agents.html', msg=msg, users=users)
             username = current_user.username
             user_account = InactiveUserAccount(id,username)
             db.session.add(user_account)
             db.session.commit()
-            return "User's account with ID:{} has been deactivated.".format(id)              
+            if current_user.role_id == 3:
+                msg = "User's account with ID: {} has been deactivated successfully.".format(id)
+                return render_template('users.html', msg=msg, users=users1)
+            else:
+                msg = "User's account with ID: {} has been deactivated successfully.".format(id)
+                return render_template('agents.html', msg=msg, users=users)             
     return redirect(url_for('Login'))
 
 
@@ -746,10 +774,26 @@ def activateUser():
         if request.method == "POST":
             id = request.form.get('id')
             user_id = id
-            active_user = InactiveUserAccount.query.filter_by(id=user_id).all()
+            user = UserAccount.query.filter_by(id=user_id).first()
+            role_1 = 2
+            role_2 = 3
+            users = UserAccount.query.filter_by(role_id=role_1).all()
+            users1 = UserAccount.query.filter_by(role_id=role_2).all()
+            active_user = InactiveUserAccount.query.filter_by(id=user_id).first()
+            if active_user is None:
+                msg = "User's account with ID: {} is already active.".format(id)
+                if user.role_id == 3:
+                    return render_template('users.html', msg=msg, users=users1)
+                else:
+                    return render_template('agents.html', msg=msg,users=users)
             db.session.delete(active_user)
             db.session.commit()
-            return "User's account with ID:{} has been activated.".format(id)              
+            if user.role_id == 3:
+                msg = "User's account with ID: {} has been activated successfully.".format(id)
+                return render_template('users.html', msg=msg, users=users1)
+            else:
+                msg = "User's account with ID: {} has been activated successfully.".format(id)
+                return render_template('agents.html', msg=msg,users=users)            
     return redirect(url_for('Login'))
 
 
@@ -764,6 +808,88 @@ def updateFloat():
                 msg = "The user's account is not active!"
                 return render_template('manage_user.html', inactive_agent=current_user, msg=msg) 
             return render_template('manage_user.html', agent_float=current_user)              
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/floatUpdate', methods= ['POST','GET'])
+def floatUpdate():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id_no')
+            user_float = UserAccount.query.filter_by(id=id).first()
+            return render_template('change_userInfo.html', user_float = user_float)                    
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/updateRole', methods= ['POST','GET'])
+def updateRole():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id')
+            current_user = UserAccount.query.filter_by(id=id).first()
+            inactive_user = InactiveUserAccount.query.get(id)
+            if inactive_user:
+                msg = "The user's account is not active!"
+                if current_user.role_id == 2:
+                    return render_template('manage_user.html', inactive_agent=current_user, msg=msg)
+                else:
+                    return render_template('manage_user.html', inactive_user=current_user, msg=msg)
+            if current_user.role_id == 2:
+                return render_template('change_userInfo.html', agentToUser = current_user)
+            else:
+                return render_template('change_userInfo.html', userToAgent = current_user)                    
+    return redirect(url_for('Login'))
+
+
+@app.route('/admin/updatedFloat', methods= ['POST','GET'])
+def updatedFloat():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id_no')
+            role2 = 2
+            amount = int(request.form.get('amount'))
+            inactive_user = InactiveUserAccount.query.get(id)
+            current_user = UserAccount.query.get(id)
+            users = UserAccount.query.filter_by(role_id=role2).all()
+            float = current_user.float_balance
+            new_balance = float + amount
+            current_user.float_balance = new_balance
+            db.session.add(current_user)
+            db.session.commit()
+            if inactive_user:
+                msg = "The user's account is not active!"
+                return render_template('manage_user.html', inactive_agent=current_user, msg=msg) 
+            else:
+                float_msg = "Float of Ksh {} has been added to agent ID: {}. New float balance is Ksh {}.".format(amount,id,new_balance)
+                return render_template('agents.html', float_msg=float_msg, users=users)               
+    return redirect(url_for('Login'))
+
+@app.route('/admin/updatedRole', methods= ['POST','GET'])
+def updatedRole():
+    if 'id' in session:
+        if request.method == "POST":
+            id = request.form.get('id_no')
+            new_id = request.form.get('agent_no')
+            role1=2
+            role2=3
+            current_user = UserAccount.query.filter_by(id=id).first()
+            users = UserAccount.query.filter_by(role_id=role1).all()
+            users1 = UserAccount.query.filter_by(role_id=role2).all()
+            user_role = current_user.role_id
+            if user_role == 2:
+                current_user.id = current_user.userID
+                current_user.role_id = 3
+            else:
+                current_user.id = new_id
+                current_user.userID = id
+                current_user.role_id = 2
+            db.session.add(current_user)
+            db.session.commit()
+            msg = "User's role with ID: {} changed successfully".format(id)
+            if user_role == 2:
+                return render_template('agents.html', msg=msg, users=users) 
+            else:
+                return render_template('users.html', msg=msg, users=users1)              
     return redirect(url_for('Login'))
 
 
