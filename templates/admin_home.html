@@ -8,10 +8,18 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Montserrat">
     <script type="text/javascript" src="{{ url_for('static', filename='js/myscript.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 </head>
 <body>
     <div class="homeDiv" id="homeDiv">
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
+        {% if msg %}
+         <div style="background: #7ee292;border: 1px solid #e6dfdf;border-radius: 3px; width: 300px;height: 25px;position: absolute;left: 430px;top: 108px;" id="success-msg">
+            <p style="color: rgb(10, 10, 10);font-size: 13px;font-family: Montserrat;margin-left: 85px;margin-top: 3px;">
+                {{msg}}
+            </p>
+        </div>
+        {%endif%}
         <div class="pic-icon" onclick="showIcon()" id="pic-icon"><img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" width="100%" height="100%"></div>
         {%if my_role %}
         <div class="notify-div" style="display: none;" id="notify-name"><p>logged in as {{my_role}}</p><div class="inner-close" title="Close" onclick="closeName()"><p>x</p></div></div>
@@ -66,5 +74,12 @@
         <p>Do you want to log out of the System?</p>
         <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $('#success-msg').hide();
+            },3000);
+        });
+    </script>
 </body>
 </html>

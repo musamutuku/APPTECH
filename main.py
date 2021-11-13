@@ -200,23 +200,24 @@ def Login():
                 if result:
                     session['id'] = current_user.id
                     session['role'] = current_user.role_id
+                    msg = "Login successful!"
                     # check if he/she is the admin 
                     if current_user.role_id == 1:
                         user_msg = current_user.notification
                         if user_msg == '0':
                             no_msg = "no notification"
-                            return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                            return render_template("admin_home.html",user = current_user, my_role=my_role, no_msg=no_msg, msg=msg)
                         else:
                             notify_msg = user_msg
-                            return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
+                            return render_template("admin_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg, msg=msg)
                     else:
                         user_msg = current_user.notification
                         if user_msg == '0':
                             no_msg = "no notification"
-                            return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg)
+                            return render_template("user_home.html",user = current_user, my_role=my_role, no_msg=no_msg, msg=msg)
                         else:
                             notify_msg = user_msg
-                            return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg)
+                            return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg, msg=msg)
                 else:
                     return render_template("login_error.html")
     return render_template('login.html')
