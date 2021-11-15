@@ -89,11 +89,11 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/admin" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
-            <li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="/admin/system_info" id="swap-link">System info</a></li>
-            <li><img src="{{ url_for('static', filename='images/reports.png') }}">&nbsp;<a href="/admin/reports">Reports</a></li>
-            <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
+            <a href="/admin"><li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/admin" id="firstlink" style="margin-left: -1px;">Home</a></li></a>
+            <a href="#"><li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li></a>
+            <a href="/admin/system_info"></a><li id="icon-swap"><img src="{{ url_for('static', filename='images/system_info.png') }}" style="height: 38px;width: 33px;margin-bottom: -14px;margin-left: -3px;">&nbsp;<a href="/admin/system_info" id="swap-link">System info</a></li></a>
+            <a href="/admin/reports"><li><img src="{{ url_for('static', filename='images/reports.png') }}">&nbsp;<a href="/admin/reports">Reports</a></li></a>
+            <li onclick="logOut()" style="cursor: pointer;"><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <p class="p1 accSave">Savings account</p>
         <div class="homepage userpage" style="height: 370px;">
@@ -101,18 +101,6 @@
                 <a href="/admin/account"><button id="transactionbtn" style="background: #C4C4C4;">Transactions</button></a>
                 <button id="statebtn" style="background: #FFFFFF;">Account Statement</button>
             </div>
-                <!-- <div class="t-onediv" style="display: none;">
-                    <table id="t-one" style="top: 0px;left: 0px;">
-                        <tr id="row-a">
-                            <td>Transaction Date</td>
-                            <td>Reference No</td>
-                            <td>Description</td>
-                            <td>Deposits</td>
-                            <td>Withdrawals</td>
-                            <td>Status</td>
-                        </tr>
-                    </table>
-                </div> -->
                 <div class="user-all1">
                     {% if no_tx %}
                     <p id="no_transaction1">{{no_tx}}</p>

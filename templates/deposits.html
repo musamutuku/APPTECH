@@ -16,11 +16,11 @@
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
     <div class="home-links">
         <u id="pagelink">
-            <li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li>
-            <li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li>
-            <li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="/userDetails">User details</a></li>
-            <li><img src="{{ url_for('static', filename='images/advert.png') }}" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li>
-            <li><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
+            <a href="/home"><li style="margin-bottom: 25px;margin-left: -1.5px;"><img src="{{ url_for('static', filename='images/home.png') }}" style="width: 37px;height: 30px;">&nbsp;<a href="/home" id="firstlink" style="margin-left: -1px;">Home</a></li></a>
+            <a href="#"><li style="margin-bottom: 24px;"><img src="{{ url_for('static', filename='images/account_details.png') }}" style="margin-left: -1px;">&nbsp;<a href="#" style="color: #FF12AE;">Account info</a></li></a>
+            <a href="/userDetails"><li><img src="{{ url_for('static', filename='images/user_details.png') }}" alt="user_details" style="height: 45px;width: 33px;margin-bottom: -18px;">&nbsp;<a href="/userDetails">User details</a></li></a>
+            <a href="#"><li><img src="{{ url_for('static', filename='images/advert.png') }}" style="width: 27px;height: 26px;margin-left: 2px;border-radius: 0 0 3px 0;">&nbsp;<a href="#" style="margin-left: 2.5px;">Recent ads</a></li></a>
+            <li onclick="logOut()" style="cursor: pointer;"><img src="{{ url_for('static', filename='images/logout.png') }}">&nbsp;<a href="#" onclick="logOut()">Logout</a></li>
         </u>
         <p class="p1 accSave">Savings account</p>
         <div class="homepage userpage" style="height: 370px;">

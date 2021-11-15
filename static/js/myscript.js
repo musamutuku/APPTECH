@@ -358,7 +358,6 @@ function deleteDeposit(){
     })
 });
 }
-
 function deactivateAccount(){
     var userid = document.getElementById('span-id').innerHTML;
     var user_input = document.getElementById('input-id');
