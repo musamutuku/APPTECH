@@ -20,6 +20,9 @@
                     <button type="submit">SUBMIT</button>
                 </form>   
             </div>
+            <div>
+                <a href="/userDetails" class="backarrow1"><img src="{{ url_for('static', filename='images/back-arrow.png') }}">&nbsp;&nbsp;<b style="text-decoration: underline;position: relative;font-weight: normal; top: -1px;font-size: 14.5px;">Return Back</b></a>
+            </div>
             <p class="reset-error" id="reset-error" style="top: 150px;left: 235px;">
                 {% if msg %}
                 {{msg}}

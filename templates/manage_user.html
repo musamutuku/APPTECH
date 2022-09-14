@@ -14,8 +14,8 @@
     <div class="homeDiv" id="homeDiv">
         <div class="home-img"><img src="{{ url_for('static', filename='images/header.png') }}" alt="header"></div>
         {% if msg %}
-         <div style="background: #7ee292;border: 1px solid #e6dfdf;border-radius: 3px; width: 400px;height: 40px;position: absolute;left: 430px;top: 108px;" id="success-msg">
-            <p style="color: rgb(10, 10, 10);font-size: 13px;font-family: Montserrat;margin-left: 15px;margin-top: 3px;">
+         <div style="background: brown;border: 1px solid #e6dfdf;border-radius: 3px; width: 400px;height: 40px;position: absolute;left: 430px;top: 108px;" id="success-msg">
+            <p style="color: white;font-size: 13px;font-family: Montserrat;margin-left: 15px;margin-top: 3px;">
                 {{msg}}
             </p>
         </div>
@@ -147,6 +147,8 @@
         <p>Do you want to log out of the System?</p>
         <button onclick="clickOk()"><a href="/logout" id="click-okbtn">OK</a></button>
     </div>
+
+    <!-- script to set timeout period for pop up msg -->
     <script>
         $(document).ready(function(){
             setTimeout(function(){

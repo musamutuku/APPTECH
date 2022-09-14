@@ -324,7 +324,7 @@ function searchUser(){
 // manage users
 function manageUser(){
 
-    // loop through table data to get the clicked element and then obtain its innerHTML
+    // loop through table data to get the clicked element and then obtain its child's innerHTML
     var table = document.getElementById("t-two");
     for (var i = 0; i < table.rows.length; i++) {
         var firstCol = table.rows[i].cells[0];
