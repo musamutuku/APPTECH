@@ -187,14 +187,15 @@ def Login():
             return render_template('login.html', msg=msg)
         else:
             current_user = UserAccount.query.filter_by(username=username).first()
-            user_role = current_user.role
-            my_role = user_role.role_name
+        
 
             # check the existence of the person in the database
             # if current_user is not None:(opposite statement)
             if current_user is None:
                 return render_template("login_error.html")
             else:
+                user_role = current_user.role
+                my_role = user_role.role_name
                 # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
                 result = bcrypt.checkpw(password.encode(), current_user.password.encode())
                 if result:
