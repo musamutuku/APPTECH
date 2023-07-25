@@ -44,11 +44,15 @@
             </div> 
             <div>
                 <div class="photodiv">
-                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/default.png'" alt="profile" width="100%" height="100%">
+                    <img src="{{ url_for('static', filename='uploads/'+user.profile_pic) }}" onerror="this.src='/static/uploads/profile/default.png'" alt="profile" width="100%" height="100%">
                 </div>
                 <form action="/userDetails/editPhoto" method="POST" enctype="multipart/form-data">
-                    <label for="profilepic" class="editpic-label">Edit Photo</label>
-                    <input type="file" name="pic" accept="image/*" id="profilepic" style="display: none;" onchange="form.submit()" required>
+                    <label for="profilepic" class="editpic-label">Edit</label>
+                    <input type="file" name="pic" accept="image/*" id="profilepic" style="display: none;" onchange="form.submit()" required>        
+                </form>
+                <form action="/userDetails/remvPhoto" method="POST" onSubmit="if(!confirm('Do you want to Delete?')){return false;}">
+                    <label for="profilephoto" class="removepic-label">Remove</label>
+                    <input type="submit" name="pic" value="Delete" id="profilephoto" style="display: none;" required>
                 </form>
             </div>
             <br><br>

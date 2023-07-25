@@ -7,6 +7,7 @@ import bcrypt
 import os , datetime
 from sqlalchemy.orm import backref
 from werkzeug.utils import secure_filename
+from datetime import timedelta
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads/'
@@ -102,7 +103,10 @@ class InactiveUserAccount(db.Model):
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+    attempt=session.get('attempt')
+    if attempt ==None:
+       session['attempt']=5 
+    return render_template('index.html')
 
 @app.route('/admin/system_members')
 def ViewUsers():
@@ -159,7 +163,6 @@ def Register():
             idError2 = "Try again with another ID number."
             return render_template("register_error.html", id_error = idError, id_error2 = idError2)
         
-        
         # encrypting the password and pin using hash function
         if confirm == password and pin == confirm_pin:
             encrpted_pass =  bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
@@ -175,6 +178,10 @@ def Register():
 
 @app.route('/login', methods=['POST','GET'])
 def Login():
+    # login attempts
+    attempt=session.get('attempt')
+    if attempt == None:
+        session['attempt']=5
     # getting form details from login form
     if request.method=="POST":
         username=request.form.get('username')
@@ -192,15 +199,31 @@ def Login():
             # check the existence of the person in the database
             # if current_user is not None:(opposite statement)
             if current_user is None:
-                return render_template("login_error.html")
+                # login attempts 
+                attempt= session.get('attempt')
+                attempt-=1
+                session['attempt']=attempt
+                if attempt==1:
+                    attempt_msg="This is your last attempt. You will be blocked, attempt %d of 5" % attempt
+                    return render_template('login.html',attempt_msg=attempt_msg)
+                if attempt<=0:
+                    attempt_msg="Your account has been blocked, try again later after 24hrs"
+                    session.permanent = True
+                    session.permanent_session_lifetime = timedelta(minutes=1440)
+                    return render_template('login.html',attempt_msg=attempt_msg)
+                else:
+                    attempt_msg="Incorrect Login credentials, attempt %d of 5" % attempt
+                    return render_template('login.html',attempt_msg=attempt_msg)
+                # return render_template("login_error.html")
             else:
                 user_role = current_user.role
                 my_role = user_role.role_name
                 # get the password and encrypt it and check the match with the one encrypted in the database(will be success or error)
                 result = bcrypt.checkpw(password.encode(), current_user.password.encode())
-                if result:
+                if result and session['attempt']>0:
                     session['id'] = current_user.id
                     session['role'] = current_user.role_id
+                    session['attempt']=5
                     msg = "Login successful!"
                     # check if he/she is the admin 
                     if current_user.role_id == 1:
@@ -220,40 +243,58 @@ def Login():
                             notify_msg = user_msg
                             return render_template("user_home.html",user = current_user, my_role=my_role, notify_msg=notify_msg, msg=msg)
                 else:
-                    return render_template("login_error.html")
+                    attempt= session.get('attempt')
+                    attempt-=1
+                    session['attempt']=attempt
+                    if attempt==1:
+                        attempt_msg="This is your last attempt. You will be blocked, attempt %d of 5" % attempt
+                        return render_template('login.html',attempt_msg=attempt_msg)
+                    if attempt<=0:
+                        attempt_msg="Your account has been blocked, try again later after 24hrs"
+                        session.permanent = True
+                        app.permanent_session_lifetime = timedelta(minutes=1440)
+                        return render_template('login.html',attempt_msg=attempt_msg)
+                    else:
+                        attempt_msg="Incorrect Login credentials, attempt %d of 5" % attempt
+                        return render_template('login.html',attempt_msg=attempt_msg)
+                    # return render_template("login_error.html")
     return render_template('login.html')
 
 
 
 @app.route('/reset', methods = ['POST','GET'])
 def Reset():
-    if request.method=="POST":
-        id=request.form.get('id_no')
-        username=request.form.get('username')
+    if 'id' in session:
+        if request.method=="POST":
+            id=request.form.get('id_no')
+            username=request.form.get('username')
 
-        current_user = UserAccount.query.filter_by(id=id).first()
-        if current_user is not None:
-            correct_username = current_user.username
-            if username == correct_username:
-                param = datetime.datetime.now().strftime("%S")
-                new_pass = '{}Q{}kX'.format(current_user.firstname,param)
-                encrpted_pass =  bcrypt.hashpw(new_pass.encode(), bcrypt.gensalt(14))
-                current_user.password = encrpted_pass.decode()
-                db.session.add(current_user)
-                db.session.commit()
-                return "Your password has been reset. Your new password is <u><b>{}</b></u> <br> Login and change the password for security purposes.".format(new_pass)
+            current_user = UserAccount.query.filter_by(id=id).first()
+            if current_user is not None:
+                correct_username = current_user.username
+                if username == correct_username:
+                    param = datetime.datetime.now().strftime("%S")
+                    new_pass = '{}Q{}kX'.format(current_user.firstname,param)
+                    encrpted_pass =  bcrypt.hashpw(new_pass.encode(), bcrypt.gensalt(14))
+                    current_user.password = encrpted_pass.decode()
+                    db.session.add(current_user)
+                    db.session.commit()
+                    return "Your password has been reset. Your new password is <u><b>{}</b></u> <br> Login and change the password for security purposes.".format(new_pass)
+                else:
+                    msg2 = "Enter a valid username. If you forgot your username contact the Admin!"
+                    return render_template('reset.html', msg2=msg2)
             else:
-                msg2 = "Enter a valid username. If you forgot your username contact the Admin!"
-                return render_template('reset.html', msg2=msg2)
-        else:
-            msg= "You have entered unregistered ID!"
-            return render_template('reset.html',msg=msg)
+                msg= "You have entered unregistered ID!"
+        return render_template('reset.html',msg=msg)
     return render_template('reset.html')
+    return redirect(url_for('Login'))
+   
 
 @app.route('/logout')
 def logout():
     if 'id' in session:
         session.pop('id', None)
+        # session['attempt']=5
         return redirect(url_for('index'))
     return redirect(url_for('Login'))
 
@@ -377,6 +418,31 @@ def PhotoUpload():
             else:
                 return render_template("admin_details.html", user= one_user)
     return redirect(url_for('Login'))
+
+
+@app.route('/userDetails/remvPhoto', methods = ['POST','GET'])
+def Photodelete():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session.get('id')
+            
+            user = UserAccount.query.get(user_id)
+            pic=user.profile_pic
+            if pic != "default.png":
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], pic))
+
+                user.profile_pic = 'default.png'
+                db.session.add(user)
+                db.session.commit()
+
+            one_user = UserAccount.query.get(user_id)
+            role_id = session.get('role')
+            if role_id != 1:
+                return render_template("user_details.html", user= one_user)
+            else:
+                return render_template("admin_details.html", user= one_user)
+    return redirect(url_for('Login'))
+
 
 
 @app.route('/account/check_balance', methods=['POST','GET'])

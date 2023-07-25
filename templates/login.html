@@ -27,6 +27,13 @@
                     <div id="signup"><p>Don't have an account? <span><a href="/register" title="Register">Sign-up</a></span></p></div>
                 </form>
             </div>
+            <div class="loginattempt">
+                {%if attempt_msg %}
+                    <p id ="loginattmpt">
+                        {{attempt_msg}}
+                    </p>
+                {%endif%}
+                </div>
             {%if msg %}
             <div style="background: brown;width: 400px;height: 40px;border-radius: 5px;position: absolute;" id="loginerror">
                 <p style="color: white;font-size: 13px;font-family: Montserrat;margin-left: 15px;margin-top: 3px;">
