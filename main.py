@@ -264,7 +264,6 @@ def Login():
 
 @app.route('/reset', methods = ['POST','GET'])
 def Reset():
-    if 'id' in session:
         if request.method=="POST":
             id=request.form.get('id_no')
             username=request.form.get('username')
@@ -285,9 +284,9 @@ def Reset():
                     return render_template('reset.html', msg2=msg2)
             else:
                 msg= "You have entered unregistered ID!"
-        return render_template('reset.html',msg=msg)
-    return render_template('reset.html')
-    return redirect(url_for('Login'))
+                return render_template('reset.html',msg=msg)
+        return render_template('reset.html')
+    
    
 
 @app.route('/logout')

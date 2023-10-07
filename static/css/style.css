@@ -276,6 +276,7 @@ p#org-name{
     line-height: 23px;
     color: #000000;
     }
+    transaction
 .about{
     position: absolute;
     left: 105px;
@@ -1158,7 +1159,7 @@ ul{
 }
 .accBtn button{
     position: relative;
-    width: 450px;
+    width: 449px;
     height: 28px;
     left: 0px;
     top: -13px;
